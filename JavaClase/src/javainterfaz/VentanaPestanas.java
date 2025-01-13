@@ -112,6 +112,7 @@ public class VentanaPestanas extends JFrame {
             JLabel equipo2 = new JLabel("EQUIPO SELECCIONADO");
             JTextField equipo2txt = new JTextField("", 10);
             
+            //Para que no se pueda poner mas de 2 digitos en el campo de texto
             equipo2txt.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyTyped(KeyEvent e) {
@@ -126,7 +127,6 @@ public class VentanaPestanas extends JFrame {
                     }
                 }
             });
-
 
             // Si ya hay resultados guardados, mostrarlos en los campos de texto
             if (resultados.get(index).size() > i - 1) {
@@ -155,6 +155,7 @@ public class VentanaPestanas extends JFrame {
     
 
     private void actualizarResultados() {
+    	
         // Obtener los resultados de todos los campos de texto
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
             JPanel panel = (JPanel) ((JScrollPane) tabbedPane.getComponentAt(i)).getViewport().getView();
