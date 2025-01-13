@@ -4,10 +4,12 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class VentanaPestanas extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
+    private ArrayList<ArrayList<String[]>> resultados; // ArrayList para almacenar los resultados de cada jornada
 
     public VentanaPestanas() {
         // Configuración básica de la ventana
@@ -15,6 +17,12 @@ public class VentanaPestanas extends JFrame {
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // Inicializar el ArrayList de resultados
+        resultados = new ArrayList<>();
+
+        // Configurar el layout principal con BorderLayout
+        setLayout(new BorderLayout());
 
         // Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
@@ -31,8 +39,18 @@ public class VentanaPestanas extends JFrame {
             }
         });
 
-        // Agregar el JTabbedPane a la ventana
-        getContentPane().add(tabbedPane);
+        // Añadir el JTabbedPane al centro de la ventana
+        add(tabbedPane, BorderLayout.CENTER);
+
+        // Crear el panel inferior con el botón "Actualizar Resultados"
+        JPanel panelBoton = new JPanel();
+        panelBoton.setLayout(new FlowLayout(FlowLayout.CENTER));  // Alineación central
+        JButton actualizarButton = new JButton("Actualizar Resultados");
+        actualizarButton.addActionListener(e -> actualizarResultados()); // Asocia el evento del botón
+        panelBoton.add(actualizarButton);
+
+        // Añadir el panel del botón al borde inferior de la ventana
+        add(panelBoton, BorderLayout.SOUTH);
     }
 
     private void crearPestanas() {
@@ -40,6 +58,9 @@ public class VentanaPestanas extends JFrame {
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+            // Inicializar la lista de resultados de la jornada actual
+            resultados.add(new ArrayList<>());
 
             // Añadir el panel a la pestaña
             JScrollPane scrollPanel = new JScrollPane(panel);
@@ -61,22 +82,29 @@ public class VentanaPestanas extends JFrame {
             partidoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
             // Etiqueta y campo para el primer equipo
-            JLabel equipo1Label = new JLabel("Equipo 1:");
-            JTextField equipo1Field = new JTextField("Real Madrid", 10);
+            JLabel equipo1 = new JLabel("EQUIPO SELECCIONADO");
+            JTextField equipo1txt = new JTextField("", 10);
 
             // Etiqueta "vs"
             JLabel vsLabel = new JLabel("vs");
 
             // Etiqueta y campo para el segundo equipo
-            JLabel equipo2Label = new JLabel("Equipo 2:");
-            JTextField equipo2Field = new JTextField("Barcelona", 10);
+            JLabel equipo2 = new JLabel("EQUIPO SELECCIONADO");
+            JTextField equipo2txt = new JTextField("", 10);
 
-            // Agregar componentes al panel del partido
-            partidoPanel.add(equipo1Label);
-            partidoPanel.add(equipo1Field);
+            // Si ya hay resultados guardados, mostrarlos en los campos de texto
+            if (resultados.get(index).size() > i - 1) {
+                String[] partidoResultado = resultados.get(index).get(i - 1);
+                equipo1txt.setText(partidoResultado[0]);
+                equipo2txt.setText(partidoResultado[1]);
+            }
+
+            // Agregar los componentes en el orden especificado: etiqueta - campo - "vs" - campo - etiqueta
+            partidoPanel.add(equipo1);
+            partidoPanel.add(equipo1txt);
             partidoPanel.add(vsLabel);
-            partidoPanel.add(equipo2Label);
-            partidoPanel.add(equipo2Field);
+            partidoPanel.add(equipo2);
+            partidoPanel.add(equipo2txt);
 
             // Agregar el panel del partido al panel principal
             panel.add(partidoPanel);
@@ -87,5 +115,36 @@ public class VentanaPestanas extends JFrame {
         panel.repaint();
     }
 
-    
+    private void actualizarResultados() {
+        // Obtener los resultados de todos los campos de texto
+        for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+            JPanel panel = (JPanel) ((JScrollPane) tabbedPane.getComponentAt(i)).getViewport().getView();
+            ArrayList<String[]> jornadaResultados = resultados.get(i); // Obtener la lista de resultados de la jornada
+
+            // Limpiar los resultados de la jornada actual (si es necesario)
+            jornadaResultados.clear();
+
+            for (Component comp : panel.getComponents()) {
+                if (comp instanceof JPanel) {
+                    JPanel partidoPanel = (JPanel) comp;
+                    JTextField equipo1txt = null;
+                    JTextField equipo2txt = null;
+                    for (Component subComp : partidoPanel.getComponents()) {
+                        if (subComp instanceof JTextField) {
+                            if (equipo1txt == null) {
+                                equipo1txt = (JTextField) subComp;
+                            } else {
+                                equipo2txt = (JTextField) subComp;
+                            }
+                        }
+                    }
+                    // Guardar los resultados en el ArrayList correspondiente para la jornada actual
+                    if (equipo1txt != null && equipo2txt != null) {
+                        String[] resultado = {equipo1txt.getText(), equipo2txt.getText()};
+                        jornadaResultados.add(resultado); // Agregar resultado al ArrayList de la jornada
+                    }
+                }
+            }
+        }
+    }
 }

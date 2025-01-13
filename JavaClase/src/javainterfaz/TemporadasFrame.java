@@ -443,7 +443,7 @@ public class TemporadasFrame extends JFrame {
 
             // Crear una nueva ventana para mostrar la clasificación
             JFrame clasificacionFrame = new JFrame("Clasificación de Equipos");
-            clasificacionFrame.setSize(600, 300);
+            clasificacionFrame.setSize(500, 300);
             clasificacionFrame.setLocationRelativeTo(null);
             clasificacionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             
