@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class VentanaPestanas extends JFrame {
@@ -86,6 +88,22 @@ public class VentanaPestanas extends JFrame {
             // Etiqueta y campo para el primer equipo
             JLabel equipo1 = new JLabel("EQUIPO SELECCIONADO");
             JTextField equipo1txt = new JTextField("", 10);
+            
+            //Para que no se pueda poner mas de 2 digitos en el campo de texto
+            equipo1txt.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    char c = e.getKeyChar();
+                    // Verificar si el caracter ingresado es un número
+                    if (!Character.isDigit(c)) {
+                        e.consume(); // Si no es un número, se descarta la tecla
+                    }
+                    // Limitar a 2 dígitos
+                    if (equipo1txt.getText().length() >= 2) {
+                        e.consume(); // No permitir más de 2 dígitos
+                    }
+                }
+            });
 
             // Etiqueta "vs"
             JLabel vsLabel = new JLabel("vs");
@@ -93,6 +111,22 @@ public class VentanaPestanas extends JFrame {
             // Etiqueta y campo para el segundo equipo
             JLabel equipo2 = new JLabel("EQUIPO SELECCIONADO");
             JTextField equipo2txt = new JTextField("", 10);
+            
+            equipo2txt.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    char c = e.getKeyChar();
+                    // Verificar si el caracter ingresado es un número
+                    if (!Character.isDigit(c)) {
+                        e.consume(); // Si no es un número, se descarta la tecla
+                    }
+                    // Limitar a 2 dígitos
+                    if (equipo2txt.getText().length() >= 2) {
+                        e.consume(); // No permitir más de 2 dígitos
+                    }
+                }
+            });
+
 
             // Si ya hay resultados guardados, mostrarlos en los campos de texto
             if (resultados.get(index).size() > i - 1) {
