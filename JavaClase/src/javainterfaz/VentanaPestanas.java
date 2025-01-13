@@ -129,16 +129,31 @@ public class VentanaPestanas extends JFrame {
             // Limpiar los resultados de la jornada actual (si es necesario)
             jornadaResultados.clear();
 
+         // Recorre todos los componentes del panel principal de la jornada actual
             for (Component comp : panel.getComponents()) {
+            	
+            	// Verifica si el componente es un panel (el panel de cada partido)
+            	
                 if (comp instanceof JPanel) {
+                	
+                	// Convierte el componente a un JPanel (representa un partido)
                     JPanel partidoPanel = (JPanel) comp;
+                    
+                    // Inicializa los campos de texto para los equipos (no están asignados inicialmente)
                     JTextField equipo1txt = null; 
                     JTextField equipo2txt = null;
+                    
+                    // Recorre todos los componentes dentro del panel del partido (campos de texto)
                     for (Component subComp : partidoPanel.getComponents()) {
+                    	
+                    	 // Verifica si el subcomponente es un JTextField (campo de texto)
                         if (subComp instanceof JTextField) {
+                        	
+                        	  // Si el primer campo de texto no ha sido asignado, asigna el primero
                             if (equipo1txt == null) {
                                 equipo1txt = (JTextField) subComp;
                             } else {
+                            	 // Si el primer campo de texto ya fue asignado, asigna el segundo
                                 equipo2txt = (JTextField) subComp;
                             }
                         }
