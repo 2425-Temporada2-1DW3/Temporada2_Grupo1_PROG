@@ -114,6 +114,8 @@ public class VentanaPestanas extends JFrame {
         panel.revalidate();
         panel.repaint();
     }
+    
+    
 
     private void actualizarResultados() {
         // Obtener los resultados de todos los campos de texto
