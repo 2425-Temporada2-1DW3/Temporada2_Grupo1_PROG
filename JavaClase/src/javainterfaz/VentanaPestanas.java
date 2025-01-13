@@ -41,6 +41,8 @@ public class VentanaPestanas extends JFrame {
 
         // Añadir el JTabbedPane al centro de la ventana
         add(tabbedPane, BorderLayout.CENTER);
+        
+        actualizarContenidoPestana(0); // 0 corresponde a la primera pestaña
 
         // Crear el panel inferior con el botón "Actualizar Resultados"
         JPanel panelBoton = new JPanel();
@@ -103,8 +105,9 @@ public class VentanaPestanas extends JFrame {
             partidoPanel.add(equipo1);
             partidoPanel.add(equipo1txt);
             partidoPanel.add(vsLabel);
-            partidoPanel.add(equipo2);
             partidoPanel.add(equipo2txt);
+            partidoPanel.add(equipo2);
+            
 
             // Agregar el panel del partido al panel principal
             panel.add(partidoPanel);
@@ -129,7 +132,7 @@ public class VentanaPestanas extends JFrame {
             for (Component comp : panel.getComponents()) {
                 if (comp instanceof JPanel) {
                     JPanel partidoPanel = (JPanel) comp;
-                    JTextField equipo1txt = null;
+                    JTextField equipo1txt = null; 
                     JTextField equipo2txt = null;
                     for (Component subComp : partidoPanel.getComponents()) {
                         if (subComp instanceof JTextField) {
