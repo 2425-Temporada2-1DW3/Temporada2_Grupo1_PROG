@@ -18,7 +18,7 @@ public class VentanaPestanas extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Inicializar el ArrayList de resultados
+        // Inicializar el ArrayList de resultados 
         resultados = new ArrayList<>();
 
         // Configurar el layout principal con BorderLayout
