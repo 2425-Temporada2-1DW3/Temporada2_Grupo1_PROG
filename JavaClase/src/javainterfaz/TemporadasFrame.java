@@ -1,4 +1,3 @@
-
 package javainterfaz;
 
 import java.awt.*;

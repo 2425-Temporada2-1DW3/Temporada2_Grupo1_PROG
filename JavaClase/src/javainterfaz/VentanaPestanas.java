@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class VentanaPestanas extends JFrame {
@@ -18,7 +20,7 @@ public class VentanaPestanas extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Inicializar el ArrayList de resultados
+        // Inicializar el ArrayList de resultados 
         resultados = new ArrayList<>();
 
         // Configurar el layout principal con BorderLayout
@@ -41,6 +43,8 @@ public class VentanaPestanas extends JFrame {
 
         // Añadir el JTabbedPane al centro de la ventana
         add(tabbedPane, BorderLayout.CENTER);
+        
+        actualizarContenidoPestana(0); // 0 corresponde a la primera pestaña
 
         // Crear el panel inferior con el botón "Actualizar Resultados"
         JPanel panelBoton = new JPanel();
@@ -84,6 +88,22 @@ public class VentanaPestanas extends JFrame {
             // Etiqueta y campo para el primer equipo
             JLabel equipo1 = new JLabel("EQUIPO SELECCIONADO");
             JTextField equipo1txt = new JTextField("", 10);
+            
+            //Para que no se pueda poner mas de 2 digitos en el campo de texto
+            equipo1txt.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    char c = e.getKeyChar();
+                    // Verificar si el caracter ingresado es un número
+                    if (!Character.isDigit(c)) {
+                        e.consume(); // Si no es un número, se descarta la tecla
+                    }
+                    // Limitar a 2 dígitos
+                    if (equipo1txt.getText().length() >= 2) {
+                        e.consume(); // No permitir más de 2 dígitos
+                    }
+                }
+            });
 
             // Etiqueta "vs"
             JLabel vsLabel = new JLabel("vs");
@@ -91,6 +111,22 @@ public class VentanaPestanas extends JFrame {
             // Etiqueta y campo para el segundo equipo
             JLabel equipo2 = new JLabel("EQUIPO SELECCIONADO");
             JTextField equipo2txt = new JTextField("", 10);
+            
+            equipo2txt.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    char c = e.getKeyChar();
+                    // Verificar si el caracter ingresado es un número
+                    if (!Character.isDigit(c)) {
+                        e.consume(); // Si no es un número, se descarta la tecla
+                    }
+                    // Limitar a 2 dígitos
+                    if (equipo2txt.getText().length() >= 2) {
+                        e.consume(); // No permitir más de 2 dígitos
+                    }
+                }
+            });
+
 
             // Si ya hay resultados guardados, mostrarlos en los campos de texto
             if (resultados.get(index).size() > i - 1) {
@@ -103,8 +139,9 @@ public class VentanaPestanas extends JFrame {
             partidoPanel.add(equipo1);
             partidoPanel.add(equipo1txt);
             partidoPanel.add(vsLabel);
-            partidoPanel.add(equipo2);
             partidoPanel.add(equipo2txt);
+            partidoPanel.add(equipo2);
+            
 
             // Agregar el panel del partido al panel principal
             panel.add(partidoPanel);
@@ -114,6 +151,8 @@ public class VentanaPestanas extends JFrame {
         panel.revalidate();
         panel.repaint();
     }
+    
+    
 
     private void actualizarResultados() {
         // Obtener los resultados de todos los campos de texto
@@ -124,16 +163,31 @@ public class VentanaPestanas extends JFrame {
             // Limpiar los resultados de la jornada actual (si es necesario)
             jornadaResultados.clear();
 
+         // Recorre todos los componentes del panel principal de la jornada actual
             for (Component comp : panel.getComponents()) {
+            	
+            	// Verifica si el componente es un panel (el panel de cada partido)
+            	
                 if (comp instanceof JPanel) {
+                	
+                	// Convierte el componente a un JPanel (representa un partido)
                     JPanel partidoPanel = (JPanel) comp;
-                    JTextField equipo1txt = null;
+                    
+                    // Inicializa los campos de texto para los equipos (no están asignados inicialmente)
+                    JTextField equipo1txt = null; 
                     JTextField equipo2txt = null;
+                    
+                    // Recorre todos los componentes dentro del panel del partido (campos de texto)
                     for (Component subComp : partidoPanel.getComponents()) {
+                    	
+                    	 // Verifica si el subcomponente es un JTextField (campo de texto)
                         if (subComp instanceof JTextField) {
+                        	
+                        	  // Si el primer campo de texto no ha sido asignado, asigna el primero
                             if (equipo1txt == null) {
                                 equipo1txt = (JTextField) subComp;
                             } else {
+                            	 // Si el primer campo de texto ya fue asignado, asigna el segundo
                                 equipo2txt = (JTextField) subComp;
                             }
                         }
