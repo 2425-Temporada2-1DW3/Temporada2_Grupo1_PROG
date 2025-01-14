@@ -81,6 +81,7 @@ public class VentanaPestanas extends JFrame {
         panel.removeAll();
 
         // Agregar tres partidos con campos de texto para insertar los nombres de los equipos
+        
         for (int i = 1; i <= 3; i++) {
             JPanel partidoPanel = new JPanel();
             partidoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));

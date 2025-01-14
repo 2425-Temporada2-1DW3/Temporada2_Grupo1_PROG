@@ -93,8 +93,6 @@ class ClasificacionWindow extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(panelClasificacion);
         add(scrollPane);
-        
-      
 		
     }
 }
@@ -124,7 +122,7 @@ public class TemporadasFrame extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout(10, 10));
 
-        // Inicializar datos de ejemplo
+        // Inicializar datos de ejemplo-
         inicializarDatos();
 
         // Panel superior con ComboBox de temporadas
@@ -213,7 +211,7 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Unio Esportiva", Arrays.asList("Manuel Turizo", "Alberto Millán", "Ramón Pérez", "Christantus Uche", "Franceso Virgolini")),
             new Equipo("Barca", Arrays.asList("Albert Rivera", "Oscar Mato", "Iñigo Errejón", "Echenique", "Xavier Cebrián")),
             new Equipo("Cisneros", Arrays.asList("Pepe Viyuela", "Antonio Luque", "Nico Jr", "Julian Álvarez", "Benito Antonio")),
-            new Equipo("Eibar", Arrays.asList("Iosu Cabrera", "Endika Sanchez", "Danel Santiago", "Asier Carabantes", "Markel Larreina")),
+            new Equipo("Eibar", Arrays.asList("Martin Villalón", "Urko Ruiz", "Danel Santiago", "Asier Carabantes", "Markel Larreina")),
             new Equipo("Hernani Club", Arrays.asList("Gorka Guruzeta", "Oihan Sancet", "Dudu Gutiérrez", "Juanlu", "Unai Simón"))
         );
         temporadas.add(new Temporada(2024, equipos2024));
