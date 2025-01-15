@@ -43,6 +43,25 @@ import java.util.Random;
     public List<Equipo> getEquipos() {
         return equipos;
     }
+	}
+
+    class Jugador {
+        private String nombre;
+        private ImageIcon imagen;
+
+        public Jugador(String nombre, ImageIcon imagen) {
+            this.nombre = nombre;
+            this.imagen = imagen;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public ImageIcon getImagen() {
+            return imagen;
+        }
+    }
     
     //CLASE CLASIFICACION
     class Clasificacion {
@@ -65,7 +84,7 @@ import java.util.Random;
         public void setPuntos(int puntos) {
             this.puntos = puntos;
         }
-}}
+}
 //VENTANA CLASIFICACION CREADA AUTOMATICAMENTE 
 class ClasificacionWindow extends JFrame {
 	
@@ -333,7 +352,6 @@ public class TemporadasFrame extends JFrame {
 
         // Si el usuario presiona OK, procesar la creación de la temporada
         if (opcion == JOptionPane.OK_OPTION) {
-        	
             try {
             	// Obtener el año y los nombres de los equipos ingresados
                 int anio = Integer.parseInt(campoAnio.getText().trim());
@@ -404,6 +422,11 @@ public class TemporadasFrame extends JFrame {
                                 lblJugador.setHorizontalAlignment(SwingConstants.CENTER);
                                 lblJugador.setFont(new Font("Arial", Font.PLAIN, 14));
                                 panelEquipo.add(lblJugador);
+                                
+                               
+
+                               
+                                panelEquipo.add(lblJugador);
                             }
 
                             // Añadir el panel del equipo al panel de jugadores
@@ -416,6 +439,8 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.revalidate();
         panelJugadores.repaint();
     }
+    
+   
     
     private List<String> generarJugadoresAleatorios() {
         String[] nombres = {"Pepe", "Juan", "Carlos", "Luis", "Manuel", "Andrés", "Marcos", "Javier", "David", "Miguel", "Andrés","Jorge"};

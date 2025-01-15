@@ -16,7 +16,7 @@ public class VentanaPestanas extends JFrame {
     public VentanaPestanas() {
         // Configuración básica de la ventana
         setTitle("Jornadas");
-        setSize(800, 500);
+        setSize(900, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -29,7 +29,7 @@ public class VentanaPestanas extends JFrame {
         // Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
 
-        // Crear las 10 pestañas
+        // Crear las 11 pestañas
         crearPestanas();
 
         // Agregar un ChangeListener para actualizar contenido al cambiar pestaña
@@ -58,7 +58,9 @@ public class VentanaPestanas extends JFrame {
     }
 
     private void crearPestanas() {
-        for (int i = 1; i <= 10; i++) {
+    	
+    	
+        for (int i = 1; i <= 11; i++) {
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -71,7 +73,8 @@ public class VentanaPestanas extends JFrame {
             tabbedPane.addTab("Jornada " + i, scrollPanel);
         }
     }
-
+    
+   
     private void actualizarContenidoPestana(int index) {
         // Obtener el panel correspondiente a la pestaña seleccionada
         JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(index);
