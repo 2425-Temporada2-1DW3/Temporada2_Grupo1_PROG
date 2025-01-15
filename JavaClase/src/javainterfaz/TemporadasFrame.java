@@ -45,23 +45,23 @@ import java.util.Random;
     }
 	}
 
-    class Jugador {
-        private String nombre;
-        private ImageIcon imagen;
+	class Jugador {
+	    private String nombre;
+	    private ImageIcon imagen;
 
-        public Jugador(String nombre, ImageIcon imagen) {
-            this.nombre = nombre;
-            this.imagen = imagen;
-        }
+	    public Jugador(String nombre, ImageIcon imagen) {
+	        this.nombre = nombre;
+	        this.imagen = imagen;
+	    }
 
-        public String getNombre() {
-            return nombre;
-        }
+	    public String getNombre() {
+	        return nombre;
+	    }
 
-        public ImageIcon getImagen() {
-            return imagen;
-        }
-    }
+	    public ImageIcon getImagen() {
+	        return imagen;
+	    }
+	}
     
     //CLASE CLASIFICACION
     class Clasificacion {
@@ -155,6 +155,7 @@ public class TemporadasFrame extends JFrame {
         
         separator_1 = new JSeparator();
         panelNorte.add(separator_1);
+      
         
         separator = new JSeparator();
         panelNorte.add(separator);
@@ -178,6 +179,8 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.setLayout(new GridLayout(0, 2, 10, 10)); // 2 columnas, espacio entre jugadores
         JScrollPane scrollJugadores = new JScrollPane(panelJugadores);
         panelCentro.add(scrollJugadores);
+        
+        
 
         getContentPane().add(panelCentro, BorderLayout.CENTER);
         
@@ -285,6 +288,7 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.revalidate();
         panelJugadores.repaint();
     }
+    
     
     private void crearPestanas() {
     	
