@@ -1,90 +1,15 @@
 package javainterfaz;
 
 import java.awt.*;
+
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-	// Clase Equipo
-	class Equipo {
-    private String nombre;
-    private List<String> jugadores;
 
-    public Equipo(String nombre, List<String> jugadores) {
-        this.nombre = nombre;
-        this.jugadores = jugadores;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public List<String> getJugadores() {
-        return jugadores;
-    }
-}
-
-	// Clase Temporada
-	class Temporada {
-    private int anio;
-    private List<Equipo> equipos;
-
-    public Temporada(int anio, List<Equipo> equipos) {
-        this.anio = anio;
-        this.equipos = equipos;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public List<Equipo> getEquipos() {
-        return equipos;
-    }
-	}
-
-	class Jugador {
-	    private String nombre;
-	    private ImageIcon imagen;
-
-	    public Jugador(String nombre, ImageIcon imagen) {
-	        this.nombre = nombre;
-	        this.imagen = imagen;
-	    }
-
-	    public String getNombre() {
-	        return nombre;
-	    }
-
-	    public ImageIcon getImagen() {
-	        return imagen;
-	    }
-	}
-    
-    //CLASE CLASIFICACION
-    class Clasificacion {
-        private String nombreEquipo;
-        private int puntos;
-
-        public Clasificacion(String nombreEquipo) {
-            this.nombreEquipo = nombreEquipo;
-            this.puntos = 0; // Inicialmente, los equipos tienen 0 puntos
-        }
-
-        public String getNombreEquipo() {
-            return nombreEquipo;
-        }
-
-        public int getPuntos() {
-            return puntos;
-        }
-
-        public void setPuntos(int puntos) {
-            this.puntos = puntos;
-        }
-}
 //VENTANA CLASIFICACION CREADA AUTOMATICAMENTE 
 class ClasificacionWindow extends JFrame {
 	
@@ -179,10 +104,10 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.setLayout(new GridLayout(0, 2, 10, 10)); // 2 columnas, espacio entre jugadores
         JScrollPane scrollJugadores = new JScrollPane(panelJugadores);
         panelCentro.add(scrollJugadores);
-        
-        
 
         getContentPane().add(panelCentro, BorderLayout.CENTER);
+
+        
         
         // Botón para crear temporada
         btnCrearTemporada = new JButton("Crear Temporada");
