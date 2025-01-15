@@ -1,8 +1,6 @@
 package javainterfaz;
 
 import java.awt.*;
-
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,8 +53,20 @@ public class TemporadasFrame extends JFrame {
     private JSeparator separator_1;
     private JButton btnCrearTemporada;
     private JTabbedPane tabbedPane;
+    
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                TemporadasFrame frame = new TemporadasFrame();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public TemporadasFrame() {
+    	
         // Configuración básica del frame
         setTitle("Gestión de Temporadas");
         setSize(800, 500);
@@ -81,7 +91,6 @@ public class TemporadasFrame extends JFrame {
         separator_1 = new JSeparator();
         panelNorte.add(separator_1);
       
-        
         separator = new JSeparator();
         panelNorte.add(separator);
         
@@ -107,8 +116,6 @@ public class TemporadasFrame extends JFrame {
 
         getContentPane().add(panelCentro, BorderLayout.CENTER);
 
-        
-        
         // Botón para crear temporada
         btnCrearTemporada = new JButton("Crear Temporada");
         btnCrearTemporada.addActionListener(e -> crearNuevaTemporada());
@@ -351,10 +358,6 @@ public class TemporadasFrame extends JFrame {
                                 lblJugador.setHorizontalAlignment(SwingConstants.CENTER);
                                 lblJugador.setFont(new Font("Arial", Font.PLAIN, 14));
                                 panelEquipo.add(lblJugador);
-                                
-                               
-
-                               
                                 panelEquipo.add(lblJugador);
                             }
 
@@ -368,8 +371,6 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.revalidate();
         panelJugadores.repaint();
     }
-    
-   
     
     private List<String> generarJugadoresAleatorios() {
         String[] nombres = {"Pepe", "Juan", "Carlos", "Luis", "Manuel", "Andrés", "Marcos", "Javier", "David", "Miguel", "Andrés","Jorge"};
@@ -385,7 +386,6 @@ public class TemporadasFrame extends JFrame {
 
         return jugadores;
     }
-
 
     private void confirmarSeleccionEquipos() {
         // Contar cuántos equipos están seleccionados
@@ -437,27 +437,16 @@ public class TemporadasFrame extends JFrame {
         }
     }
 
-
-    
     private void accederALaPaginaPrincipal() {
         // Crear la ventana de la página principal (MainPage) y mostrarla
     	 int permiso = 0; // Cambia el valor del permiso según sea necesario
     	    mainPage vh = new mainPage(permiso);
       
-        vh.setVisible(true);
+    	    vh.setVisible(true);
 
         // Cerrar la ventana actual (TemporadasFrame) si lo deseas
         this.dispose();
     }
     
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                TemporadasFrame frame = new TemporadasFrame();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
+    
 }
