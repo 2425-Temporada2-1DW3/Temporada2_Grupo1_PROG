@@ -65,10 +65,10 @@ import java.util.Random;
         public void setPuntos(int puntos) {
             this.puntos = puntos;
         }
-    
 }}
 //VENTANA CLASIFICACION CREADA AUTOMATICAMENTE 
 class ClasificacionWindow extends JFrame {
+	
     private static final long serialVersionUID = 1L;
 
     public ClasificacionWindow(List<String> equiposSeleccionados) {
@@ -93,13 +93,12 @@ class ClasificacionWindow extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(panelClasificacion);
         add(scrollPane);
-		
     }
 }
 
-
 // Clase principal para la interfaz gráfica
 public class TemporadasFrame extends JFrame {
+	
     private static final long serialVersionUID = 1L;
     private JComboBox<String> comboBoxTemporadas;
     private JPanel panelEquipos;
@@ -112,7 +111,6 @@ public class TemporadasFrame extends JFrame {
     private JSeparator separator_1;
     private JButton btnCrearTemporada;
     private JTabbedPane tabbedPane;
-
 
     public TemporadasFrame() {
         // Configuración básica del frame
@@ -179,17 +177,15 @@ public class TemporadasFrame extends JFrame {
             VentanaPestanas ventanaPestanas = new VentanaPestanas();
             ventanaPestanas.setVisible(true);
         });
-      
         
         getContentPane().add(btnConfirmar, BorderLayout.SOUTH);
 
         // Actualizar lista inicial de equipos
         actualizarEquipos();
     }
-    
-   
 
     private void inicializarDatos() {
+    	
         temporadas = new ArrayList<>();
 
         // Temporada 2023
@@ -218,6 +214,7 @@ public class TemporadasFrame extends JFrame {
     }
 
     private void actualizarEquipos() {
+    	
         panelEquipos.removeAll();
         panelJugadores.removeAll();
         checkboxesEquipos = new ArrayList<>();
@@ -248,7 +245,9 @@ public class TemporadasFrame extends JFrame {
 
             // Ocultar el botón "Confirmar Equipos" para la temporada 2023
             btnConfirmar.setVisible(false);
+            
         } else { // Otras temporadas: mostrar equipos con checkboxes
+        	
             for (Equipo equipo : temporada.getEquipos()) {
                 JCheckBox checkBox = new JCheckBox(equipo.getNombre());
                 checkBox.addActionListener(e -> actualizarJugadores());
@@ -269,7 +268,9 @@ public class TemporadasFrame extends JFrame {
     }
     
     private void crearPestanas() {
+    	
         for (int i = 1; i <= 10; i++) {
+        	
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -285,39 +286,45 @@ public class TemporadasFrame extends JFrame {
         }
     }
 
-    
     private void limitarSeleccionEquipos(JCheckBox checkBox) {
+    	
         // Contar cuántos equipos están seleccionados
         long equiposSeleccionados = checkboxesEquipos.stream().filter(JCheckBox::isSelected).count();
 
         if (equiposSeleccionados > 6) {
+        	
             // Desmarcar el checkbox si se seleccionan más de 6
             checkBox.setSelected(false);
             JOptionPane.showMessageDialog(this, "No puedes seleccionar más de 6 equipos.", "Límite alcanzado", JOptionPane.WARNING_MESSAGE);
+            
         } else if (equiposSeleccionados == 6) {
+        	
             // Deshabilitar los checkboxes si ya se han seleccionado 6 equipos
             for (JCheckBox cb : checkboxesEquipos) {
+            	
                 if (!cb.isSelected()) {
                     cb.setEnabled(false);  // Deshabilitar checkbox no seleccionado
                 }
             }
+            
         } else {
+        	
             // Habilitar todos los checkboxes si se han desmarcado algunos
             for (JCheckBox cb : checkboxesEquipos) {
                 cb.setEnabled(true);  // Habilitar checkbox
+                
             }
         }
     }
     
     private void crearNuevaTemporada() {
+    	
     	// Crear campos de texto para ingresar el año y los nombres de los equipos
         JTextField campoAnio = new JTextField();
         JTextField campoEquipos = new JTextField();
 
-        int opcion = JOptionPane.showConfirmDialog(
-            this,
-            new Object[]{
-                "Año de la Temporada:", campoAnio,
+        int opcion = JOptionPane.showConfirmDialog(this,new Object[]{
+        		"Año de la Temporada:", campoAnio,
                 "Nombres de los Equipos (separados por comas):", campoEquipos
             },
             "Crear Nueva Temporada",
@@ -326,6 +333,7 @@ public class TemporadasFrame extends JFrame {
 
         // Si el usuario presiona OK, procesar la creación de la temporada
         if (opcion == JOptionPane.OK_OPTION) {
+        	
             try {
             	// Obtener el año y los nombres de los equipos ingresados
                 int anio = Integer.parseInt(campoAnio.getText().trim());
@@ -461,6 +469,7 @@ public class TemporadasFrame extends JFrame {
             JTable tablaClasificacion = new JTable(datos, columnas);
             tablaClasificacion.setFillsViewportHeight(true);
             tablaClasificacion.getTableHeader().setReorderingAllowed(false); // Deshabilitar reordenamiento
+            tablaClasificacion.setDefaultEditor(Object.class, null);
 
             // Crear un panel con scroll para la tabla
             JScrollPane scrollPane = new JScrollPane(tablaClasificacion);
