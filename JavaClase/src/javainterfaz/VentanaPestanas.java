@@ -6,6 +6,10 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class VentanaPestanas extends JFrame {
@@ -93,6 +97,10 @@ public class VentanaPestanas extends JFrame {
 
         // Limpiar el contenido del panel
         panel.removeAll();
+        
+        // Verificar si es una jornada de 2 a 9
+        boolean esJornada2a9 = index >= 1 && index <= 9;
+
 
         // Agregar tres partidos con campos de texto para insertar los nombres de los equipos
         
@@ -142,6 +150,30 @@ public class VentanaPestanas extends JFrame {
                     }
                 }
             });
+            
+            // Si es una jornada de 2 a 9, asignar números aleatorios a los campos de texto
+            if (esJornada2a9) {
+                // Comprobar si los resultados ya están almacenados
+                if (resultados.get(index).size() <= i - 1 || resultados.get(index).get(i - 1)[0].isEmpty()) {
+                    // Si no hay resultados almacenados, generar números aleatorios
+                    int numeroAleatorio1 = (int) (Math.random() * 99) + 1;  // Número aleatorio entre 1 y 99
+                    int numeroAleatorio2 = (int) (Math.random() * 99) + 1;  // Número aleatorio entre 1 y 99
+                    equipo1txt.setText(String.valueOf(numeroAleatorio1));
+                    equipo2txt.setText(String.valueOf(numeroAleatorio2));
+
+                    // Guardar el resultado generado en la lista de resultados
+                    String[] partidoResultado = {String.valueOf(numeroAleatorio1), String.valueOf(numeroAleatorio2)};
+                    while (resultados.get(index).size() <= i - 1) {
+                        resultados.get(index).add(new String[2]); // Asegurarse de que haya espacio en la lista
+                    }
+                    resultados.get(index).set(i - 1, partidoResultado); // Guardar el resultado
+                } else {
+                    // Si ya hay resultados almacenados, usarlos
+                    String[] partidoResultado = resultados.get(index).get(i - 1);
+                    equipo1txt.setText(partidoResultado[0]);
+                    equipo2txt.setText(partidoResultado[1]);
+                }
+            }
 
             // Si ya hay resultados guardados, mostrarlos en los campos de texto
             if (resultados.get(index).size() > i - 1) {
@@ -169,6 +201,65 @@ public class VentanaPestanas extends JFrame {
         panel.repaint();
     }
     
+    private void guardarTemporada(String temporada) {
+        String archivo = "temporada_" + temporada + ".txt"; // Nombre del archivo basado en el año
+
+        // Crea un archivo si no existe
+        File f = new File(archivo);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
+            // Escribe el encabezado de la temporada
+            writer.write("Temporada: " + temporada);
+            writer.newLine(); // Salto de línea
+
+            // Recorre todas las jornadas y guarda los resultados
+            for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+                JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(i);
+                JPanel panel = (JPanel) scrollPanel.getViewport().getView();
+
+                writer.write("Jornada " + (i + 1) + ":");
+                writer.newLine();
+
+                // Recorre todos los resultados de la jornada y guárdalos en el archivo
+                for (Component comp : panel.getComponents()) {
+                    if (comp instanceof JPanel) {
+                        JPanel partidoPanel = (JPanel) comp;
+
+                        // Recorre los componentes de cada partido (campos de texto)
+                        JTextField equipo1txt = null;
+                        JTextField equipo2txt = null;
+
+                        for (Component subComp : partidoPanel.getComponents()) {
+                            if (subComp instanceof JTextField) {
+                                if (equipo1txt == null) {
+                                    equipo1txt = (JTextField) subComp;
+                                } else {
+                                    equipo2txt = (JTextField) subComp;
+                                }
+                            }
+                        }
+
+                        // Si los campos de texto están presentes, escribe el resultado en el archivo
+                        if (equipo1txt != null && equipo2txt != null) {
+                            String resultado = equipo1txt.getText() + " vs " + equipo2txt.getText();
+                            writer.write(resultado);
+                            writer.newLine(); // Salto de línea
+                        }
+                    }
+                }
+
+                writer.newLine(); // Salto de línea entre jornadas
+            }
+
+            // Mensaje de confirmación
+            JOptionPane.showMessageDialog(this, "Temporada " + temporada + " guardada correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar la temporada.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
     
     private void finalizarTemporada() {
         boolean todosLlenos = true; // Flag para verificar si todos los campos están llenos
@@ -203,7 +294,7 @@ public class VentanaPestanas extends JFrame {
                 }
             }
 
-            // Si encontramos un campo vacío, no seguimos revisando el resto de las jornadas
+            // Si encontramos un campo vacío en cualquier jornada, no seguimos revisando el resto
             if (!todosLlenos) {
                 break;
             }
@@ -214,6 +305,9 @@ public class VentanaPestanas extends JFrame {
             // Aquí podemos mostrar el mensaje y cerrar la ventana actual
             JOptionPane.showMessageDialog(this, "Temporada Finalizada");
 
+            // Llamada al método para guardar la temporada
+            guardarTemporada("2024");  // Asegúrate de pasar el año adecuado
+
             // Cerrar la ventana actual (VentanaPestanas)
             this.dispose();
 
@@ -222,9 +316,10 @@ public class VentanaPestanas extends JFrame {
             temporadaFrame.setVisible(true);
         } else {
             // Si hay algún campo vacío, mostrar un mensaje de advertencia
-            JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos antes de finalizar la temporada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos de todas las jornadas antes de finalizar la temporada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
+
 
     
     private void actualizarResultados() {

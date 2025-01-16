@@ -1,6 +1,13 @@
 package javainterfaz;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,6 +95,9 @@ public class TemporadasFrame extends JFrame {
         panelNorte.add(new JLabel("Temporada:"));
         panelNorte.add(comboBoxTemporadas);
         getContentPane().add(panelNorte, BorderLayout.NORTH);
+        
+        // Cargar las temporadas
+        cargarTemporada("2024");
         
         separator_1 = new JSeparator();
         panelNorte.add(separator_1);
@@ -357,6 +367,31 @@ public class TemporadasFrame extends JFrame {
         }
     }
 
+    private void cargarTemporada(String temporada) {
+        String archivo = "temporada_" + temporada + ".txt";  // El archivo correspondiente
+
+        // Verifica si el archivo existe
+        File file = new File(archivo);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                // Aquí puedes leer los datos del archivo y cargarlos en tu aplicación
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    // Procesa cada línea leída del archivo
+                    System.out.println(linea);  // Ejemplo: mostrar contenido
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Si el archivo no existe, muestra un mensaje o procede sin hacer nada
+            System.out.println("El archivo de la temporada no existe.");
+        }
+    }
+
+
+    
     private void actualizarJugadores() {
         // Limpiar el panel de jugadores antes de añadir nuevos jugadores
         panelJugadores.removeAll();
