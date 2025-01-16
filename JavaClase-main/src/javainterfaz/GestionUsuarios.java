@@ -5,23 +5,22 @@ import java.util.HashMap;
 
 public class GestionUsuarios {
 	
-	private static final String USER_FILE = "users.ser";
+	private static final String USER_FILE = "usuarios.ser";
 
-    public static void saveUser(String username, char[] userPassword) {
-        HashMap<String, String> users = readUsers();
-
+    public static void guardarUsuarios(String nombreUsuario, String contraseñaUsuario) {
+        HashMap<String, String> usuarios = leerUsuarios();
         
-
-        // Serialize and save the HashMap to a file
+        usuarios.put(nombreUsuario, contraseñaUsuario);
+        
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USER_FILE))) {
-            oos.writeObject(users);
+            oos.writeObject(usuarios);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
     @SuppressWarnings("unchecked")
-	private static HashMap<String, String> readUsers() {
+	private static HashMap<String, String> leerUsuarios() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(USER_FILE))) {
             Object obj = ois.readObject();
             if (obj instanceof HashMap) {
