@@ -35,7 +35,7 @@ class ClasificacionWindow extends JFrame {
             
         } 
         JScrollPane scrollPane = new JScrollPane(panelClasificacion);
-        add(scrollPane);
+        add(scrollPane);  
     }
 }
 

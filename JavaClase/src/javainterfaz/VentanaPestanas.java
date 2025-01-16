@@ -52,10 +52,16 @@ public class VentanaPestanas extends JFrame {
         // Crear el panel inferior con el botón "Actualizar Resultados"
         JPanel panelBoton = new JPanel();
         panelBoton.setLayout(new FlowLayout(FlowLayout.CENTER));  // Alineación central
+        
         JButton actualizarButton = new JButton("Actualizar Resultados");
         actualizarButton.addActionListener(e -> actualizarResultados()); // Asocia el evento del botón
         panelBoton.add(actualizarButton);
-
+        
+        // Botón para finalizar la temporada
+        JButton finalizarButton = new JButton("Finalizar Temporada");
+        finalizarButton.addActionListener(e -> finalizarTemporada()); // Asocia el evento del botón
+        panelBoton.add(finalizarButton);
+        
         // Añadir el panel del botón al borde inferior de la ventana
         add(panelBoton, BorderLayout.SOUTH);
     }
@@ -164,7 +170,10 @@ public class VentanaPestanas extends JFrame {
     }
     
     
-
+    private void finalizarTemporada() {
+       
+    }
+    
     private void actualizarResultados() {
     	
         // Obtener los resultados de todos los campos de texto
