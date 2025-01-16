@@ -128,6 +128,15 @@ public class TemporadasFrame extends JFrame {
         btnConfirmar = new JButton("Confirmar Equipos");
         btnConfirmar.addActionListener(e -> confirmarSeleccionEquipos());
         btnConfirmar.addActionListener(e -> {
+        	
+        	 long equiposSeleccionados = checkboxesEquipos.stream().filter(JCheckBox::isSelected).count();
+        	    
+        	    // Si no se han seleccionado exactamente 6 equipos, mostrar un mensaje y no crear el TabbedPane
+        	    if (equiposSeleccionados != 6) {
+        	        JOptionPane.showMessageDialog(this, "Debes seleccionar exactamente 6 equipos para continuar.", "Selección incorrecta", JOptionPane.WARNING_MESSAGE);
+        	        return; // Detener el flujo y no crear la ventana con las pestañas
+        	    }
+        	    
             // Abrir la ventana con las pestañas
             VentanaPestanas ventanaPestanas = new VentanaPestanas();
             ventanaPestanas.setVisible(true);
@@ -454,10 +463,7 @@ public class TemporadasFrame extends JFrame {
             clasificacionFrame.add(scrollPane);
             clasificacionFrame.setVisible(true);
             this.dispose();
-        } else {
-            // Si no se han seleccionado exactamente 6 equipos, mostrar un mensaje de advertencia
-            JOptionPane.showMessageDialog(this, "Debes seleccionar exactamente 6 equipos para confirmar.", "Selección incorrecta", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
     }
 
     private void accederALaPaginaPrincipal() {

@@ -17,7 +17,7 @@ public class VentanaPestanas extends JFrame {
     public VentanaPestanas() {
         // Configuración básica de la ventana
         setTitle("Jornadas");
-        setSize(900, 500);
+        setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -63,7 +63,7 @@ public class VentanaPestanas extends JFrame {
     private void crearPestanas() {
     	
     	
-        for (int i = 1; i <= 11; i++) {
+        for (int i = 1; i <= 10; i++) {
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -142,6 +142,8 @@ public class VentanaPestanas extends JFrame {
                 equipo1txt.setText(partidoResultado[0]);
                 equipo2txt.setText(partidoResultado[1]);
             }
+            
+            
 
             // Agregar los componentes en el orden especificado: etiqueta - campo - "vs" - campo - etiqueta
             partidoPanel.add(equipo1);
