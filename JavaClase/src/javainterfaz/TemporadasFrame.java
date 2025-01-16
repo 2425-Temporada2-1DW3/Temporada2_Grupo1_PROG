@@ -116,7 +116,7 @@ public class TemporadasFrame extends JFrame {
         panelCentro.add(scrollJugadores);
 
         getContentPane().add(panelCentro, BorderLayout.CENTER);
-
+        
         // Botón para crear temporada
         btnCrearTemporada = new JButton("Crear Temporada");
         btnCrearTemporada.addActionListener(e -> crearNuevaTemporada());

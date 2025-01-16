@@ -29,6 +29,8 @@ public class VentanaPestanas extends JFrame {
 
         // Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
+        
+        
 
         // Crear las 11 pestañas
         crearPestanas();
@@ -61,7 +63,6 @@ public class VentanaPestanas extends JFrame {
     
 
     private void crearPestanas() {
-    	
     	
         for (int i = 1; i <= 10; i++) {
             // Crear un panel para cada pestaña
