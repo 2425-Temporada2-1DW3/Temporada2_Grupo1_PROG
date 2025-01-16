@@ -33,8 +33,7 @@ class ClasificacionWindow extends JFrame {
             panelEquipo.add(new JLabel("0 Puntos"), BorderLayout.EAST); // Puntos iniciales
             panelClasificacion.add(panelEquipo);
             
-        }
-
+        } 
         JScrollPane scrollPane = new JScrollPane(panelClasificacion);
         add(scrollPane);
     }
@@ -153,7 +152,10 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Unio Esportiva", Arrays.asList("Alberto Millán", "Fran Leonori", "Franceso Virgolini", "Ramón Pérez", "Christantus Uche")),
             new Equipo("Las Abelles", Arrays.asList("José Bordalás", "Haritz Pacheco", "Andrés Fernández", "Juanjo Jiménez", "Erik Prieto"))
         );
+
+		// Agregar Temporada
         temporadas.add(new Temporada(2023, equipos2023));
+        
         // Ordenar los equipos seleccionados alfabéticamente (A-Z) COMPARANDO EL NOMBRE
         Collections.sort(equipos2023, Comparator.comparing(Equipo::getNombre));
 
@@ -168,6 +170,8 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Eibar", Arrays.asList("Martin Villalón", "Urko Ruiz", "Danel Santiago", "Asier Carabantes", "Markel Larreina")),
             new Equipo("Hernani Club", Arrays.asList("Gorka Guruzeta", "Oihan Sancet", "Dudu Gutiérrez", "Juanlu", "Unai Simón"))
         );
+
+		// Agregar Temporada
         temporadas.add(new Temporada(2024, equipos2024));
         // Ordenar los equipos seleccionados alfabéticamente (A-Z) COMPARANDO EL NOMBRE
         Collections.sort(equipos2024, Comparator.comparing(Equipo::getNombre));
@@ -449,6 +453,7 @@ public class TemporadasFrame extends JFrame {
             // Configurar la ventana
             clasificacionFrame.add(scrollPane);
             clasificacionFrame.setVisible(true);
+            this.dispose();
         } else {
             // Si no se han seleccionado exactamente 6 equipos, mostrar un mensaje de advertencia
             JOptionPane.showMessageDialog(this, "Debes seleccionar exactamente 6 equipos para confirmar.", "Selección incorrecta", JOptionPane.WARNING_MESSAGE);

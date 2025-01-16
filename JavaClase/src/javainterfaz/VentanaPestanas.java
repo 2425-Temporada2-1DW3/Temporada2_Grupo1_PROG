@@ -12,6 +12,7 @@ public class VentanaPestanas extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
     private ArrayList<ArrayList<String[]>> resultados; // ArrayList para almacenar los resultados de cada jornada
+   
 
     public VentanaPestanas() {
         // Configuración básica de la ventana
@@ -56,6 +57,8 @@ public class VentanaPestanas extends JFrame {
         // Añadir el panel del botón al borde inferior de la ventana
         add(panelBoton, BorderLayout.SOUTH);
     }
+    
+    
 
     private void crearPestanas() {
     	
@@ -64,6 +67,7 @@ public class VentanaPestanas extends JFrame {
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            
 
             // Inicializar la lista de resultados de la jornada actual
             resultados.add(new ArrayList<>());
