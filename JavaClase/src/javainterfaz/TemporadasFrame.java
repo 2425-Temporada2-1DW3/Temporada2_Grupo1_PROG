@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -152,6 +154,8 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Las Abelles", Arrays.asList("José Bordalás", "Haritz Pacheco", "Andrés Fernández", "Juanjo Jiménez", "Erik Prieto"))
         );
         temporadas.add(new Temporada(2023, equipos2023));
+        // Ordenar los equipos seleccionados alfabéticamente (A-Z) COMPARANDO EL NOMBRE
+        Collections.sort(equipos2023, Comparator.comparing(Equipo::getNombre));
 
         // Temporada 2024
         List<Equipo> equipos2024 = Arrays.asList(
@@ -165,6 +169,8 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Hernani Club", Arrays.asList("Gorka Guruzeta", "Oihan Sancet", "Dudu Gutiérrez", "Juanlu", "Unai Simón"))
         );
         temporadas.add(new Temporada(2024, equipos2024));
+        // Ordenar los equipos seleccionados alfabéticamente (A-Z) COMPARANDO EL NOMBRE
+        Collections.sort(equipos2024, Comparator.comparing(Equipo::getNombre));
     }
 
     private void actualizarEquipos() {
@@ -193,6 +199,7 @@ public class TemporadasFrame extends JFrame {
                     panelEquipo.add(lblJugador);
                 }
 
+                
                 // Añadir el panel del equipo al panel de jugadores
                 panelJugadores.add(panelEquipo);
             }
@@ -208,6 +215,7 @@ public class TemporadasFrame extends JFrame {
                 checkBox.addActionListener(e -> limitarSeleccionEquipos(checkBox));
                 checkboxesEquipos.add(checkBox);
                 panelEquipos.add(checkBox);
+                
             }
 
             // Mostrar el botón "Confirmar Equipos" para temporadas diferentes a 2023
@@ -291,6 +299,13 @@ public class TemporadasFrame extends JFrame {
             try {
             	// Obtener el año y los nombres de los equipos ingresados
                 int anio = Integer.parseInt(campoAnio.getText().trim());
+                
+                // Validar que el año sea 2025 o mayor
+                if (anio < 2025) {
+                    JOptionPane.showMessageDialog(this, "El año de la temporada debe ser 2025 o posterior.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el año no cumple con la condición
+                }
+                
                 String[] nombresEquipos = campoEquipos.getText().trim().split(",");
                 
                 // Crear una lista para almacenar los equipos
@@ -400,6 +415,9 @@ public class TemporadasFrame extends JFrame {
                 }
             }
 
+            // Ordenar los equipos seleccionados alfabéticamente (A-Z)
+            Collections.sort(equiposSeleccionadosList);
+            
             // Crear una nueva ventana para mostrar la clasificación
             JFrame clasificacionFrame = new JFrame("Clasificación de Equipos");
             clasificacionFrame.setSize(500, 300);
