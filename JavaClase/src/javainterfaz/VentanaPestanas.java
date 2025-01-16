@@ -86,6 +86,9 @@ public class VentanaPestanas extends JFrame {
             // Añadir el panel a la pestaña
             JScrollPane scrollPanel = new JScrollPane(panel);
             tabbedPane.addTab("Jornada " + i, scrollPanel);
+
+              // Actualizar el contenido de la pestaña para inicializar sus componentes
+            actualizarContenidoPestana(i - 1);
         }
     }
     
