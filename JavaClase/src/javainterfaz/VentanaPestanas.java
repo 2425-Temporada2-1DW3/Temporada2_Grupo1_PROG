@@ -171,8 +171,61 @@ public class VentanaPestanas extends JFrame {
     
     
     private void finalizarTemporada() {
-       
+        boolean todosLlenos = true; // Flag para verificar si todos los campos están llenos
+
+        // Recorre todas las pestañas (jornadas)
+        for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+            JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(i);
+            JPanel panel = (JPanel) scrollPanel.getViewport().getView();
+
+            // Recorre todos los componentes dentro del panel de la jornada actual (paneles de partidos)
+            for (Component comp : panel.getComponents()) {
+                if (comp instanceof JPanel) {
+                    JPanel partidoPanel = (JPanel) comp;
+
+                    // Recorre todos los componentes dentro del panel del partido (campos de texto)
+                    for (Component subComp : partidoPanel.getComponents()) {
+                        if (subComp instanceof JTextField) {
+                            JTextField campoTexto = (JTextField) subComp;
+
+                            // Verifica si el campo de texto está vacío
+                            if (campoTexto.getText().trim().isEmpty()) {
+                                todosLlenos = false; // Si algún campo está vacío, cambiamos el flag
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Si encontramos un campo vacío, no seguimos revisando el resto
+                if (!todosLlenos) {
+                    break;
+                }
+            }
+
+            // Si encontramos un campo vacío, no seguimos revisando el resto de las jornadas
+            if (!todosLlenos) {
+                break;
+            }
+        }
+
+        // Si todos los campos están llenos, finalizar la temporada
+        if (todosLlenos) {
+            // Aquí podemos mostrar el mensaje y cerrar la ventana actual
+            JOptionPane.showMessageDialog(this, "Temporada Finalizada");
+
+            // Cerrar la ventana actual (VentanaPestanas)
+            this.dispose();
+
+            // Abrir la ventana TemporadaFrame
+            TemporadasFrame temporadaFrame = new TemporadasFrame();
+            temporadaFrame.setVisible(true);
+        } else {
+            // Si hay algún campo vacío, mostrar un mensaje de advertencia
+            JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos antes de finalizar la temporada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }
+
     
     private void actualizarResultados() {
     	
