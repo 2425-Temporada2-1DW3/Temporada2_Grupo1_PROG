@@ -24,7 +24,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
-public class Login extends JFrame implements ActionListener{
+public class Login extends Icono implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -46,9 +46,7 @@ public class Login extends JFrame implements ActionListener{
 			}
 		});
 	}
-	
-
-    
+	 
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Registrarse");
@@ -74,7 +72,6 @@ public class Login extends JFrame implements ActionListener{
 		
 		textUsuario = new JTextField();
 		textUsuario.setColumns(10);
-
 		
 		lblContraseña = new JLabel("Constraseña");
 		lblContraseña.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -82,17 +79,13 @@ public class Login extends JFrame implements ActionListener{
 		btnAcceder = new JButton("Acceder");
 		btnAcceder.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnAcceder.addActionListener(this);
-
 		
 		btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnRegistrarse.addActionListener(this);
-
-        
 		
 		passwordField = new JPasswordField();
 
-		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -164,18 +157,18 @@ public class Login extends JFrame implements ActionListener{
 		    public void actionPerformed(ActionEvent e) {
 		        String usuario = textUsuario.getText();
 		        String contraseña = String.valueOf(passwordField.getPassword());
-		        validarUsuario(usuario, contraseña);
+		        if (usuario.isEmpty() || contraseña.isEmpty()) {
+	                JOptionPane.showMessageDialog(Login.this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+		        } else {
+			        validarUsuario(usuario, contraseña);
+		        }
 		    }
 		});
 	}
-	
-	
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
         
-		
 	}
 	
 	 private void validarUsuario(String username, String password) {
@@ -200,8 +193,4 @@ public class Login extends JFrame implements ActionListener{
 		        JOptionPane.showMessageDialog(this, "El archivo usuarios.ser tiene un formato inválido.", "Error", JOptionPane.ERROR_MESSAGE);
 		    }
 		}
-
-	 
-	
-	
 }

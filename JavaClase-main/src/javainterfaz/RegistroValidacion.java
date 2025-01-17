@@ -1,33 +1,25 @@
 package javainterfaz;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegistroValidacion {
 
-	   
-	    
-	 // REQUIERE: Los campos no deben ser nulos.
-	 // EFECTOS: Devuelve false si ningún campo está vacío; de lo contrario, devuelve true.
-	    
-		public static boolean CamposVacios(String... fields) {
-		    for (String field : fields) {
-		        if (!field.isEmpty()) {
-		            return false;
-		        }
-		    }
-		    return true;
-		}
-		
-	    // EFECTOS: Verifica si la contraseña cumple con el formato de PASSWORD_PATTERN,
-	    //      (por ejemplo, al menos 8 caracteres, uno de ellos en mayúscula y un número).
-	    
-	    public static boolean ContraseñaValida(String password) {
-	        return true;
-	    }
+    // Patrón para validar contraseñas: al menos 5 caracteres, una mayúscula y un número.
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*\\d).{5,}$");
+    
+    // Patrón para validar nombres: solo letras y espacios, sin números ni caracteres especiales.
+    private static final Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z]+( [a-zA-Z]+)*$");
 
-	 // EFECTOS: Verifica si el nombre completo no contiene números ni caracteres especiales.
-	    
-	    public static boolean UsuarioValido(String fullName) {
-	        return true;
+    // Verifica si la contraseña cumple con el formato definido en PASSWORD_PATTERN.
+    public static boolean contraseñaValida(String contraseña) {
+        Matcher matcher = PASSWORD_PATTERN.matcher(contraseña);
+        return matcher.matches();
+    }
 
-	        
-	    }
+    // Verifica si el nombre de usuario cumple con el formato definido en FULL_NAME_PATTERN.
+    public static boolean usuarioValido(String nombreUsuario) {
+        Matcher matcher = FULL_NAME_PATTERN.matcher(nombreUsuario);
+        return matcher.matches();
+    }
 }

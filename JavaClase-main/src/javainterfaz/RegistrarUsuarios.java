@@ -4,17 +4,13 @@ package javainterfaz;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,40 +18,16 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
-public class RegistrarUsuarios extends JFrame implements ActionListener, KeyListener {
+public class RegistrarUsuarios extends Icono implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-
-	
 	private JPanel contentPane;
 	private JLabel lblLogo, lblTitulo, lblUsuario, lblContraseña;
 	private JTextField textUsuario;
 	private JPasswordField passwordField;
 	private JButton btnRegistrate, btnIniciarSesion; 
 
-	   
-	 /**
-		 * Launch the application.
-		 */
-		public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						RegistrarUsuarios frame = new RegistrarUsuarios();
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
-
-		/**
-		 * Create the frame.
-		 */
-	      
-	
 	public RegistrarUsuarios() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Registrarse");
@@ -76,14 +48,12 @@ public class RegistrarUsuarios extends JFrame implements ActionListener, KeyList
 		lblTitulo = new JLabel("Registrarse");
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		
-		lblUsuario = new JLabel("Usuario");
+		lblUsuario = new JLabel("Nombre Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		textUsuario = new JTextField();
 		textUsuario.setColumns(10);
-		textUsuario.addKeyListener(this); 
 
-		
 		lblContraseña = new JLabel("Constraseña");
 		lblContraseña.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
@@ -93,12 +63,9 @@ public class RegistrarUsuarios extends JFrame implements ActionListener, KeyList
 		
 		btnIniciarSesion = new JButton("Iniciar Sesion");
 		btnIniciarSesion.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        
-		
+        		
 		passwordField = new JPasswordField();
-		passwordField.addKeyListener(this); 
 
-		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -113,9 +80,9 @@ public class RegistrarUsuarios extends JFrame implements ActionListener, KeyList
 									.addGap(155)
 									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 										.addComponent(textUsuario, 221, 221, Short.MAX_VALUE)
-										.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblContraseña, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-										.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))))
+										.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+										.addComponent(lblUsuario))))
 							.addGap(112))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(189)
@@ -152,7 +119,6 @@ public class RegistrarUsuarios extends JFrame implements ActionListener, KeyList
 		);
 		panel.setLayout(gl_panel);
 	
-
 	// Acción del botón
 		btnIniciarSesion.addActionListener(new ActionListener() {
         @Override
@@ -165,55 +131,45 @@ public class RegistrarUsuarios extends JFrame implements ActionListener, KeyList
         }
     });
 		
-		
+		btnRegistrate.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        String usuario = textUsuario.getText();
+		        String contraseña = String.valueOf(passwordField.getPassword());
+
+		        if (!usuario.isEmpty() && !contraseña.isEmpty()) {
+		            if (RegistroValidacion.usuarioValido(usuario)) {
+		                if (RegistroValidacion.contraseñaValida(contraseña)) {
+		                    if (!LeerGuardarUsuarios.usuarioExiste(usuario)) { // Verificar si el usuario ya existe
+		                    // Si todas las validaciones son correctas
+		                    validarUsuarios(usuario, contraseña);
+		                    Login Login = new Login();
+		                	Login.setVisible(true);
+		                    dispose();
+		                   	} else {
+		                      JOptionPane.showMessageDialog(RegistrarUsuarios.this, "El nombre de usuario ya existe. Elija otro.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    }
+		                } else {
+		                    JOptionPane.showMessageDialog(RegistrarUsuarios.this, "La contraseña debe tener al menos 5 caracteres, incluir una letra mayúscula y un número.", "Error", JOptionPane.ERROR_MESSAGE);
+		                }
+		            } else {
+		                JOptionPane.showMessageDialog(RegistrarUsuarios.this, "El nombre de usuario no puede contener números ni caracteres especiales.", "Error", JOptionPane.ERROR_MESSAGE);
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(RegistrarUsuarios.this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		});
 }
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		userClickLoginLogic(e);		
-	}
-	
-	@Override
-	public void keyTyped(KeyEvent e) {
-		char keyChar = e.getKeyChar();
-		if (keyChar != KeyEvent.VK_ENTER);	
+
+private void validarUsuarios(String nombreUsuario, String contraseñaUsuario){
+
+	LeerGuardarUsuarios.guardarUsuarios(nombreUsuario, contraseñaUsuario);
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		userKeyboardLoginLogic(e);		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
 	
-	
-	private void userKeyboardLoginLogic(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {  
-        	validacionUsuarios(textUsuario.getText(),String.valueOf(passwordField.getPassword()));
-		
-        }
-	}
-	
-	private void userClickLoginLogic(ActionEvent e) {
-		
-		if (e.getSource() == btnRegistrate) {	
-
-			validacionUsuarios(textUsuario.getText(), String.valueOf(passwordField.getPassword()));
-			
-		} else if (e.getSource() == btnIniciarSesion) {
-			this.dispose();
-		}
-	}
-	
-
-private void validacionUsuarios(String nombreUsuario, String contraseñaUsuario){
-
-	GestionUsuarios.guardarUsuarios(nombreUsuario, contraseñaUsuario);
-	}
-	
-	
+}
 }
