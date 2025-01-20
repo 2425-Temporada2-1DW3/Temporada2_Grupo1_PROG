@@ -41,7 +41,7 @@ public class VentanaPestanas extends JFrame {
         
         
 
-        // Crear las 11 pestañas
+        // Crear las 11 pestañass
         crearPestanas();
 
         // Agregar un ChangeListener para actualizar contenido al cambiar pestaña
