@@ -1,3 +1,4 @@
+
 package javainterfaz;
 
 import java.awt.EventQueue;
@@ -61,7 +62,7 @@ public class interfaz extends JFrame implements ActionListener {
 	public interfaz() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
+		setSize(715, 583);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
@@ -146,6 +147,11 @@ public class interfaz extends JFrame implements ActionListener {
 		errorLabel = new JLabel("New label");
 		errorLabel.setForeground(new Color(255, 0, 0));
 		errorLabel.setVisible(false);
+		
+		JToggleButton tglbtnRegistrarse = new JToggleButton("Registrarse");
+		tglbtnRegistrarse.setForeground(Color.BLACK);
+		tglbtnRegistrarse.setFont(new Font("Verdana", Font.BOLD, 15));
+		tglbtnRegistrarse.setBackground(new Color(51, 153, 204));
 
 		gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -162,12 +168,14 @@ public class interfaz extends JFrame implements ActionListener {
 								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblContrasena, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(31)
-							.addComponent(tglbtnNewToggleButton, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(63)
-							.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+							.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(31)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(tglbtnRegistrarse)
+								.addComponent(tglbtnNewToggleButton, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))))
+					.addPreferredGap(ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
 					.addComponent(lblimagen, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
 					.addGap(59))
 				.addGroup(gl_panel.createSequentialGroup()
@@ -195,7 +203,9 @@ public class interfaz extends JFrame implements ActionListener {
 							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(tglbtnNewToggleButton)))
-					.addContainerGap(138, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(tglbtnRegistrarse, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(91, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 	}
@@ -228,12 +238,10 @@ public class interfaz extends JFrame implements ActionListener {
 
 				permiso = 0;
 
-				//TemporadasFrame t = new TemporadasFrame();
-				
 				mainPage vh = new mainPage(permiso);
 
-				//t.setVisible(true);
 				vh.setVisible(true);
+
 				this.setVisible(false);
 
 				this.dispose();
@@ -244,12 +252,9 @@ public class interfaz extends JFrame implements ActionListener {
 
 				permiso = 2;
 
-				//mainPage vh = new mainPage(permiso);
-				//vh.setVisible(true);
-				
-				TemporadasFrame t = new TemporadasFrame();
-				t.setVisible(true);
-				
+				TemporadasFrame vh = new TemporadasFrame();
+				vh.setVisible(true);
+
 				this.setVisible(false);
 
 				this.dispose();
@@ -262,9 +267,6 @@ public class interfaz extends JFrame implements ActionListener {
 
 				mainPage vh = new mainPage(permiso);
 				vh.setVisible(true);
-				
-				//TemporadasFrame t = new TemporadasFrame();
-				//t.setVisible(true);
 
 				this.setVisible(false);
 
@@ -283,5 +285,4 @@ public class interfaz extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
 }
