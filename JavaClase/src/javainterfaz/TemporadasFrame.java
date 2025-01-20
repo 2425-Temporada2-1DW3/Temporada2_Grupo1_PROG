@@ -158,6 +158,8 @@ public class TemporadasFrame extends JFrame {
         actualizarEquipos();
     }
 
+    
+    //inicializar datos
     private void inicializarDatos() {
     	
         temporadas = new ArrayList<>();
