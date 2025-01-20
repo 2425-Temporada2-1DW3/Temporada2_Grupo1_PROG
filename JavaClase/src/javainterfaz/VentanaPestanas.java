@@ -16,9 +16,14 @@ public class VentanaPestanas extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
     private ArrayList<ArrayList<String[]>> resultados; // ArrayList para almacenar los resultados de cada jornada
+    private boolean temporadaFinalizada;
+    private JComboBox<String> comboBoxTemporadas;
    
 
-    public VentanaPestanas() {
+    public VentanaPestanas(JComboBox<String> comboBoxTemporadas) {
+    	
+    	this.comboBoxTemporadas = comboBoxTemporadas;
+    	
         // Configuración básica de la ventana
         setTitle("Jornadas");
         setSize(800, 500);
@@ -86,6 +91,9 @@ public class VentanaPestanas extends JFrame {
             // Añadir el panel a la pestaña
             JScrollPane scrollPanel = new JScrollPane(panel);
             tabbedPane.addTab("Jornada " + i, scrollPanel);
+            
+            //Actualizar la pestaña para inicializar los componentes
+            actualizarContenidoPestana(i - 1);
         }
     }
     
@@ -202,6 +210,13 @@ public class VentanaPestanas extends JFrame {
     }
     
     private void guardarTemporada(String temporada) {
+    	
+    	 // Obtener la temporada seleccionada del comboBoxTemporadas
+        String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
+        
+        // Extraer solo el año de la temporada seleccionada (por ejemplo "Temporada 2024" -> "2024")
+        String año = temporadaSeleccionada.replaceAll("[^0-9]", "");
+        
         String archivo = "temporada_" + temporada + ".txt"; // Nombre del archivo basado en el año
 
         // Crea un archivo si no existe
@@ -210,6 +225,8 @@ public class VentanaPestanas extends JFrame {
             // Escribe el encabezado de la temporada
             writer.write("Temporada: " + temporada);
             writer.newLine(); // Salto de línea
+            writer.write("Estado: Finalizada"); // Agregar estado de finalización
+            writer.newLine();
 
             // Recorre todas las jornadas y guarda los resultados
             for (int i = 0; i < tabbedPane.getTabCount(); i++) {
@@ -302,11 +319,14 @@ public class VentanaPestanas extends JFrame {
 
         // Si todos los campos están llenos, finalizar la temporada
         if (todosLlenos) {
+        	
+        	 String añoSeleccionado = (String) comboBoxTemporadas.getSelectedItem();
+        	 
             // Aquí podemos mostrar el mensaje y cerrar la ventana actual
             JOptionPane.showMessageDialog(this, "Temporada Finalizada");
 
             // Llamada al método para guardar la temporada
-            guardarTemporada("2024");  // Asegúrate de pasar el año adecuado
+            guardarTemporada(añoSeleccionado);  // Asegúrate de pasar el año adecuado
 
             // Cerrar la ventana actual (VentanaPestanas)
             this.dispose();

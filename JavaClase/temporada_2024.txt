@@ -1,36 +1,52 @@
 Temporada: 2024
+Finalizada: true
 Jornada 1:
-12 vs 21
-23 vs 32
-21 vs 67
+99 vs 99
+22 vs 22
+33 vs 43
 
 Jornada 2:
+42 vs 42
+57 vs 28
+45 vs 73
 
 Jornada 3:
+24 vs 78
+49 vs 38
+16 vs 8
 
 Jornada 4:
-59 vs 88
-85 vs 96
-82 vs 35
+21 vs 87
+91 vs 70
+45 vs 90
 
 Jornada 5:
-17 vs 96
-95 vs 54
-41 vs 42
+91 vs 53
+69 vs 72
+98 vs 92
 
 Jornada 6:
+30 vs 40
+68 vs 28
+93 vs 95
 
 Jornada 7:
+19 vs 2
+66 vs 48
+62 vs 24
 
 Jornada 8:
-84 vs 99
-24 vs 50
-4 vs 64
+50 vs 88
+47 vs 38
+49 vs 74
 
 Jornada 9:
-70 vs 57
-72 vs 22
-17 vs 84
+21 vs 30
+66 vs 55
+88 vs 65
 
 Jornada 10:
+69 vs 57
+1 vs 30
+36 vs 6
 

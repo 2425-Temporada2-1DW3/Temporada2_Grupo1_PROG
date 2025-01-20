@@ -148,7 +148,7 @@ public class TemporadasFrame extends JFrame {
         	    }
         	    
             // Abrir la ventana con las pestañas
-            VentanaPestanas ventanaPestanas = new VentanaPestanas();
+            VentanaPestanas ventanaPestanas = new VentanaPestanas(comboBoxTemporadas);
             ventanaPestanas.setVisible(true);
         });
         
@@ -251,7 +251,6 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.revalidate();
         panelJugadores.repaint();
     }
-    
     
     private void crearPestanas() {
     	
@@ -368,6 +367,9 @@ public class TemporadasFrame extends JFrame {
     }
 
     private void cargarTemporada(String temporada) {
+    	
+    	 boolean esFinalizada = false;
+    	 
         String archivo = "temporada_" + temporada + ".txt";  // El archivo correspondiente
 
         // Verifica si el archivo existe
@@ -511,6 +513,4 @@ public class TemporadasFrame extends JFrame {
         // Cerrar la ventana actual (TemporadasFrame) si lo deseas
         this.dispose();
     }
-    
-    
 }

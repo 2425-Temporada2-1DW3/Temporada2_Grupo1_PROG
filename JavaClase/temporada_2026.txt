@@ -1,0 +1,52 @@
+Temporada: 2026
+Estado: Finalizada
+Jornada 1:
+9 vs 99
+6 vs 66
+7 vs 77
+
+Jornada 2:
+34 vs 9
+38 vs 45
+62 vs 21
+
+Jornada 3:
+30 vs 39
+28 vs 18
+28 vs 35
+
+Jornada 4:
+42 vs 94
+8 vs 20
+63 vs 45
+
+Jornada 5:
+34 vs 27
+46 vs 62
+62 vs 66
+
+Jornada 6:
+78 vs 2
+31 vs 88
+98 vs 44
+
+Jornada 7:
+43 vs 88
+16 vs 31
+18 vs 61
+
+Jornada 8:
+68 vs 92
+68 vs 67
+84 vs 35
+
+Jornada 9:
+14 vs 82
+2 vs 74
+43 vs 68
+
+Jornada 10:
+94 vs 2
+67 vs 87
+76 vs 47
+
