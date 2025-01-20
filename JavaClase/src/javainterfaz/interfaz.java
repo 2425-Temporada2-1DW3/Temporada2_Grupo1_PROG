@@ -149,6 +149,17 @@ public class interfaz extends JFrame implements ActionListener {
 		errorLabel.setVisible(false);
 		
 		JToggleButton tglbtnRegistrarse = new JToggleButton("Registrarse");
+		tglbtnRegistrarse.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // Abrir la ventana de registrar usuario
+		        RegistrarUsuarios registrarUsuarios = new RegistrarUsuarios();
+		        registrarUsuarios.setVisible(true);
+
+		        // Cerrar la ventana actual de login
+		        setVisible(false); // Esto hace que la ventana de login desaparezca
+		    }
+		});
 		tglbtnRegistrarse.setForeground(Color.BLACK);
 		tglbtnRegistrarse.setFont(new Font("Verdana", Font.BOLD, 15));
 		tglbtnRegistrarse.setBackground(new Color(51, 153, 204));
@@ -212,77 +223,71 @@ public class interfaz extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
+	    Object o = e.getSource();
 
-		if (o == tglbtnNewToggleButton) {
-			// Cuando pulsa aceptar
+	    if (o == tglbtnNewToggleButton) {
+	        // Cuando pulsa aceptar
 
-			String admincorrecto = "admin";
-			String admincontrasena = "admin123";
+	        // Usuarios hardcodeados para admin, arbitro y usuario
+	        String admincorrecto = "admin";
+	        String admincontrasena = "admin123";
 
-			String arbitrocorrecto = "arbitro";
-			String arbitrocontrasena = "arbitro123";
+	        String arbitrocorrecto = "arbitro";
+	        String arbitrocontrasena = "arbitro123";
 
-			String usuariocorrecto = "usuario";
-			String usuariocontrasena = "usuario123";
+	        String usuariocorrecto = "usuario";
+	        String usuariocontrasena = "usuario123";
 
-			String usuario = formattedTextField.getText().replaceAll("\\s+", "");
-			String contrasena = new String(passwordField.getPassword()).replaceAll("\\s+", "");
+	        // Datos introducidos por el usuario
+	        String usuario = formattedTextField.getText().replaceAll("\\s+", "");
+	        String contrasena = new String(passwordField.getPassword()).replaceAll("\\s+", "");
 
-			// Compruebo si los datos son correctos
-
-			if (usuario.equals("") || contrasena.equals("")) { // comprueba que no haya campos en blanco
-				errorLabel.setText("Campos en blanco o espacios introducidos");
-				errorLabel.setVisible(true);
-			} else if (usuario.equals(usuariocorrecto) && contrasena.equals(usuariocontrasena)) {
-
-				permiso = 0;
-
-				mainPage vh = new mainPage(permiso);
-
-				vh.setVisible(true);
-
-				this.setVisible(false);
-
-				this.dispose();
-
-			}
-
-			else if (usuario.equals(admincorrecto) && contrasena.equals(admincontrasena)) {
-
-				permiso = 2;
-
-				TemporadasFrame vh = new TemporadasFrame();
-				vh.setVisible(true);
-
-				this.setVisible(false);
-
-				this.dispose();
-
-			}
-
-			else if (usuario.equals(arbitrocorrecto) && contrasena.equals(arbitrocontrasena)) {
-
-				permiso = 1;
-
-				mainPage vh = new mainPage(permiso);
-				vh.setVisible(true);
-
-				this.setVisible(false);
-
-				this.dispose();
-			}
-
-			else if ((usuario.equals(usuariocorrecto)) || (usuario.equals(admincorrecto))
-					|| (usuario.equals(arbitrocorrecto))) {
-				errorLabel.setText("Contraseña incorrecta");
-				errorLabel.setVisible(true);
-			}
-
-			else {
-				errorLabel.setText("Usuario no existente");
-				errorLabel.setVisible(true);
-			}
-		}
+	        // Verifica si los campos no están vacíos
+	        if (usuario.equals("") || contrasena.equals("")) {
+	            errorLabel.setText("Campos en blanco o espacios introducidos");
+	            errorLabel.setVisible(true);
+	        } else {
+	            // Si el usuario es uno de los hardcodeados, validar con sus contraseñas
+	            if (usuario.equals(admincorrecto) && contrasena.equals(admincontrasena)) {
+	                permiso = 2;
+	                TemporadasFrame vh = new TemporadasFrame();
+	                vh.setVisible(true);
+	                this.setVisible(false);
+	                this.dispose();
+	            } else if (usuario.equals(arbitrocorrecto) && contrasena.equals(arbitrocontrasena)) {
+	                permiso = 1;
+	                mainPage vh = new mainPage(permiso);
+	                vh.setVisible(true);
+	                this.setVisible(false);
+	                this.dispose();
+	            } else if (usuario.equals(usuariocorrecto) && contrasena.equals(usuariocontrasena)) {
+	                permiso = 0;
+	                mainPage vh = new mainPage(permiso);
+	                vh.setVisible(true);
+	                this.setVisible(false);
+	                this.dispose();
+	            }
+	            // Si no es uno de los usuarios hardcodeados, verificar en el archivo de usuarios registrados
+	            else if (LeerGuardarUsuarios.usuarioExiste(usuario)) {
+	                // Verificar contraseña de usuarios registrados
+	                String contrasenaGuardada = LeerGuardarUsuarios.obtenerContraseña(usuario);
+	                if (contrasena.equals(contrasenaGuardada)) {
+	                    // Asignar permisos si es un usuario registrado
+	                    permiso = 0; // Aquí puedes asignar permisos según el tipo de usuario registrado
+	                    mainPage vh = new mainPage(permiso);
+	                    vh.setVisible(true);
+	                    this.setVisible(false);
+	                    this.dispose();
+	                } else {
+	                    errorLabel.setText("Contraseña incorrecta");
+	                    errorLabel.setVisible(true);
+	                }
+	            } else {
+	                errorLabel.setText("Usuario no existente");
+	                errorLabel.setVisible(true);
+	            }
+	        }
+	    }
 	}
+
 }

@@ -6,10 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
@@ -32,16 +35,25 @@ public class RegistrarUsuarios extends Icono implements ActionListener {
 	public RegistrarUsuarios() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Registrarse");
-		setBounds(100, 100, 1063, 670);
+        setSize(715, 583);
+        setLocationRelativeTo(null);
+        setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarUsuarios.class.getResource("/img/imagenes/rugby1.png")));
+		getContentPane().setBackground(new Color(255, 255, 0));
+		
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setResizable(false);
+		contentPane.setBackground(new Color(255, 255, 0));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout(0, 0));
+		
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		 panel.setBackground(new Color(255, 255, 0));
+	     contentPane.add(panel, BorderLayout.CENTER);
 		
 		lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(RegistrarUsuarios.class.getResource("/img/imagenes/logo.png")));
@@ -125,8 +137,8 @@ public class RegistrarUsuarios extends Icono implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Abrir el segundo JFrame
-        	Login Login = new Login();
-        	Login.setVisible(true);
+        	interfaz interfaz = new interfaz();
+        	interfaz.setVisible(true);
 
             dispose(); // Cierra la ventana actual
         }
@@ -144,8 +156,9 @@ public class RegistrarUsuarios extends Icono implements ActionListener {
 		                    if (!LeerGuardarUsuarios.usuarioExiste(usuario)) { // Verificar si el usuario ya existe
 		                    // Si todas las validaciones son correctas
 		                    validarUsuarios(usuario, contraseña);
-		                    Login Login = new Login();
-		                	Login.setVisible(true);
+		                    
+		                	interfaz interfaz = new interfaz();
+							interfaz.setVisible(true);
 		                    dispose();
 		                   	} else {
 		                      JOptionPane.showMessageDialog(RegistrarUsuarios.this, "El nombre de usuario ya existe. Elija otro.", "Error", JOptionPane.ERROR_MESSAGE);
