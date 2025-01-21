@@ -59,6 +59,7 @@ public class interfaz extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 
+	//interfaz
 	public interfaz() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
