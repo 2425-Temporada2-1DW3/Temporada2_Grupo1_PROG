@@ -40,6 +40,7 @@ public class RegistrarUsuarios extends Icono implements ActionListener {
         setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarUsuarios.class.getResource("/img/imagenes/rugby1.png")));
 		getContentPane().setBackground(new Color(255, 255, 0));
+		setBounds(100, 100, 510, 476);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 0));
