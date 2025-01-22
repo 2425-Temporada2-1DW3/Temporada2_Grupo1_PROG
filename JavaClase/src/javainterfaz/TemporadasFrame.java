@@ -61,6 +61,8 @@ public class TemporadasFrame extends JFrame {
     private JSeparator separator_1;
     private JButton btnCrearTemporada;
     private JTabbedPane tabbedPane;
+    private List<String> equiposSeleccionadosList = new ArrayList<>();
+
     
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -204,6 +206,9 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.removeAll();
         checkboxesEquipos = new ArrayList<>();
 
+        // Limpiar la lista de equipos seleccionados
+        equiposSeleccionadosList.clear();
+        
         int temporadaSeleccionada = comboBoxTemporadas.getSelectedIndex();
 
         // Obtener la temporada seleccionada de la lista
@@ -241,6 +246,8 @@ public class TemporadasFrame extends JFrame {
                 checkboxesEquipos.add(checkBox);
                 panelEquipos.add(checkBox);
                 
+                // Iterar sobre los equipos seleccionados
+               
             }
 
             // Mostrar el botón "Confirmar Equipos" para temporadas diferentes a 2023
@@ -253,6 +260,8 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.revalidate();
         panelJugadores.repaint();
     }
+    
+  
     
     private void crearPestanas() {
     	
