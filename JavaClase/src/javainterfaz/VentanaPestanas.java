@@ -155,13 +155,13 @@ public class VentanaPestanas extends JFrame {
         
 
         // Agregar tres partidos con campos de texto para insertar los nombres de los equipos
-        
+        int idx = 1;
         for (int i = 1; i <= 3; i++) {
             JPanel partidoPanel = new JPanel();
             partidoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
             // Etiqueta y campo para el primer equipo
-            String equipo1Nombre = equipos.get(i).getNombre();
+            String equipo1Nombre = equipos.get(idx).getNombre();
             JLabel equipo1 = new JLabel(equipo1Nombre);  
             JTextField equipo1txt = new JTextField("", 10);
             
@@ -185,7 +185,7 @@ public class VentanaPestanas extends JFrame {
             JLabel vsLabel = new JLabel("vs");
 
             // Etiqueta y campo para el segundo equipo
-			String equipo2Nombre = equipos.get(i + 1).getNombre();
+			String equipo2Nombre = equipos.get(idx + 1).getNombre();
             JLabel equipo2 = new JLabel(equipo2Nombre);
             JTextField equipo2txt = new JTextField("", 10);
             
@@ -227,6 +227,10 @@ public class VentanaPestanas extends JFrame {
                     equipo1txt.setText(partidoResultado[0]);
                     equipo2txt.setText(partidoResultado[1]);
                 }
+                idx ++;
+                if (idx == equipos.size()) {
+					idx = 1;
+				}
             }
 
             // Si ya hay resultados guardados, mostrarlos en los campos de texto
