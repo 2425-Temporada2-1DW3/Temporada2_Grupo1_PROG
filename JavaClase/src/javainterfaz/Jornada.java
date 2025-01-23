@@ -4,62 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jornada {
-    private int numeroJornada;        // Número de la jornada
-    private List<Partido> partidos;   // Lista de partidos de esta jornada
-    private boolean jugada;           // Indicador si la jornada ya se jugó
+    private int numero; // Número de la jornada
+    private List<Partido> partidos; // Lista de partidos en la jornada
+    private boolean finalizada; // Si la jornada ha finalizado o no
 
-    // Constructor
-    public Jornada(int numeroJornada, List<Equipo> equipos) {
-        this.numeroJornada = numeroJornada;
+    public Jornada(int numero) {
+        this.numero = numero;
         this.partidos = new ArrayList<>();
-        this.jugada = false;  // Inicialmente la jornada no se ha jugado
-
-        // Generamos los partidos de la jornada sin repeticiones
-        for (int i = 0; i < equipos.size(); i++) {
-            for (int j = i + 1; j < equipos.size(); j++) {
-                partidos.add(new Partido(equipos.get(i), equipos.get(j)));
-            }
-        }
+        this.finalizada = false;
     }
 
-    // Métodos getter
-    public int getNumeroJornada() {
-        return numeroJornada;
+    public int getNumero() {
+        return numero;
     }
 
     public List<Partido> getPartidos() {
         return partidos;
     }
 
-    public boolean esJugada() {
-        return jugada;
+    public void agregarPartido(Partido partido) {
+        partidos.add(partido);
     }
 
-    // Método para marcar la jornada como jugada
-    public void marcarComoJugada() {
-        this.jugada = true;
+    public boolean isFinalizada() {
+        return finalizada;
     }
 
-    // Método para mostrar los partidos de la jornada
-    public void mostrarJornada() {
-        System.out.println("Jornada " + numeroJornada + ":");
-        for (Partido partido : partidos) {
-            System.out.println(partido);
-        }
+    public void marcarComoFinalizada() {
+        this.finalizada = true;
     }
 
-    // Método para mostrar solo los partidos no jugados
-    public void mostrarPartidosPendientes() {
-        if (!jugada) {
-            mostrarJornada(); // Si no se ha jugado, mostramos todos los partidos
-        } else {
-            System.out.println("Esta jornada ya ha sido jugada.");
-        }
-    }
-
-    // Método para mostrar si la jornada ya fue jugada
-    public String estadoJornada() {
-        return jugada ? "Jornada Finalizada" : "Jornada En Curso";
+    @Override
+    public String toString() {
+        return "Jornada " + numero;
     }
 }
-
