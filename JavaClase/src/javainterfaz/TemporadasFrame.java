@@ -502,6 +502,8 @@ public class TemporadasFrame extends JFrame {
             clasificacionFrame.add(scrollPane);
             clasificacionFrame.setVisible(true);
             this.dispose();
+            
+            ////
         } 
     }
 
