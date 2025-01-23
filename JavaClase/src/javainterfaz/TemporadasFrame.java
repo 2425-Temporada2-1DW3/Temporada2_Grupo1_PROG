@@ -501,7 +501,7 @@ public class TemporadasFrame extends JFrame {
                 datos[i][2] = 0; // Victorias
                 datos[i][3] = 0; // Derrotas
             }
-
+////
             // Crear la tabla con los datos
             JTable tablaClasificacion = new JTable(datos, columnas);
             tablaClasificacion.setFillsViewportHeight(true);
@@ -515,6 +515,8 @@ public class TemporadasFrame extends JFrame {
             clasificacionFrame.add(scrollPane);
             clasificacionFrame.setVisible(true);
             this.dispose();
+            
+            ////
         } 
     }
 
