@@ -19,6 +19,7 @@ public class VentanaPestanas extends JFrame {
     private boolean temporadaFinalizada;
     private JComboBox<String> comboBoxTemporadas;
    
+   
 
     public VentanaPestanas(JComboBox<String> comboBoxTemporadas) {
     	
@@ -97,6 +98,8 @@ public class VentanaPestanas extends JFrame {
         }
     }
     
+    
+    
    
     private void actualizarContenidoPestana(int index) {
         // Obtener el panel correspondiente a la pestaña seleccionada
@@ -109,6 +112,8 @@ public class VentanaPestanas extends JFrame {
         // Verificar si es una jornada de 2 a 9
         boolean esJornada2a9 = index >= 1 && index <= 9;
 
+        
+        
 
         // Agregar tres partidos con campos de texto para insertar los nombres de los equipos
         
@@ -117,7 +122,7 @@ public class VentanaPestanas extends JFrame {
             partidoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
             // Etiqueta y campo para el primer equipo
-            JLabel equipo1 = new JLabel("EQUIPO SELECCIONADO");
+            JLabel equipo1 = new JLabel("EQUIPO SELECCIONADO");  
             JTextField equipo1txt = new JTextField("", 10);
             
             //Para que no se pueda poner mas de 2 digitos en el campo de texto
@@ -208,6 +213,8 @@ public class VentanaPestanas extends JFrame {
         panel.revalidate();
         panel.repaint();
     }
+    
+    
     
     private void guardarTemporada(String temporada) {
     	
