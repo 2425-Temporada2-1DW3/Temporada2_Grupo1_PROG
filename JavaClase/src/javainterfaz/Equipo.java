@@ -56,4 +56,9 @@ class Equipo implements Serializable,  Comparable<Equipo>{
 			
 		}
 	
+	@Override
+	public String toString() {
+	    return nombre; // Suponiendo que el atributo 'nombre' contiene el nombre del equipo
+	}
+	
 }

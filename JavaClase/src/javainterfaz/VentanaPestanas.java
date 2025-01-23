@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VentanaPestanas extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -18,12 +19,14 @@ public class VentanaPestanas extends JFrame {
     private ArrayList<ArrayList<String[]>> resultados; // ArrayList para almacenar los resultados de cada jornada
     private boolean temporadaFinalizada;
     private JComboBox<String> comboBoxTemporadas;
+    private List<Equipo> equipos;
    
    
 
-    public VentanaPestanas(JComboBox<String> comboBoxTemporadas) {
+    public VentanaPestanas(JComboBox<String> comboBoxTemporadas,  List<Equipo> equipos) {
     	
     	this.comboBoxTemporadas = comboBoxTemporadas;
+    	 this.equipos = (equipos != null) ? equipos : new ArrayList<>(); // Asegurar que no sea null
     	
         // Configuración básica de la ventana
         setTitle("Jornadas");
@@ -80,6 +83,8 @@ public class VentanaPestanas extends JFrame {
 
     private void crearPestanas() {
     	
+    	List<List<Partido>> calendario = generarCalendarioRoundRobin(equipos);
+    	
         for (int i = 1; i <= 10; i++) {
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
@@ -93,12 +98,44 @@ public class VentanaPestanas extends JFrame {
             JScrollPane scrollPanel = new JScrollPane(panel);
             tabbedPane.addTab("Jornada " + i, scrollPanel);
             
+            
+            
             //Actualizar la pestaña para inicializar los componentes
             actualizarContenidoPestana(i - 1);
         }
     }
     
-    
+    private List<List<Partido>> generarCalendarioRoundRobin(List<Equipo> equipos) {
+        List<List<Partido>> jornadas = new ArrayList<>();
+        int numEquipos = equipos.size();
+
+        if (numEquipos % 2 != 0) {
+            equipos.add(new Equipo("Descansa", new ArrayList<>()));
+            numEquipos++;
+        }
+
+        int numJornadas = numEquipos - 1;
+        int numPartidosPorJornada = numEquipos / 2;
+
+        List<Equipo> equiposRotables = new ArrayList<>(equipos);
+        equiposRotables.remove(0); // El primer equipo es fijo
+
+        for (int jornada = 0; jornada < numJornadas; jornada++) {
+            List<Partido> partidos = new ArrayList<>();
+
+            partidos.add(new Partido(equipos.get(0), equiposRotables.get(0)));
+            for (int i = 1; i < numPartidosPorJornada; i++) {
+                partidos.add(new Partido(equiposRotables.get(i), equiposRotables.get(equiposRotables.size() - i)));
+            }
+
+            jornadas.add(partidos);
+
+            Equipo ultimo = equiposRotables.remove(equiposRotables.size() - 1);
+            equiposRotables.add(0, ultimo);
+        }
+
+        return jornadas;
+    }
     
    
     private void actualizarContenidoPestana(int index) {
@@ -108,6 +145,8 @@ public class VentanaPestanas extends JFrame {
 
         // Limpiar el contenido del panel
         panel.removeAll();
+        
+        List<Partido> jornada = generarCalendarioRoundRobin(equipos).get(index % (equipos.size() - 1));
         
         // Verificar si es una jornada de 2 a 9
         boolean esJornada2a9 = index >= 1 && index <= 9;
@@ -122,7 +161,8 @@ public class VentanaPestanas extends JFrame {
             partidoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
             // Etiqueta y campo para el primer equipo
-            JLabel equipo1 = new JLabel("EQUIPO SELECCIONADO");  
+            String equipo1Nombre = equipos.get(i).getNombre();
+            JLabel equipo1 = new JLabel(equipo1Nombre);  
             JTextField equipo1txt = new JTextField("", 10);
             
             //Para que no se pueda poner mas de 2 digitos en el campo de texto
@@ -145,7 +185,8 @@ public class VentanaPestanas extends JFrame {
             JLabel vsLabel = new JLabel("vs");
 
             // Etiqueta y campo para el segundo equipo
-            JLabel equipo2 = new JLabel("EQUIPO SELECCIONADO");
+			String equipo2Nombre = equipos.get(i + 1).getNombre();
+            JLabel equipo2 = new JLabel(equipo2Nombre);
             JTextField equipo2txt = new JTextField("", 10);
             
             //Para que no se pueda poner mas de 2 digitos en el campo de texto

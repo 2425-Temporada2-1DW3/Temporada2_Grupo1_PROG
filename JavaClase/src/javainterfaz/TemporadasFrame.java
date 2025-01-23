@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 
 //VENTANA CLASIFICACION CREADA AUTOMATICAMENTE 
@@ -62,6 +63,7 @@ public class TemporadasFrame extends JFrame {
     private JButton btnCrearTemporada;
     private JTabbedPane tabbedPane;
     private List<String> equiposSeleccionadosList = new ArrayList<>();
+    private List<Equipo> equipos2023;
 
     
     public static void main(String[] args) {
@@ -149,15 +151,35 @@ public class TemporadasFrame extends JFrame {
         	        return; // Detener el flujo y no crear la ventana con las pestañas
         	    }
         	    
-            // Abrir la ventana con las pestañas
-            VentanaPestanas ventanaPestanas = new VentanaPestanas(comboBoxTemporadas);
-            ventanaPestanas.setVisible(true);
-        });
+        	    
+        	    List<Equipo> equiposSeleccionados1 = checkboxesEquipos.stream()
+        	            .filter(JCheckBox::isSelected)
+        	            .map(checkbox -> obtenerEquipoPorNombre(checkbox.getText()))
+        	            .collect(Collectors.toList());
+
+        	        // Crear la ventana con los equipos seleccionados
+        	        VentanaPestanas ventanaPestanas = new VentanaPestanas(comboBoxTemporadas, equiposSeleccionados1);
+        	        ventanaPestanas.setVisible(true);
+        	        
+        	        System.out.println("Equipos seleccionados: " + equiposSeleccionados1);
+        	        System.out.println("Creando ventana con los equipos seleccionados...");
+        	    });
         
         getContentPane().add(btnConfirmar, BorderLayout.SOUTH);
 
         // Actualizar lista inicial de equipos
         actualizarEquipos();
+    }
+    
+    private Equipo obtenerEquipoPorNombre(String nombre) {
+        for (Temporada temporada : temporadas) {
+            for (Equipo equipo : temporada.getEquipos()) {
+                if (equipo.getNombre().equals(nombre)) {
+                    return equipo;
+                }
+            }
+        }
+        return null; // En caso de que no se encuentre el equipo
     }
 
     
@@ -261,27 +283,9 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.repaint();
     }
     
-  
     
-    private void crearPestanas() {
-    	
-        for (int i = 1; i <= 10; i++) {
-        	
-            // Crear un panel para cada pestaña
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            tabbedPane.addTab("Clasificación", panel);
-
-            // Agregar contenido al panel de cada pestaña
-            panel.add(new JLabel("Contenido de la pestaña " + i));
-            panel.add(new JTextArea("Este es el contenido de la pestaña " + i));
-
-            // Añadir el panel a la pestaña
-            JScrollPane scrollPanel = new JScrollPane(panel);
-            tabbedPane.addTab("Pestaña " + i, scrollPanel);
-        }
-    }
-
+    
+    
     private void limitarSeleccionEquipos(JCheckBox checkBox) {
     	
         // Contar cuántos equipos están seleccionados
