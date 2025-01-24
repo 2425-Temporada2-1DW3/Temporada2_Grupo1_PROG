@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//clase
 public class VentanaPestanas extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
