@@ -22,7 +22,7 @@ public class VentanaPestanas extends JFrame {
     private List<Equipo> equipos;
    
    
-
+//ventana
     public VentanaPestanas(JComboBox<String> comboBoxTemporadas,  List<Equipo> equipos) {
     	
     	this.comboBoxTemporadas = comboBoxTemporadas;
