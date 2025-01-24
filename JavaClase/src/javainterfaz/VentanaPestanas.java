@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //clase
@@ -21,6 +22,8 @@ public class VentanaPestanas extends JFrame {
     private boolean temporadaFinalizada;
     private JComboBox<String> comboBoxTemporadas;
     private List<Equipo> equipos;
+    private List<List<Partido>> calendarioGenerado;  // Nueva variable para almacenar el calendario fijo
+
    
    
 //ventana
@@ -83,14 +86,15 @@ public class VentanaPestanas extends JFrame {
     
 
     private void crearPestanas() {
-    	
-    	List<List<Partido>> calendario = generarCalendarioRoundRobin(equipos);
-    	
+        // Al generar el calendario solo una vez
+        if (calendarioGenerado == null) {
+            calendarioGenerado = generarCalendarioRoundRobin(equipos);
+        }
+        
         for (int i = 1; i <= 10; i++) {
             // Crear un panel para cada pestaña
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            
 
             // Inicializar la lista de resultados de la jornada actual
             resultados.add(new ArrayList<>());
@@ -98,9 +102,7 @@ public class VentanaPestanas extends JFrame {
             // Añadir el panel a la pestaña
             JScrollPane scrollPanel = new JScrollPane(panel);
             tabbedPane.addTab("Jornada " + i, scrollPanel);
-            
-            
-            
+
             //Actualizar la pestaña para inicializar los componentes
             actualizarContenidoPestana(i - 1);
         }
@@ -110,33 +112,53 @@ public class VentanaPestanas extends JFrame {
         List<List<Partido>> jornadas = new ArrayList<>();
         int numEquipos = equipos.size();
 
-        if (numEquipos % 2 != 0) {
-            equipos.add(new Equipo("Descansa", new ArrayList<>()));
-            numEquipos++;
-        }
+        // Si el número de equipos es impar, añadimos un equipo "Descansa"
+        
 
-        int numJornadas = numEquipos - 1;
+        int numJornadas = numEquipos - 1; // Número de jornadas para la ida
         int numPartidosPorJornada = numEquipos / 2;
 
+        // Lista rotativa de equipos (sin el primero, que es fijo)
         List<Equipo> equiposRotables = new ArrayList<>(equipos);
-        equiposRotables.remove(0); // El primer equipo es fijo
+        equiposRotables.remove(0); // El primer equipo será fijo
 
+        // Generar jornadas de ida
         for (int jornada = 0; jornada < numJornadas; jornada++) {
             List<Partido> partidos = new ArrayList<>();
 
-            partidos.add(new Partido(equipos.get(0), equiposRotables.get(0)));
-            for (int i = 1; i < numPartidosPorJornada; i++) {
-                partidos.add(new Partido(equiposRotables.get(i), equiposRotables.get(equiposRotables.size() - i)));
+            // Enfrentamiento del equipo fijo contra el último de la lista rotativa
+            partidos.add(new Partido(equipos.get(0), equiposRotables.get(equiposRotables.size() - 1)));
+
+            // Generar los demás partidos siguiendo la lógica de extremos (2º vs penúltimo, etc.)
+            for (int i = 0; i < numPartidosPorJornada - 1; i++) {
+                Equipo local = equiposRotables.get(i);
+                Equipo visitante = equiposRotables.get(equiposRotables.size() - 2 - i);
+                partidos.add(new Partido(local, visitante));
             }
 
             jornadas.add(partidos);
 
+            // Rotar los equipos rotables para la siguiente jornada
             Equipo ultimo = equiposRotables.remove(equiposRotables.size() - 1);
             equiposRotables.add(0, ultimo);
         }
 
+        // Generar jornadas de vuelta (invirtiendo local y visitante)
+        List<List<Partido>> jornadasVuelta = new ArrayList<>();
+        for (List<Partido> jornadaIda : jornadas) {
+            List<Partido> jornadaVuelta = new ArrayList<>();
+            for (Partido partido : jornadaIda) {
+                jornadaVuelta.add(new Partido(partido.getvisitante(), partido.getlocal()));
+            }
+            jornadasVuelta.add(jornadaVuelta);
+        }
+
+        // Añadir las jornadas de vuelta al calendario
+        jornadas.addAll(jornadasVuelta);
+
         return jornadas;
     }
+
     
    
     private void actualizarContenidoPestana(int index) {
@@ -146,110 +168,74 @@ public class VentanaPestanas extends JFrame {
 
         // Limpiar el contenido del panel
         panel.removeAll();
-        
-        List<Partido> jornada = generarCalendarioRoundRobin(equipos).get(index % (equipos.size() - 1));
-        
-        // Verificar si es una jornada de 2 a 9
-        boolean esJornada2a9 = index >= 1 && index <= 9;
 
+        List<Partido> partidos = calendarioGenerado.get(index);
         
-        
+        ArrayList<String[]> jornadaResultados = resultados.get(index);
 
-        // Agregar tres partidos con campos de texto para insertar los nombres de los equipos
-        int idx = 1;
-        for (int i = 1; i <= 3; i++) {
+        int idx = 0;
+        // Crear los campos de texto para los resultados
+        for (Partido partido : partidos) {
             JPanel partidoPanel = new JPanel();
             partidoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
             // Etiqueta y campo para el primer equipo
-            String equipo1Nombre = equipos.get(idx).getNombre();
-            JLabel equipo1 = new JLabel(equipo1Nombre);  
+            JLabel equipo1Label = new JLabel(partido.getlocal().getNombre());
             JTextField equipo1txt = new JTextField("", 10);
-            
-            //Para que no se pueda poner mas de 2 digitos en el campo de texto
+            if (jornadaResultados.size() > 0 && jornadaResultados.get(idx) != null) {
+                equipo1txt.setText(jornadaResultados.get(idx)[0]); // Cargar el resultado
+            }
             equipo1txt.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyTyped(KeyEvent e) {
                     char c = e.getKeyChar();
-                    // Verificar si el caracter ingresado es un número
                     if (!Character.isDigit(c)) {
-                        e.consume(); // Si no es un número, se descarta la tecla
+                        e.consume();
                     }
-                    // Limitar a 2 dígitos
                     if (equipo1txt.getText().length() >= 2) {
-                        e.consume(); // No permitir más de 2 dígitos
+                        e.consume();
                     }
                 }
             });
+
+            // Incrementar idx
+            idx++;
+            if (idx == partidos.size()) {
+                idx = 0; // Reiniciar el índice si se sobrepasa el número de partidos
+            }
 
             // Etiqueta "vs"
             JLabel vsLabel = new JLabel("vs");
 
             // Etiqueta y campo para el segundo equipo
-			String equipo2Nombre = equipos.get(idx + 1).getNombre();
-            JLabel equipo2 = new JLabel(equipo2Nombre);
+            Equipo equipo2 = partidos.get(idx).getvisitante();
+            JLabel equipo2Label = new JLabel(partido.getvisitante().getNombre());
             JTextField equipo2txt = new JTextField("", 10);
-            
-            //Para que no se pueda poner mas de 2 digitos en el campo de texto
+
+            // Cargar el resultado si existe
+            if (jornadaResultados.size() > idx && jornadaResultados.get(idx) != null) {
+                equipo2txt.setText(jornadaResultados.get(idx)[1]);
+            }
+
             equipo2txt.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyTyped(KeyEvent e) {
                     char c = e.getKeyChar();
-                    // Verificar si el caracter ingresado es un número
                     if (!Character.isDigit(c)) {
-                        e.consume(); // Si no es un número, se descarta la tecla
+                        e.consume();
                     }
-                    // Limitar a 2 dígitos
                     if (equipo2txt.getText().length() >= 2) {
-                        e.consume(); // No permitir más de 2 dígitos
+                        e.consume();
                     }
                 }
             });
-            
-            // Si es una jornada de 2 a 9, asignar números aleatorios a los campos de texto
-            if (esJornada2a9) {
-                // Comprobar si los resultados ya están almacenados
-                if (resultados.get(index).size() <= i - 1 || resultados.get(index).get(i - 1)[0].isEmpty()) {
-                    // Si no hay resultados almacenados, generar números aleatorios
-                    int numeroAleatorio1 = (int) (Math.random() * 99) + 1;  // Número aleatorio entre 1 y 99
-                    int numeroAleatorio2 = (int) (Math.random() * 99) + 1;  // Número aleatorio entre 1 y 99
-                    equipo1txt.setText(String.valueOf(numeroAleatorio1));
-                    equipo2txt.setText(String.valueOf(numeroAleatorio2));
 
-                    // Guardar el resultado generado en la lista de resultados
-                    String[] partidoResultado = {String.valueOf(numeroAleatorio1), String.valueOf(numeroAleatorio2)};
-                    while (resultados.get(index).size() <= i - 1) {
-                        resultados.get(index).add(new String[2]); // Asegurarse de que haya espacio en la lista
-                    }
-                    resultados.get(index).set(i - 1, partidoResultado); // Guardar el resultado
-                } else {
-                    // Si ya hay resultados almacenados, usarlos
-                    String[] partidoResultado = resultados.get(index).get(i - 1);
-                    equipo1txt.setText(partidoResultado[0]);
-                    equipo2txt.setText(partidoResultado[1]);
-                }
-                idx ++;
-                if (idx == equipos.size()) {
-					idx = 1;
-				}
-            }
-
-            // Si ya hay resultados guardados, mostrarlos en los campos de texto
-            if (resultados.get(index).size() > i - 1) {
-                String[] partidoResultado = resultados.get(index).get(i - 1);
-                equipo1txt.setText(partidoResultado[0]);
-                equipo2txt.setText(partidoResultado[1]);
-            }
-            
-            
-
-            // Agregar los componentes en el orden especificado: etiqueta - campo - "vs" - campo - etiqueta
-            partidoPanel.add(equipo1);
+            // Agregar los componentes en el orden especificado
+            partidoPanel.add(equipo1Label);
             partidoPanel.add(equipo1txt);
             partidoPanel.add(vsLabel);
             partidoPanel.add(equipo2txt);
-            partidoPanel.add(equipo2);
-            
+            partidoPanel.add(equipo2Label);
 
             // Agregar el panel del partido al panel principal
             panel.add(partidoPanel);
@@ -259,12 +245,12 @@ public class VentanaPestanas extends JFrame {
         panel.revalidate();
         panel.repaint();
     }
-    
+
+
     
     
     private void guardarTemporada(String temporada) {
-    	
-    	 // Obtener la temporada seleccionada del comboBoxTemporadas
+        // Obtener la temporada seleccionada del comboBoxTemporadas
         String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
         
         // Extraer solo el año de la temporada seleccionada (por ejemplo "Temporada 2024" -> "2024")
@@ -280,6 +266,14 @@ public class VentanaPestanas extends JFrame {
             writer.newLine(); // Salto de línea
             writer.write("Estado: Finalizada"); // Agregar estado de finalización
             writer.newLine();
+
+            // Escribir los nombres de los equipos
+            writer.write("Equipos:");
+            writer.newLine();
+            for (Equipo equipo : equipos) {
+                writer.write("EQUIPO " + equipo.getNombre());  // Guardar el nombre de cada equipo precedido por "EQUIPO"
+                writer.newLine();
+            }
 
             // Recorre todas las jornadas y guarda los resultados
             for (int i = 0; i < tabbedPane.getTabCount(); i++) {
@@ -308,12 +302,15 @@ public class VentanaPestanas extends JFrame {
                             }
                         }
 
+                        for (Equipo equipo : equipos) {
                         // Si los campos de texto están presentes, escribe el resultado en el archivo
                         if (equipo1txt != null && equipo2txt != null) {
-                            String resultado = equipo1txt.getText() + " vs " + equipo2txt.getText();
+                            // Formato solicitado para guardar los resultados
+                            String resultado =    equipo1txt.getText() + " vs " + equipo2txt.getText()  ;
                             writer.write(resultado);
                             writer.newLine(); // Salto de línea
                         }
+                    }
                     }
                 }
 
@@ -327,6 +324,7 @@ public class VentanaPestanas extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar la temporada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
 
 
@@ -396,7 +394,6 @@ public class VentanaPestanas extends JFrame {
 
     
     private void actualizarResultados() {
-    	
         // Obtener los resultados de todos los campos de texto
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
             JPanel panel = (JPanel) ((JScrollPane) tabbedPane.getComponentAt(i)).getViewport().getView();
@@ -405,35 +402,25 @@ public class VentanaPestanas extends JFrame {
             // Limpiar los resultados de la jornada actual (si es necesario)
             jornadaResultados.clear();
 
-         // Recorre todos los componentes del panel principal de la jornada actual
+            // Recorre todos los componentes del panel principal de la jornada actual
             for (Component comp : panel.getComponents()) {
-            	
-            	// Verifica si el componente es un panel (el panel de cada partido)
-            	
                 if (comp instanceof JPanel) {
-                	
-                	// Convierte el componente a un JPanel (representa un partido)
                     JPanel partidoPanel = (JPanel) comp;
-                    
-                    // Inicializa los campos de texto para los equipos (no están asignados inicialmente)
-                    JTextField equipo1txt = null; 
+
+                    JTextField equipo1txt = null;
                     JTextField equipo2txt = null;
-                    
+
                     // Recorre todos los componentes dentro del panel del partido (campos de texto)
                     for (Component subComp : partidoPanel.getComponents()) {
-                    	
-                    	 // Verifica si el subcomponente es un JTextField (campo de texto)
                         if (subComp instanceof JTextField) {
-                        	
-                        	  // Si el primer campo de texto no ha sido asignado, asigna el primero
                             if (equipo1txt == null) {
                                 equipo1txt = (JTextField) subComp;
                             } else {
-                            	 // Si el primer campo de texto ya fue asignado, asigna el segundo
                                 equipo2txt = (JTextField) subComp;
                             }
                         }
                     }
+
                     // Guardar los resultados en el ArrayList correspondiente para la jornada actual
                     if (equipo1txt != null && equipo2txt != null) {
                         String[] resultado = {equipo1txt.getText(), equipo2txt.getText()};
@@ -443,4 +430,5 @@ public class VentanaPestanas extends JFrame {
             }
         }
     }
+
 }
