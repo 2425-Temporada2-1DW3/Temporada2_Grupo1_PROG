@@ -1,6 +1,8 @@
 package javainterfaz;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,52 +26,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
- class ClasificacionWindow extends JFrame {
-
-    private static final long serialVersionUID = 1L;
-    private List<Clasificacion> clasificaciones;
-
-    public ClasificacionWindow(List<Clasificacion> clasificaciones) {
-        setTitle("Clasificación de Equipos");
-        setSize(800, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // Crear un panel para mostrar la clasificación
-        JPanel panelClasificacion = new JPanel();
-        panelClasificacion.setLayout(new BoxLayout(panelClasificacion, BoxLayout.Y_AXIS));
-
-        // Mostrar los equipos con sus puntos actualizados
-        for (Clasificacion clasificacion : clasificaciones) {
-            // Obtener la lista de equipos en esta clasificación
-            List<Equipo> equipos = clasificacion.obtenerClasificacion();
-
-            // Crear un panel para cada equipo
-            for (Equipo equipo : equipos) {
-                JPanel panelEquipo = new JPanel();
-                panelEquipo.setLayout(new BorderLayout());
-                panelEquipo.add(new JLabel(equipo.getNombre()), BorderLayout.WEST); // Nombre del equipo
-                panelEquipo.add(new JLabel(equipo.getPuntos() + " Puntos"), BorderLayout.EAST); // Puntos actuales
-                panelClasificacion.add(panelEquipo);
-            }
-        }
-
-        JScrollPane scrollPane = new JScrollPane(panelClasificacion);
-        add(scrollPane);
-    }
-
-    // Método para actualizar la clasificación
-    public void actualizarClasificacion(List<Clasificacion> clasificaciones) {
-        this.clasificaciones = clasificaciones;
-        revalidate();
-        repaint();
-    }
-}
-
-
 
 // Clase principal para la interfaz gráfica
-public class TemporadasFrame extends JFrame {
+public class TemporadasFrame extends JFrame implements ActionListener {
 	
     private static final long serialVersionUID = 1L;
     private JComboBox<String> comboBoxTemporadas;
@@ -509,7 +468,6 @@ public class TemporadasFrame extends JFrame {
             clasificacionFrame.setSize(500, 300);
             clasificacionFrame.setLocationRelativeTo(null);
             clasificacionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            
 
             // Definir las columnas de la tabla
             String[] columnas = {"Equipo", "Puntos", "Victorias", "Derrotas"};
@@ -522,7 +480,7 @@ public class TemporadasFrame extends JFrame {
                 datos[i][2] = 0; // Victorias
                 datos[i][3] = 0; // Derrotas
             }
-////
+
             // Crear la tabla con los datos
             JTable tablaClasificacion = new JTable(datos, columnas);
             tablaClasificacion.setFillsViewportHeight(true);
@@ -531,15 +489,121 @@ public class TemporadasFrame extends JFrame {
 
             // Crear un panel con scroll para la tabla
             JScrollPane scrollPane = new JScrollPane(tablaClasificacion);
-            
+
+            // Crear los botones de exportación
+            JButton btnExportarXML = new JButton("Exportar a XML");
+            btnExportarXML.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    exportarXML(equiposSeleccionadosList, datos);
+                }
+            });
+
+            JButton btnExportarPDF = new JButton("Exportar a PDF");
+            btnExportarPDF.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    exportarPDF(equiposSeleccionadosList, datos);
+                }
+            });
+
+            // Crear un panel para los botones de exportación
+            JPanel panelBotones = new JPanel();
+            panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER)); // Alinear los botones a la derecha
+            panelBotones.add(btnExportarXML);
+            panelBotones.add(btnExportarPDF);
+
             // Configurar la ventana
-            clasificacionFrame.add(scrollPane);
+            clasificacionFrame.setLayout(new BorderLayout()); // Usar BorderLayout para el contenedor principal
+            clasificacionFrame.add(scrollPane, BorderLayout.CENTER); // Agregar la tabla al centro
+            clasificacionFrame.add(panelBotones, BorderLayout.SOUTH); // Agregar el panel con los botones en la parte baja
+
             clasificacionFrame.setVisible(true);
             this.dispose();
-            
-            ////
         } 
     }
+
+ // Método para exportar a XML
+    private void exportarXML(List<String> equiposSeleccionados, Object[][] datos) {
+//        try {
+//            // Crear documento XML
+//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//            Document doc = docBuilder.newDocument();
+//
+//            // Crear el nodo raíz
+//            Element raiz = doc.createElement("Clasificacion");
+//            doc.appendChild(raiz);
+//
+//            // Agregar los equipos
+//            for (int i = 0; i < equiposSeleccionados.size(); i++) {
+//                Element equipo = doc.createElement("Equipo");
+//                raiz.appendChild(equipo);
+//
+//                Element nombre = doc.createElement("Nombre");
+//                nombre.appendChild(doc.createTextNode(equiposSeleccionados.get(i)));
+//                equipo.appendChild(nombre);
+//
+//                Element puntos = doc.createElement("Puntos");
+//                puntos.appendChild(doc.createTextNode(String.valueOf(datos[i][1])));
+//                equipo.appendChild(puntos);
+//
+//                Element victorias = doc.createElement("Victorias");
+//                victorias.appendChild(doc.createTextNode(String.valueOf(datos[i][2])));
+//                equipo.appendChild(victorias);
+//
+//                Element derrotas = doc.createElement("Derrotas");
+//                derrotas.appendChild(doc.createTextNode(String.valueOf(datos[i][3])));
+//                equipo.appendChild(derrotas);
+//            }
+//
+//            // Guardar el archivo XML
+//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//            Transformer transformer = transformerFactory.newTransformer();
+//            DOMSource source = new DOMSource(doc);
+//            StreamResult result = new StreamResult(new File("clasificacion.xml"));
+//            transformer.transform(source, result);
+//
+//            JOptionPane.showMessageDialog(null, "Datos exportados a XML con éxito.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+   }
+    
+    private void exportarPDF(List<String> equiposSeleccionados, Object[][] datos) {  
+//    	try {
+//            // Crear documento PDF
+//            Document document = new Document();
+//            PdfWriter.getInstance(document, new FileOutputStream("clasificacion.pdf"));
+//            document.open();
+//
+//            // Título del documento
+//            document.add(new Paragraph("Clasificación de Equipos"));
+//
+//            // Crear tabla para el PDF
+//            PdfPTable table = new PdfPTable(4); // 4 columnas
+//            table.addCell("Equipo");
+//            table.addCell("Puntos");
+//            table.addCell("Victorias");
+//            table.addCell("Derrotas");
+//
+//            // Agregar datos a la tabla
+//            for (int i = 0; i < equiposSeleccionados.size(); i++) {
+//    			table.addCell(equiposSeleccionados.get(i));
+//                table.addCell(String.valueOf(datos[i][1]));
+//                table.addCell(String.valueOf(datos[i][2]));
+//                table.addCell(String.valueOf(datos[i][3]));
+//            }
+//
+//            // Agregar tabla al documento
+//            document.add(table);
+//            document.close();
+//
+//            JOptionPane.showMessageDialog(null, "Datos exportados a PDF con éxito.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//    }
+  }
 
     private void accederALaPaginaPrincipal() {
         // Crear la ventana de la página principal (MainPage) y mostrarla
@@ -551,4 +615,10 @@ public class TemporadasFrame extends JFrame {
         // Cerrar la ventana actual (TemporadasFrame) si lo deseas
         this.dispose();
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
