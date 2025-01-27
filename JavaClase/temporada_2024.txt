@@ -1,52 +1,62 @@
 Temporada: 2024
 Estado: Finalizada
+
+Equipos Participantes:
+- Barca
+- Cisneros
+- Eibar
+- Hernani Club
+- Labiana
+- Las Abelles
+
+Resultados por Jornada:
 Jornada 1:
-5 vs 4
-5 vs 2
-3 vs 5
+Barca 1 vs Las Abelles 2
+Cisneros 2 vs Labiana 2
+Eibar 22 vs Hernani Club 2
 
 Jornada 2:
-53 vs 92
-57 vs 46
-58 vs 88
+Barca 2 vs Labiana 22
+Las Abelles 2 vs Hernani Club 2
+Cisneros 3 vs Eibar 3
 
 Jornada 3:
-3 vs 89
-28 vs 78
-50 vs 67
+Barca 4 vs Hernani Club 43
+Labiana 3 vs Eibar 43
+Las Abelles 3 vs Cisneros 2
 
 Jornada 4:
-17 vs 47
-90 vs 40
-46 vs 72
+Barca 2 vs Eibar 2
+Hernani Club 2 vs Cisneros 2
+Labiana 2 vs Las Abelles 2
 
 Jornada 5:
-70 vs 1
-18 vs 36
-20 vs 66
+Barca 2 vs Cisneros 2
+Eibar 2 vs Las Abelles 22
+Hernani Club 2 vs Labiana 2
 
 Jornada 6:
-50 vs 63
-50 vs 97
-86 vs 88
+Las Abelles 2 vs Barca 2
+Labiana 2 vs Cisneros 2
+Hernani Club 2 vs Eibar 3
 
 Jornada 7:
-93 vs 28
-43 vs 40
-71 vs 72
+Labiana 1 vs Barca 1
+Hernani Club 1 vs Las Abelles 1
+Eibar 1 vs Cisneros 1
 
 Jornada 8:
-28 vs 65
-17 vs 92
-91 vs 1
+Hernani Club 2 vs Barca 2
+Eibar 2 vs Labiana 2
+Cisneros 2 vs Las Abelles 2
 
 Jornada 9:
-76 vs 43
-6 vs 90
-61 vs 11
+Eibar 2 vs Barca 22
+Cisneros 22 vs Hernani Club 22
+Las Abelles 22 vs Labiana 22
 
 Jornada 10:
-57 vs 7
-97 vs 3
-41 vs 80
+Cisneros 22 vs Barca 22
+Las Abelles 22 vs Eibar 22
+Labiana 22 vs Hernani Club 22
 

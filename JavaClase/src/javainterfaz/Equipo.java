@@ -3,13 +3,11 @@ package javainterfaz;
 import java.io.Serializable;
 import java.util.List;
 
-
-
 class Equipo implements Serializable,  Comparable<Equipo>{
     /**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private String nombre;
     private List<String> jugadores;
 	private int puntos;
@@ -44,6 +42,10 @@ class Equipo implements Serializable,  Comparable<Equipo>{
 
     public List<String> getJugadores() {
         return jugadores;
+    }
+    
+    public void sumarPuntos(int puntos) {
+        this.puntos += puntos;
     }
     
 	public int compareTo(Equipo other) {

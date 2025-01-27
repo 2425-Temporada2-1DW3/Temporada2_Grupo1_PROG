@@ -17,6 +17,8 @@ public class AsignacionEquipos {
     public String toString() {
         return nombre;
     }
+    
+    
 
     public static void main(String[] args) {
         // Inicializar los equipos
@@ -29,7 +31,7 @@ public class AsignacionEquipos {
             new AsignacionEquipos("Sociedad")
         );
 
-        int nJornadas = 15;  // Número de jornadas
+        int nJornadas = 10;  // Número de jornadas
         String[][][] partidos = new String[nJornadas][3][2]; // [jornada][partidos][equipo1, equipo2]
 
         for (int jornada = 0; jornada < nJornadas; jornada++) {
