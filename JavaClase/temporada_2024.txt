@@ -1,209 +1,62 @@
 Temporada: 2024
 Estado: Finalizada
-Equipos:
-EQUIPO Barca
-EQUIPO Cisneros
-EQUIPO Eibar
-EQUIPO Hernani Club
-EQUIPO Las Abelles
-EQUIPO Pozuelo
+
+Equipos Participantes:
+- Barca
+- Cisneros
+- Eibar
+- Hernani Club
+- Labiana
+- Las Abelles
+
+Resultados por Jornada:
 Jornada 1:
-Barca11 vs 11Barca
-Cisneros11 vs 11Cisneros
-Eibar11 vs 11Eibar
-Hernani Club11 vs 11Hernani Club
-Las Abelles11 vs 11Las Abelles
-Pozuelo11 vs 11Pozuelo
-Barca11 vs 1Barca
-Cisneros11 vs 1Cisneros
-Eibar11 vs 1Eibar
-Hernani Club11 vs 1Hernani Club
-Las Abelles11 vs 1Las Abelles
-Pozuelo11 vs 1Pozuelo
-Barca1 vs 1Barca
-Cisneros1 vs 1Cisneros
-Eibar1 vs 1Eibar
-Hernani Club1 vs 1Hernani Club
-Las Abelles1 vs 1Las Abelles
-Pozuelo1 vs 1Pozuelo
+Barca 1 vs Las Abelles 2
+Cisneros 2 vs Labiana 2
+Eibar 22 vs Hernani Club 2
 
 Jornada 2:
-Barca1 vs 1Barca
-Cisneros1 vs 1Cisneros
-Eibar1 vs 1Eibar
-Hernani Club1 vs 1Hernani Club
-Las Abelles1 vs 1Las Abelles
-Pozuelo1 vs 1Pozuelo
-Barca1 vs 1Barca
-Cisneros1 vs 1Cisneros
-Eibar1 vs 1Eibar
-Hernani Club1 vs 1Hernani Club
-Las Abelles1 vs 1Las Abelles
-Pozuelo1 vs 1Pozuelo
-Barca11 vs 1Barca
-Cisneros11 vs 1Cisneros
-Eibar11 vs 1Eibar
-Hernani Club11 vs 1Hernani Club
-Las Abelles11 vs 1Las Abelles
-Pozuelo11 vs 1Pozuelo
+Barca 2 vs Labiana 22
+Las Abelles 2 vs Hernani Club 2
+Cisneros 3 vs Eibar 3
 
 Jornada 3:
-Barca1 vs 1Barca
-Cisneros1 vs 1Cisneros
-Eibar1 vs 1Eibar
-Hernani Club1 vs 1Hernani Club
-Las Abelles1 vs 1Las Abelles
-Pozuelo1 vs 1Pozuelo
-Barca1 vs 2Barca
-Cisneros1 vs 2Cisneros
-Eibar1 vs 2Eibar
-Hernani Club1 vs 2Hernani Club
-Las Abelles1 vs 2Las Abelles
-Pozuelo1 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Barca 4 vs Hernani Club 43
+Labiana 3 vs Eibar 43
+Las Abelles 3 vs Cisneros 2
 
 Jornada 4:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Barca 2 vs Eibar 2
+Hernani Club 2 vs Cisneros 2
+Labiana 2 vs Las Abelles 2
 
 Jornada 5:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Barca 2 vs Cisneros 2
+Eibar 2 vs Las Abelles 22
+Hernani Club 2 vs Labiana 2
 
 Jornada 6:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Las Abelles 2 vs Barca 2
+Labiana 2 vs Cisneros 2
+Hernani Club 2 vs Eibar 3
 
 Jornada 7:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Labiana 1 vs Barca 1
+Hernani Club 1 vs Las Abelles 1
+Eibar 1 vs Cisneros 1
 
 Jornada 8:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca22 vs 2Barca
-Cisneros22 vs 2Cisneros
-Eibar22 vs 2Eibar
-Hernani Club22 vs 2Hernani Club
-Las Abelles22 vs 2Las Abelles
-Pozuelo22 vs 2Pozuelo
+Hernani Club 2 vs Barca 2
+Eibar 2 vs Labiana 2
+Cisneros 2 vs Las Abelles 2
 
 Jornada 9:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Eibar 2 vs Barca 22
+Cisneros 22 vs Hernani Club 22
+Las Abelles 22 vs Labiana 22
 
 Jornada 10:
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
-Barca2 vs 2Barca
-Cisneros2 vs 2Cisneros
-Eibar2 vs 2Eibar
-Hernani Club2 vs 2Hernani Club
-Las Abelles2 vs 2Las Abelles
-Pozuelo2 vs 2Pozuelo
+Cisneros 22 vs Barca 22
+Las Abelles 22 vs Eibar 22
+Labiana 22 vs Hernani Club 22
 

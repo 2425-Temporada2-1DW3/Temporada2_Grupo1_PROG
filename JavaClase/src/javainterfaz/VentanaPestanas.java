@@ -252,81 +252,62 @@ public class VentanaPestanas extends JFrame {
     private void guardarTemporada(String temporada) {
         // Obtener la temporada seleccionada del comboBoxTemporadas
         String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
-        
+
         // Extraer solo el año de la temporada seleccionada (por ejemplo "Temporada 2024" -> "2024")
         String año = temporadaSeleccionada.replaceAll("[^0-9]", "");
-        
-        String archivo = "temporada_" + temporada + ".txt"; // Nombre del archivo basado en el año
+
+        String archivo = "temporada_" + año + ".txt"; // Nombre del archivo basado en el año
 
         // Crea un archivo si no existe
         File f = new File(archivo);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
             // Escribe el encabezado de la temporada
-            writer.write("Temporada: " + temporada);
-            writer.newLine(); // Salto de línea
-            writer.write("Estado: Finalizada"); // Agregar estado de finalización
+            writer.write("Temporada: " + temporadaSeleccionada);
+            writer.newLine();
+            writer.write("Estado: Finalizada");
+            writer.newLine();
             writer.newLine();
 
-            // Escribir los nombres de los equipos
-            writer.write("Equipos:");
+            // Escribir los nombres de los equipos participantes
+            writer.write("Equipos Participantes:");
             writer.newLine();
             for (Equipo equipo : equipos) {
-                writer.write("EQUIPO " + equipo.getNombre());  // Guardar el nombre de cada equipo precedido por "EQUIPO"
+                writer.write("- " + equipo.getNombre());
                 writer.newLine();
             }
+            writer.newLine();
 
-            // Recorre todas las jornadas y guarda los resultados
+            // Escribir los resultados de cada jornada
+            writer.write("Resultados por Jornada:");
+            writer.newLine();
             for (int i = 0; i < tabbedPane.getTabCount(); i++) {
-                JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(i);
-                JPanel panel = (JPanel) scrollPanel.getViewport().getView();
-
                 writer.write("Jornada " + (i + 1) + ":");
                 writer.newLine();
 
-                // Recorre todos los resultados de la jornada y guárdalos en el archivo
-                for (Component comp : panel.getComponents()) {
-                    if (comp instanceof JPanel) {
-                        JPanel partidoPanel = (JPanel) comp;
+                // Obtener los resultados de la jornada
+                List<Partido> partidos = calendarioGenerado.get(i);
+                ArrayList<String[]> jornadaResultados = resultados.get(i);
 
-                        // Recorre los componentes de cada partido (campos de texto)
-                        JTextField equipo1txt = null;
-                        JTextField equipo2txt = null;
+                for (int j = 0; j < partidos.size(); j++) {
+                    Partido partido = partidos.get(j);
+                    String[] resultado = jornadaResultados.get(j);
 
-                        for (Component subComp : partidoPanel.getComponents()) {
-                            if (subComp instanceof JTextField) {
-                                if (equipo1txt == null) {
-                                    equipo1txt = (JTextField) subComp;
-                                } else {
-                                    equipo2txt = (JTextField) subComp;
-                                }
-                            }
-                        }
-
-                        for (Equipo equipo : equipos) {
-                        // Si los campos de texto están presentes, escribe el resultado en el archivo
-                        if (equipo1txt != null && equipo2txt != null) {
-                            // Formato solicitado para guardar los resultados
-                            String resultado =    equipo1txt.getText() + " vs " + equipo2txt.getText()  ;
-                            writer.write(resultado);
-                            writer.newLine(); // Salto de línea
-                        }
-                    }
-                    }
+                    // Formato: Equipo1 (resultado1) vs Equipo2 (resultado2)
+                    String lineaResultado = partido.getlocal().getNombre() + " " + resultado[0] + " vs " +
+                                            partido.getvisitante().getNombre() + " " + resultado[1] + "";
+                    writer.write(lineaResultado);
+                    writer.newLine();
                 }
-
-                writer.newLine(); // Salto de línea entre jornadas
+                writer.newLine();
             }
 
             // Mensaje de confirmación
-            JOptionPane.showMessageDialog(this, "Temporada " + temporada + " guardada correctamente.");
+            JOptionPane.showMessageDialog(this, "Temporada " + temporadaSeleccionada + " guardada correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al guardar la temporada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
-
 
     
     private void finalizarTemporada() {

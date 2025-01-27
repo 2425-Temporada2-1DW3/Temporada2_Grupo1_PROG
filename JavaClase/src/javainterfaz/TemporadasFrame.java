@@ -18,12 +18,18 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 
-//VENTANA CLASIFICACION CREADA AUTOMATICAMENTE 
-class ClasificacionWindow extends JFrame {
-	
-    private static final long serialVersionUID = 1L;
 
-    public ClasificacionWindow(List<String> equiposSeleccionados) {
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+ class ClasificacionWindow extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private List<Clasificacion> clasificaciones;
+
+    public ClasificacionWindow(List<Clasificacion> clasificaciones) {
         setTitle("Clasificación de Equipos");
         setSize(800, 500);
         setLocationRelativeTo(null);
@@ -33,19 +39,34 @@ class ClasificacionWindow extends JFrame {
         JPanel panelClasificacion = new JPanel();
         panelClasificacion.setLayout(new BoxLayout(panelClasificacion, BoxLayout.Y_AXIS));
 
-        // Mostrar los equipos seleccionados con puntos (inicialmente 0)
-        for (String equipo : equiposSeleccionados) {
-            JPanel panelEquipo = new JPanel();
-            panelEquipo.setLayout(new BorderLayout());
-            panelEquipo.add(new JLabel(equipo), BorderLayout.WEST); // Nombre del equipo
-            panelEquipo.add(new JLabel("0 Puntos"), BorderLayout.EAST); // Puntos iniciales
-            panelClasificacion.add(panelEquipo);
-            
-        } 
+        // Mostrar los equipos con sus puntos actualizados
+        for (Clasificacion clasificacion : clasificaciones) {
+            // Obtener la lista de equipos en esta clasificación
+            List<Equipo> equipos = clasificacion.obtenerClasificacion();
+
+            // Crear un panel para cada equipo
+            for (Equipo equipo : equipos) {
+                JPanel panelEquipo = new JPanel();
+                panelEquipo.setLayout(new BorderLayout());
+                panelEquipo.add(new JLabel(equipo.getNombre()), BorderLayout.WEST); // Nombre del equipo
+                panelEquipo.add(new JLabel(equipo.getPuntos() + " Puntos"), BorderLayout.EAST); // Puntos actuales
+                panelClasificacion.add(panelEquipo);
+            }
+        }
+
         JScrollPane scrollPane = new JScrollPane(panelClasificacion);
-        add(scrollPane);  
+        add(scrollPane);
+    }
+
+    // Método para actualizar la clasificación
+    public void actualizarClasificacion(List<Clasificacion> clasificaciones) {
+        this.clasificaciones = clasificaciones;
+        revalidate();
+        repaint();
     }
 }
+
+
 
 // Clase principal para la interfaz gráfica
 public class TemporadasFrame extends JFrame {

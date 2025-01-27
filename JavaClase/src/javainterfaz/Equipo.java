@@ -44,6 +44,10 @@ class Equipo implements Serializable,  Comparable<Equipo>{
         return jugadores;
     }
     
+    public void sumarPuntos(int puntos) {
+        this.puntos += puntos;
+    }
+    
 	public int compareTo(Equipo other) {
 		// Compare based on points, goal difference, and then goals scored
 		if (this.puntos != other.puntos) {
