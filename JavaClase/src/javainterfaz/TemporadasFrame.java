@@ -1,108 +1,35 @@
-
 package javainterfaz;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
-	// Clase Equipo
-	class Equipo {
-    private String nombre;
-    private List<String> jugadores;
 
-    public Equipo(String nombre, List<String> jugadores) {
-        this.nombre = nombre;
-        this.jugadores = jugadores;
-    }
 
-    public String getNombre() {
-        return nombre;
-    }
 
-    public List<String> getJugadores() {
-        return jugadores;
-    }
-}
-
-	// Clase Temporada
-	class Temporada {
-    private int anio;
-    private List<Equipo> equipos;
-
-    public Temporada(int anio, List<Equipo> equipos) {
-        this.anio = anio;
-        this.equipos = equipos;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public List<Equipo> getEquipos() {
-        return equipos;
-    }
-    
-    //CLASE CLASIFICACION
-    class Clasificacion {
-        private String nombreEquipo;
-        private int puntos;
-
-        public Clasificacion(String nombreEquipo) {
-            this.nombreEquipo = nombreEquipo;
-            this.puntos = 0; // Inicialmente, los equipos tienen 0 puntos
-        }
-
-        public String getNombreEquipo() {
-            return nombreEquipo;
-        }
-
-        public int getPuntos() {
-            return puntos;
-        }
-
-        public void setPuntos(int puntos) {
-            this.puntos = puntos;
-        }
-    
-}}
-//VENTANA CLASIFICACION CREADA AUTOMATICAMENTE 
-class ClasificacionWindow extends JFrame {
-    private static final long serialVersionUID = 1L;
-
-    public ClasificacionWindow(List<String> equiposSeleccionados) {
-        setTitle("Clasificación de Equipos");
-        setSize(800, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // Crear un panel para mostrar la clasificación
-        JPanel panelClasificacion = new JPanel();
-        panelClasificacion.setLayout(new BoxLayout(panelClasificacion, BoxLayout.Y_AXIS));
-
-        // Mostrar los equipos seleccionados con puntos (inicialmente 0)
-        for (String equipo : equiposSeleccionados) {
-            JPanel panelEquipo = new JPanel();
-            panelEquipo.setLayout(new BorderLayout());
-            panelEquipo.add(new JLabel(equipo), BorderLayout.WEST); // Nombre del equipo
-            panelEquipo.add(new JLabel("0 Puntos"), BorderLayout.EAST); // Puntos iniciales
-            panelClasificacion.add(panelEquipo);
-            
-        }
-
-        JScrollPane scrollPane = new JScrollPane(panelClasificacion);
-        add(scrollPane);
-        
-      
-		
-    }
-}
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 
 
 // Clase principal para la interfaz gráfica
-public class TemporadasFrame extends JFrame {
+public class TemporadasFrame extends JFrame implements ActionListener {
+	
     private static final long serialVersionUID = 1L;
     private JComboBox<String> comboBoxTemporadas;
     private JPanel panelEquipos;
@@ -115,9 +42,23 @@ public class TemporadasFrame extends JFrame {
     private JSeparator separator_1;
     private JButton btnCrearTemporada;
     private JTabbedPane tabbedPane;
+    private List<String> equiposSeleccionadosList = new ArrayList<>();
+    private List<Equipo> equipos2023;
 
+    
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                TemporadasFrame frame = new TemporadasFrame();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public TemporadasFrame() {
+    	
         // Configuración básica del frame
         setTitle("Gestión de Temporadas");
         setSize(800, 500);
@@ -125,7 +66,7 @@ public class TemporadasFrame extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout(10, 10));
 
-        // Inicializar datos de ejemplo
+        // Inicializar datos de ejemplo-
         inicializarDatos();
 
         // Panel superior con ComboBox de temporadas
@@ -139,9 +80,12 @@ public class TemporadasFrame extends JFrame {
         panelNorte.add(comboBoxTemporadas);
         getContentPane().add(panelNorte, BorderLayout.NORTH);
         
+        // Cargar las temporadas
+        cargarTemporada("2024");
+        
         separator_1 = new JSeparator();
         panelNorte.add(separator_1);
-        
+      
         separator = new JSeparator();
         panelNorte.add(separator);
         
@@ -178,11 +122,28 @@ public class TemporadasFrame extends JFrame {
         btnConfirmar = new JButton("Confirmar Equipos");
         btnConfirmar.addActionListener(e -> confirmarSeleccionEquipos());
         btnConfirmar.addActionListener(e -> {
-            // Abrir la ventana con las pestañas
-            VentanaPestanas ventanaPestanas = new VentanaPestanas();
-            ventanaPestanas.setVisible(true);
-        });
-      
+        	
+        	 long equiposSeleccionados = checkboxesEquipos.stream().filter(JCheckBox::isSelected).count();
+        	    
+        	    // Si no se han seleccionado exactamente 6 equipos, mostrar un mensaje y no crear el TabbedPane
+        	    if (equiposSeleccionados != 6) {
+        	        JOptionPane.showMessageDialog(this, "Debes seleccionar exactamente 6 equipos para continuar.", "Selección incorrecta", JOptionPane.WARNING_MESSAGE);
+        	        return; // Detener el flujo y no crear la ventana con las pestañas
+        	    }
+        	    
+        	    
+        	    List<Equipo> equiposSeleccionados1 = checkboxesEquipos.stream()
+        	            .filter(JCheckBox::isSelected)
+        	            .map(checkbox -> obtenerEquipoPorNombre(checkbox.getText()))
+        	            .collect(Collectors.toList());
+
+        	        // Crear la ventana con los equipos seleccionados
+        	        VentanaPestanas ventanaPestanas = new VentanaPestanas(comboBoxTemporadas, equiposSeleccionados1);
+        	        ventanaPestanas.setVisible(true);
+        	        
+        	        System.out.println("Equipos seleccionados: " + equiposSeleccionados1);
+        	        System.out.println("Creando ventana con los equipos seleccionados...");
+        	    });
         
         getContentPane().add(btnConfirmar, BorderLayout.SOUTH);
 
@@ -190,9 +151,21 @@ public class TemporadasFrame extends JFrame {
         actualizarEquipos();
     }
     
-   
+    private Equipo obtenerEquipoPorNombre(String nombre) {
+        for (Temporada temporada : temporadas) {
+            for (Equipo equipo : temporada.getEquipos()) {
+                if (equipo.getNombre().equals(nombre)) {
+                    return equipo;
+                }
+            }
+        }
+        return null; // En caso de que no se encuentre el equipo
+    }
 
+    
+    //inicializar datos
     private void inicializarDatos() {
+    	
         temporadas = new ArrayList<>();
 
         // Temporada 2023
@@ -204,7 +177,12 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Unio Esportiva", Arrays.asList("Alberto Millán", "Fran Leonori", "Franceso Virgolini", "Ramón Pérez", "Christantus Uche")),
             new Equipo("Las Abelles", Arrays.asList("José Bordalás", "Haritz Pacheco", "Andrés Fernández", "Juanjo Jiménez", "Erik Prieto"))
         );
+
+		// Agregar Temporada
         temporadas.add(new Temporada(2023, equipos2023));
+        
+        // Ordenar los equipos seleccionados alfabéticamente (A-Z) COMPARANDO EL NOMBRE
+        Collections.sort(equipos2023, Comparator.comparing(Equipo::getNombre));
 
         // Temporada 2024
         List<Equipo> equipos2024 = Arrays.asList(
@@ -214,17 +192,25 @@ public class TemporadasFrame extends JFrame {
             new Equipo("Unio Esportiva", Arrays.asList("Manuel Turizo", "Alberto Millán", "Ramón Pérez", "Christantus Uche", "Franceso Virgolini")),
             new Equipo("Barca", Arrays.asList("Albert Rivera", "Oscar Mato", "Iñigo Errejón", "Echenique", "Xavier Cebrián")),
             new Equipo("Cisneros", Arrays.asList("Pepe Viyuela", "Antonio Luque", "Nico Jr", "Julian Álvarez", "Benito Antonio")),
-            new Equipo("Eibar", Arrays.asList("Iosu Cabrera", "Endika Sanchez", "Danel Santiago", "Asier Carabantes", "Markel Larreina")),
+            new Equipo("Eibar", Arrays.asList("Martin Villalón", "Urko Ruiz", "Danel Santiago", "Asier Carabantes", "Markel Larreina")),
             new Equipo("Hernani Club", Arrays.asList("Gorka Guruzeta", "Oihan Sancet", "Dudu Gutiérrez", "Juanlu", "Unai Simón"))
         );
+
+		// Agregar Temporada
         temporadas.add(new Temporada(2024, equipos2024));
+        // Ordenar los equipos seleccionados alfabéticamente (A-Z) COMPARANDO EL NOMBRE
+        Collections.sort(equipos2024, Comparator.comparing(Equipo::getNombre));
     }
 
     private void actualizarEquipos() {
+    	
         panelEquipos.removeAll();
         panelJugadores.removeAll();
         checkboxesEquipos = new ArrayList<>();
 
+        // Limpiar la lista de equipos seleccionados
+        equiposSeleccionadosList.clear();
+        
         int temporadaSeleccionada = comboBoxTemporadas.getSelectedIndex();
 
         // Obtener la temporada seleccionada de la lista
@@ -245,19 +231,25 @@ public class TemporadasFrame extends JFrame {
                     panelEquipo.add(lblJugador);
                 }
 
+                
                 // Añadir el panel del equipo al panel de jugadores
                 panelJugadores.add(panelEquipo);
             }
 
             // Ocultar el botón "Confirmar Equipos" para la temporada 2023
             btnConfirmar.setVisible(false);
+            
         } else { // Otras temporadas: mostrar equipos con checkboxes
+        	
             for (Equipo equipo : temporada.getEquipos()) {
                 JCheckBox checkBox = new JCheckBox(equipo.getNombre());
                 checkBox.addActionListener(e -> actualizarJugadores());
                 checkBox.addActionListener(e -> limitarSeleccionEquipos(checkBox));
                 checkboxesEquipos.add(checkBox);
                 panelEquipos.add(checkBox);
+                
+                // Iterar sobre los equipos seleccionados
+               
             }
 
             // Mostrar el botón "Confirmar Equipos" para temporadas diferentes a 2023
@@ -271,56 +263,48 @@ public class TemporadasFrame extends JFrame {
         panelJugadores.repaint();
     }
     
-    private void crearPestanas() {
-        for (int i = 1; i <= 10; i++) {
-            // Crear un panel para cada pestaña
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            tabbedPane.addTab("Clasificación", panel);
-
-            // Agregar contenido al panel de cada pestaña
-            panel.add(new JLabel("Contenido de la pestaña " + i));
-            panel.add(new JTextArea("Este es el contenido de la pestaña " + i));
-
-            // Añadir el panel a la pestaña
-            JScrollPane scrollPanel = new JScrollPane(panel);
-            tabbedPane.addTab("Pestaña " + i, scrollPanel);
-        }
-    }
-
+    
+    
     
     private void limitarSeleccionEquipos(JCheckBox checkBox) {
+    	
         // Contar cuántos equipos están seleccionados
         long equiposSeleccionados = checkboxesEquipos.stream().filter(JCheckBox::isSelected).count();
 
         if (equiposSeleccionados > 6) {
+        	
             // Desmarcar el checkbox si se seleccionan más de 6
             checkBox.setSelected(false);
             JOptionPane.showMessageDialog(this, "No puedes seleccionar más de 6 equipos.", "Límite alcanzado", JOptionPane.WARNING_MESSAGE);
+            
         } else if (equiposSeleccionados == 6) {
+        	
             // Deshabilitar los checkboxes si ya se han seleccionado 6 equipos
             for (JCheckBox cb : checkboxesEquipos) {
+            	
                 if (!cb.isSelected()) {
                     cb.setEnabled(false);  // Deshabilitar checkbox no seleccionado
                 }
             }
+            
         } else {
+        	
             // Habilitar todos los checkboxes si se han desmarcado algunos
             for (JCheckBox cb : checkboxesEquipos) {
                 cb.setEnabled(true);  // Habilitar checkbox
+                
             }
         }
     }
     
     private void crearNuevaTemporada() {
+    	
     	// Crear campos de texto para ingresar el año y los nombres de los equipos
         JTextField campoAnio = new JTextField();
         JTextField campoEquipos = new JTextField();
 
-        int opcion = JOptionPane.showConfirmDialog(
-            this,
-            new Object[]{
-                "Año de la Temporada:", campoAnio,
+        int opcion = JOptionPane.showConfirmDialog(this,new Object[]{
+        		"Año de la Temporada:", campoAnio,
                 "Nombres de los Equipos (separados por comas):", campoEquipos
             },
             "Crear Nueva Temporada",
@@ -332,6 +316,13 @@ public class TemporadasFrame extends JFrame {
             try {
             	// Obtener el año y los nombres de los equipos ingresados
                 int anio = Integer.parseInt(campoAnio.getText().trim());
+                
+                // Validar que el año sea 2025 o mayor
+                if (anio < 2025) {
+                    JOptionPane.showMessageDialog(this, "El año de la temporada debe ser 2025 o posterior.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el año no cumple con la condición
+                }
+                
                 String[] nombresEquipos = campoEquipos.getText().trim().split(",");
                 
                 // Crear una lista para almacenar los equipos
@@ -370,6 +361,34 @@ public class TemporadasFrame extends JFrame {
         }
     }
 
+    private void cargarTemporada(String temporada) {
+    	
+    	 boolean esFinalizada = false;
+    	 
+        String archivo = "temporada_" + temporada + ".txt";  // El archivo correspondiente
+
+        // Verifica si el archivo existe
+        File file = new File(archivo);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                // Aquí puedes leer los datos del archivo y cargarlos en tu aplicación
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    // Procesa cada línea leída del archivo
+                    System.out.println(linea);  // Ejemplo: mostrar contenido
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Si el archivo no existe, muestra un mensaje o procede sin hacer nada
+            System.out.println("El archivo de la temporada no existe.");
+        }
+    }
+
+
+    
     private void actualizarJugadores() {
         // Limpiar el panel de jugadores antes de añadir nuevos jugadores
         panelJugadores.removeAll();
@@ -399,6 +418,7 @@ public class TemporadasFrame extends JFrame {
                                 lblJugador.setHorizontalAlignment(SwingConstants.CENTER);
                                 lblJugador.setFont(new Font("Arial", Font.PLAIN, 14));
                                 panelEquipo.add(lblJugador);
+                                panelEquipo.add(lblJugador);
                             }
 
                             // Añadir el panel del equipo al panel de jugadores
@@ -427,7 +447,6 @@ public class TemporadasFrame extends JFrame {
         return jugadores;
     }
 
-
     private void confirmarSeleccionEquipos() {
         // Contar cuántos equipos están seleccionados
         long equiposSeleccionados = checkboxesEquipos.stream().filter(JCheckBox::isSelected).count();
@@ -441,12 +460,14 @@ public class TemporadasFrame extends JFrame {
                 }
             }
 
+            // Ordenar los equipos seleccionados alfabéticamente (A-Z)
+            Collections.sort(equiposSeleccionadosList);
+            
             // Crear una nueva ventana para mostrar la clasificación
             JFrame clasificacionFrame = new JFrame("Clasificación de Equipos");
-            clasificacionFrame.setSize(600, 300);
+            clasificacionFrame.setSize(500, 300);
             clasificacionFrame.setLocationRelativeTo(null);
             clasificacionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            
 
             // Definir las columnas de la tabla
             String[] columnas = {"Equipo", "Puntos", "Victorias", "Derrotas"};
@@ -464,40 +485,140 @@ public class TemporadasFrame extends JFrame {
             JTable tablaClasificacion = new JTable(datos, columnas);
             tablaClasificacion.setFillsViewportHeight(true);
             tablaClasificacion.getTableHeader().setReorderingAllowed(false); // Deshabilitar reordenamiento
+            tablaClasificacion.setDefaultEditor(Object.class, null);
 
             // Crear un panel con scroll para la tabla
             JScrollPane scrollPane = new JScrollPane(tablaClasificacion);
-            
+
+            // Crear los botones de exportación
+            JButton btnExportarXML = new JButton("Exportar a XML");
+            btnExportarXML.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    exportarXML(equiposSeleccionadosList, datos);
+                }
+            });
+
+            JButton btnExportarPDF = new JButton("Exportar a PDF");
+            btnExportarPDF.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    exportarPDF(equiposSeleccionadosList, datos);
+                }
+            });
+
+            // Crear un panel para los botones de exportación
+            JPanel panelBotones = new JPanel();
+            panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER)); // Alinear los botones a la derecha
+            panelBotones.add(btnExportarXML);
+            panelBotones.add(btnExportarPDF);
+
             // Configurar la ventana
-            clasificacionFrame.add(scrollPane);
+            clasificacionFrame.setLayout(new BorderLayout()); // Usar BorderLayout para el contenedor principal
+            clasificacionFrame.add(scrollPane, BorderLayout.CENTER); // Agregar la tabla al centro
+            clasificacionFrame.add(panelBotones, BorderLayout.SOUTH); // Agregar el panel con los botones en la parte baja
+
             clasificacionFrame.setVisible(true);
-        } else {
-            // Si no se han seleccionado exactamente 6 equipos, mostrar un mensaje de advertencia
-            JOptionPane.showMessageDialog(this, "Debes seleccionar exactamente 6 equipos para confirmar.", "Selección incorrecta", JOptionPane.WARNING_MESSAGE);
-        }
+            this.dispose();
+        } 
     }
 
-
+ // Método para exportar a XML
+    private void exportarXML(List<String> equiposSeleccionados, Object[][] datos) {
+//        try {
+//            // Crear documento XML
+//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//            Document doc = docBuilder.newDocument();
+//
+//            // Crear el nodo raíz
+//            Element raiz = doc.createElement("Clasificacion");
+//            doc.appendChild(raiz);
+//
+//            // Agregar los equipos
+//            for (int i = 0; i < equiposSeleccionados.size(); i++) {
+//                Element equipo = doc.createElement("Equipo");
+//                raiz.appendChild(equipo);
+//
+//                Element nombre = doc.createElement("Nombre");
+//                nombre.appendChild(doc.createTextNode(equiposSeleccionados.get(i)));
+//                equipo.appendChild(nombre);
+//
+//                Element puntos = doc.createElement("Puntos");
+//                puntos.appendChild(doc.createTextNode(String.valueOf(datos[i][1])));
+//                equipo.appendChild(puntos);
+//
+//                Element victorias = doc.createElement("Victorias");
+//                victorias.appendChild(doc.createTextNode(String.valueOf(datos[i][2])));
+//                equipo.appendChild(victorias);
+//
+//                Element derrotas = doc.createElement("Derrotas");
+//                derrotas.appendChild(doc.createTextNode(String.valueOf(datos[i][3])));
+//                equipo.appendChild(derrotas);
+//            }
+//
+//            // Guardar el archivo XML
+//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//            Transformer transformer = transformerFactory.newTransformer();
+//            DOMSource source = new DOMSource(doc);
+//            StreamResult result = new StreamResult(new File("clasificacion.xml"));
+//            transformer.transform(source, result);
+//
+//            JOptionPane.showMessageDialog(null, "Datos exportados a XML con éxito.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+   }
     
+    private void exportarPDF(List<String> equiposSeleccionados, Object[][] datos) {  
+//    	try {
+//            // Crear documento PDF
+//            Document document = new Document();
+//            PdfWriter.getInstance(document, new FileOutputStream("clasificacion.pdf"));
+//            document.open();
+//
+//            // Título del documento
+//            document.add(new Paragraph("Clasificación de Equipos"));
+//
+//            // Crear tabla para el PDF
+//            PdfPTable table = new PdfPTable(4); // 4 columnas
+//            table.addCell("Equipo");
+//            table.addCell("Puntos");
+//            table.addCell("Victorias");
+//            table.addCell("Derrotas");
+//
+//            // Agregar datos a la tabla
+//            for (int i = 0; i < equiposSeleccionados.size(); i++) {
+//    			table.addCell(equiposSeleccionados.get(i));
+//                table.addCell(String.valueOf(datos[i][1]));
+//                table.addCell(String.valueOf(datos[i][2]));
+//                table.addCell(String.valueOf(datos[i][3]));
+//            }
+//
+//            // Agregar tabla al documento
+//            document.add(table);
+//            document.close();
+//
+//            JOptionPane.showMessageDialog(null, "Datos exportados a PDF con éxito.");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//    }
+  }
+
     private void accederALaPaginaPrincipal() {
         // Crear la ventana de la página principal (MainPage) y mostrarla
     	 int permiso = 0; // Cambia el valor del permiso según sea necesario
     	    mainPage vh = new mainPage(permiso);
       
-        vh.setVisible(true);
+    	    vh.setVisible(true);
 
         // Cerrar la ventana actual (TemporadasFrame) si lo deseas
         this.dispose();
     }
-    
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                TemporadasFrame frame = new TemporadasFrame();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

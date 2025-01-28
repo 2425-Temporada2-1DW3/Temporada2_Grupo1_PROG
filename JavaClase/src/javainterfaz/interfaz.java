@@ -1,3 +1,4 @@
+
 package javainterfaz;
 
 import java.awt.EventQueue;
@@ -58,10 +59,15 @@ public class interfaz extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 
+
+	//interfazzz
+
+ 
+
 	public interfaz() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
+		setSize(715, 583);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
@@ -146,6 +152,22 @@ public class interfaz extends JFrame implements ActionListener {
 		errorLabel = new JLabel("New label");
 		errorLabel.setForeground(new Color(255, 0, 0));
 		errorLabel.setVisible(false);
+		
+		JToggleButton tglbtnRegistrarse = new JToggleButton("Registrarse");
+		tglbtnRegistrarse.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // Abrir la ventana de registrar usuario
+		        RegistrarUsuarios registrarUsuarios = new RegistrarUsuarios();
+		        registrarUsuarios.setVisible(true);
+
+		        // Cerrar la ventana actual de login
+		        setVisible(false); // Esto hace que la ventana de login desaparezca
+		    }
+		});
+		tglbtnRegistrarse.setForeground(Color.BLACK);
+		tglbtnRegistrarse.setFont(new Font("Verdana", Font.BOLD, 15));
+		tglbtnRegistrarse.setBackground(new Color(51, 153, 204));
 
 		gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -154,6 +176,11 @@ public class interfaz extends JFrame implements ActionListener {
 					.addComponent(lblLogin, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
 					.addGap(71))
 				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(40)
+					.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(39, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(16)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(50)
@@ -162,18 +189,16 @@ public class interfaz extends JFrame implements ActionListener {
 								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblContrasena, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(31)
-							.addComponent(tglbtnNewToggleButton, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(63)
-							.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+							.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(31)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(tglbtnRegistrarse)
+								.addComponent(tglbtnNewToggleButton, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))))
+					.addPreferredGap(ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
 					.addComponent(lblimagen, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
 					.addGap(59))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(40)
-					.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(39, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -193,95 +218,82 @@ public class interfaz extends JFrame implements ActionListener {
 							.addComponent(lblContrasena)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(tglbtnNewToggleButton)))
-					.addContainerGap(138, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tglbtnNewToggleButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18)
+					.addComponent(tglbtnRegistrarse, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(91, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
+	    Object o = e.getSource();
 
-		if (o == tglbtnNewToggleButton) {
-			// Cuando pulsa aceptar
+	    if (o == tglbtnNewToggleButton) {
+	        // Cuando pulsa aceptar
 
-			String admincorrecto = "admin";
-			String admincontrasena = "admin123";
+	        // Usuarios hardcodeados para admin, arbitro y usuario
+	        String admincorrecto = "admin";
+	        String admincontrasena = "admin123";
 
-			String arbitrocorrecto = "arbitro";
-			String arbitrocontrasena = "arbitro123";
+	        String arbitrocorrecto = "arbitro";
+	        String arbitrocontrasena = "arbitro123";
 
-			String usuariocorrecto = "usuario";
-			String usuariocontrasena = "usuario123";
+	        String usuariocorrecto = "usuario";
+	        String usuariocontrasena = "usuario123";
 
-			String usuario = formattedTextField.getText().replaceAll("\\s+", "");
-			String contrasena = new String(passwordField.getPassword()).replaceAll("\\s+", "");
+	        // Datos introducidos por el usuario
+	        String usuario = formattedTextField.getText().replaceAll("\\s+", "");
+	        String contrasena = new String(passwordField.getPassword()).replaceAll("\\s+", "");
 
-			// Compruebo si los datos son correctos
-
-			if (usuario.equals("") || contrasena.equals("")) { // comprueba que no haya campos en blanco
-				errorLabel.setText("Campos en blanco o espacios introducidos");
-				errorLabel.setVisible(true);
-			} else if (usuario.equals(usuariocorrecto) && contrasena.equals(usuariocontrasena)) {
-
-				permiso = 0;
-
-				//TemporadasFrame t = new TemporadasFrame();
-				
-				mainPage vh = new mainPage(permiso);
-
-				//t.setVisible(true);
-				vh.setVisible(true);
-				this.setVisible(false);
-
-				this.dispose();
-
-			}
-
-			else if (usuario.equals(admincorrecto) && contrasena.equals(admincontrasena)) {
-
-				permiso = 2;
-
-				//mainPage vh = new mainPage(permiso);
-				//vh.setVisible(true);
-				
-				TemporadasFrame t = new TemporadasFrame();
-				t.setVisible(true);
-				
-				this.setVisible(false);
-
-				this.dispose();
-
-			}
-
-			else if (usuario.equals(arbitrocorrecto) && contrasena.equals(arbitrocontrasena)) {
-
-				permiso = 1;
-
-				mainPage vh = new mainPage(permiso);
-				vh.setVisible(true);
-				
-				//TemporadasFrame t = new TemporadasFrame();
-				//t.setVisible(true);
-
-				this.setVisible(false);
-
-				this.dispose();
-			}
-
-			else if ((usuario.equals(usuariocorrecto)) || (usuario.equals(admincorrecto))
-					|| (usuario.equals(arbitrocorrecto))) {
-				errorLabel.setText("Contraseña incorrecta");
-				errorLabel.setVisible(true);
-			}
-
-			else {
-				errorLabel.setText("Usuario no existente");
-				errorLabel.setVisible(true);
-			}
-		}
+	        // Verifica si los campos no están vacíos
+	        if (usuario.equals("") || contrasena.equals("")) {
+	            errorLabel.setText("Campos en blanco o espacios introducidos");
+	            errorLabel.setVisible(true);
+	        } else {
+	            // Si el usuario es uno de los hardcodeados, validar con sus contraseñas
+	            if (usuario.equals(admincorrecto) && contrasena.equals(admincontrasena)) {
+	                permiso = 2;
+	                TemporadasFrame vh = new TemporadasFrame();
+	                vh.setVisible(true);
+	                this.setVisible(false);
+	                this.dispose();
+	            } else if (usuario.equals(arbitrocorrecto) && contrasena.equals(arbitrocontrasena)) {
+	                permiso = 1;
+	                mainPage vh = new mainPage(permiso);
+	                vh.setVisible(true);
+	                this.setVisible(false);
+	                this.dispose();
+	            } else if (usuario.equals(usuariocorrecto) && contrasena.equals(usuariocontrasena)) {
+	                permiso = 0;
+	                mainPage vh = new mainPage(permiso);
+	                vh.setVisible(true);
+	                this.setVisible(false);
+	                this.dispose();
+	            }
+	            // Si no es uno de los usuarios hardcodeados, verificar en el archivo de usuarios registrados
+	            else if (LeerGuardarUsuarios.usuarioExiste(usuario)) {
+	                // Verificar contraseña de usuarios registrados
+	                String contrasenaGuardada = LeerGuardarUsuarios.obtenerContraseña(usuario);
+	                if (contrasena.equals(contrasenaGuardada)) {
+	                    // Asignar permisos si es un usuario registrado
+	                    permiso = 0; // Aquí puedes asignar permisos según el tipo de usuario registrado
+	                    mainPage vh = new mainPage(permiso);
+	                    vh.setVisible(true);
+	                    this.setVisible(false);
+	                    this.dispose();
+	                } else {
+	                    errorLabel.setText("Contraseña incorrecta");
+	                    errorLabel.setVisible(true);
+	                }
+	            } else {
+	                errorLabel.setText("Usuario no existente");
+	                errorLabel.setVisible(true);
+	            }
+	        }
+	    }
 	}
-	
+
 }
