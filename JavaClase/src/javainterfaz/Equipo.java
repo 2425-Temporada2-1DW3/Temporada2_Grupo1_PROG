@@ -48,6 +48,22 @@ class Equipo implements Serializable,  Comparable<Equipo>{
         this.puntos += puntos;
     }
     
+    public void resetEstadisticas() {
+        this.puntos = 0;
+        this.victorias = 0;
+        this.derrotas = 0;
+    }
+    
+    public void actualizarEstadisticas(int golesPropios, int golesRivales) {
+        if (golesPropios > golesRivales) {
+            this.puntos += 3; // Gana
+            this.victorias++;
+        } else if (golesPropios < golesRivales) {
+            this.derrotas++; // Pierde
+        }
+        // Si empatan, no hay cambios en victorias o derrotas, pero no se especificó manejo de empates.
+    }
+    
 	public int compareTo(Equipo other) {
 		// Compare based on points, goal difference, and then goals scored
 		if (this.puntos != other.puntos) {

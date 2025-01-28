@@ -25,6 +25,12 @@ public class Partido implements Serializable {
 	    public Equipo getvisitante() {
 	        return visitante;
 	    }
+	    
+	    public void jugar(int golesLocal, int golesVisitante) {
+	        // Actualizar estadísticas para local y visitante
+	        local.actualizarEstadisticas(golesLocal, golesVisitante);
+	        visitante.actualizarEstadisticas(golesVisitante, golesLocal);
+	    }
 
 	    // Método para representar el partido como String (facilita la visualización)
 	    @Override
