@@ -121,6 +121,8 @@ public class VentanaPestanas extends JFrame {
         add(panelBoton, BorderLayout.SOUTH);
     }
     
+    
+    // Muestra la ventana TemporadasFrame
     private void mostrarVentanaTemporadasFrame() {
         // Aquí debes agregar el código para abrir la ventana TemporadasFrame
         // Por ejemplo, si TemporadasFrame es otra clase con un JFrame:
@@ -128,6 +130,7 @@ public class VentanaPestanas extends JFrame {
         temporadasFrame.setVisible(true);
     }    
 
+    //GENERA LAS 10 JORNADAS 
     private void crearPestanas() {
         // Al generar el calendario solo una vez
         if (calendarioGenerado == null) {
@@ -151,6 +154,7 @@ public class VentanaPestanas extends JFrame {
         }
     }
     
+    //ROUND ROBIN
     private List<List<Partido>> generarCalendarioRoundRobin(List<Equipo> equipos) {
         List<List<Partido>> jornadas = new ArrayList<>();
         int numEquipos = equipos.size();
@@ -203,7 +207,7 @@ public class VentanaPestanas extends JFrame {
     }
 
     
-   
+   //NAVEGACION ENTRE PESTAÑAS
     private void actualizarContenidoPestana(int index) {
         // Obtener el panel correspondiente a la pestaña seleccionada
         JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(index);
@@ -290,6 +294,7 @@ public class VentanaPestanas extends JFrame {
     }
 
 
+    //FUNCION PARA CARGAR LA TEMPORADA GUARDADA 
     private void cargarTemporada(String temporada) {
         String archivo = "temporada_" + temporada + ".txt"; // El nombre del archivo con el año de la temporada
         File f = new File(archivo);
@@ -334,7 +339,7 @@ public class VentanaPestanas extends JFrame {
         }
     }
 
-    
+    //FUNCION PARA GUARDAR CADA TEMPORADA
     private void guardarTemporada(String temporada) {
         String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
         String año = temporadaSeleccionada.replaceAll("[^0-9]", "");
@@ -386,6 +391,7 @@ public class VentanaPestanas extends JFrame {
         }
     }
 
+    //COMPRUEBA SI TODOS LOS CAMPOS DE TEXTO DE LOS RESULTADOS ESTAN RELLENADOS
     private boolean todosLlenos() {
         // Recorre todas las pestañas (jornadas)
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
@@ -414,7 +420,7 @@ public class VentanaPestanas extends JFrame {
         return true; // Si no hay campos vacíos, retorna true
     }
 
-    
+    //FUNCION DEL BOTON FINALIZAR TEMPORADA
     private void finalizarTemporada() {
         boolean todosLlenos = true; // Flag para verificar si todos los campos están llenos
 
@@ -478,7 +484,7 @@ public class VentanaPestanas extends JFrame {
     }
     
     
-    
+    //FUNCION DEL BOTON ACTUALIZAR RESULTADOS
     private void actualizarResultados() {
         // Obtener los resultados de todos los campos de texto
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
