@@ -1,52 +1,62 @@
 Temporada: 2025
 Estado: Finalizada
+
+Equipos Participantes:
+- Alain
+- Unai
+- German
+- Maitane
+- Txema
+- Eli
+
+Resultados por Jornada:
 Jornada 1:
-00 vs 00
-00 vs 00
-00 vs 00
+Alain 2 vs Eli 11
+Unai 2 vs Txema 2
+German 2 vs Maitane 2
 
 Jornada 2:
-9 vs 41
-74 vs 25
-84 vs 53
+Alain 1 vs Txema 1
+Eli 2 vs Maitane 2
+Unai 2 vs German 2
 
 Jornada 3:
-16 vs 36
-88 vs 8
-97 vs 30
+Alain 2 vs Maitane 2
+Txema 2 vs German 2
+Eli 2 vs Unai 2
 
 Jornada 4:
-19 vs 37
-78 vs 31
-88 vs 85
+Alain 2 vs German 2
+Maitane 2 vs Unai 2
+Txema 2 vs Eli 2
 
 Jornada 5:
-82 vs 96
-50 vs 72
-49 vs 3
+Alain 1 vs Unai 1
+German 1 vs Eli 1
+Maitane 11 vs Txema 1
 
 Jornada 6:
-99 vs 78
-52 vs 25
-75 vs 79
+Eli 22 vs Alain 2
+Txema 2 vs Unai 2
+Maitane 2 vs German 2
 
 Jornada 7:
-22 vs 73
-71 vs 30
-36 vs 43
+Txema 2 vs Alain 2
+Maitane 2 vs Eli 2
+German 2 vs Unai 2
 
 Jornada 8:
-97 vs 62
-35 vs 28
-76 vs 84
+Maitane 2 vs Alain 1
+German 1 vs Txema 1
+Unai 1 vs Eli 1
 
 Jornada 9:
-90 vs 59
-39 vs 8
-28 vs 9
+German 2 vs Alain 2
+Unai 2 vs Maitane 2
+Eli 2 vs Txema 2
 
 Jornada 10:
-90 vs 73
-12 vs 40
-51 vs 98
+Unai 1 vs Alain 2
+Eli 2 vs German 1
+Txema 1 vs Maitane 2
 

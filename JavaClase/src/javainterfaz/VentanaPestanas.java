@@ -6,8 +6,12 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +27,9 @@ public class VentanaPestanas extends JFrame {
     private JComboBox<String> comboBoxTemporadas;
     private List<Equipo> equipos;
     private List<List<Partido>> calendarioGenerado;  // Nueva variable para almacenar el calendario fijo
+    private List<Clasificacion> clasificaciones;
+ 
+    
 
    
    
@@ -32,11 +39,42 @@ public class VentanaPestanas extends JFrame {
     	this.comboBoxTemporadas = comboBoxTemporadas;
     	 this.equipos = (equipos != null) ? equipos : new ArrayList<>(); // Asegurar que no sea null
     	
+    	 
+    	 clasificaciones = new ArrayList<>();
+    	    for (Equipo equipo : equipos) {
+    	        clasificaciones.add(new Clasificacion(equipo)); // Agregar cada equipo a la clasificación
+    	    }
+    	
         // Configuración básica de la ventana
         setTitle("Jornadas");
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                        VentanaPestanas.this,
+                        "¿Quieres guardar los datos antes de cerrar?",
+                        "Confirmar Cierre",
+                        JOptionPane.YES_NO_CANCEL_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Llama al método para guardar los datos
+                    guardarTemporada("Temporada ejemplo");  // Aquí deberías pasar la temporada que corresponda
+                    System.exit(0); // Cierra la ventana después de guardar
+                } else if (opcion == JOptionPane.NO_OPTION) {
+                    // Si el usuario no quiere guardar los datos, redirigirlo a TemporadasFrame
+                    // Esto asume que TemporadasFrame es otra ventana de la aplicación
+                    // Aquí debes asegurarte de que TemporadasFrame se abre correctamente.
+                    mostrarVentanaTemporadasFrame();
+                    setVisible(false);  // Ocultar la ventana actual
+                }
+                // Si el usuario presiona Cancelar, no se hace nada y la ventana sigue abierta.
+            }
+        });
+    
 
         // Inicializar el ArrayList de resultados 
         resultados = new ArrayList<>();
@@ -47,7 +85,7 @@ public class VentanaPestanas extends JFrame {
         // Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
         
-        
+    
 
         // Crear las 11 pestañass
         crearPestanas();
@@ -83,7 +121,12 @@ public class VentanaPestanas extends JFrame {
         add(panelBoton, BorderLayout.SOUTH);
     }
     
-    
+    private void mostrarVentanaTemporadasFrame() {
+        // Aquí debes agregar el código para abrir la ventana TemporadasFrame
+        // Por ejemplo, si TemporadasFrame es otra clase con un JFrame:
+        TemporadasFrame temporadasFrame = new TemporadasFrame();
+        temporadasFrame.setVisible(true);
+    }    
 
     private void crearPestanas() {
         // Al generar el calendario solo una vez
@@ -247,28 +290,66 @@ public class VentanaPestanas extends JFrame {
     }
 
 
-    
+    private void cargarTemporada(String temporada) {
+        String archivo = "temporada_" + temporada + ".txt"; // El nombre del archivo con el año de la temporada
+        File f = new File(archivo);
+
+        if (!f.exists()) {
+            JOptionPane.showMessageDialog(this, "La temporada no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Procesar la información del archivo línea por línea
+                if (line.startsWith("Temporada:")) {
+                    String temporadaGuardada = line.split(":")[1].trim();
+                    comboBoxTemporadas.addItem(temporadaGuardada);  // Agregar la temporada al JComboBox
+                }
+
+                if (line.startsWith("Equipos Participantes:")) {
+                    while ((line = reader.readLine()) != null && !line.trim().isEmpty()) {
+                        String nombreEquipo = line.substring(2).trim();  // Eliminar el guión y posibles espacios
+                        if (!nombreEquipo.isEmpty()) {
+                            equipos.add(new Equipo(nombreEquipo, null));  // Agregar el equipo a la lista
+                        }
+                    }
+                }
+
+                if (line.startsWith("Resultados por Jornada:")) {
+                    for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+                        List<Partido> partidos = calendarioGenerado.get(i);
+                        ArrayList<String[]> jornadaResultados = new ArrayList<>();
+                        for (Partido partido : partidos) {
+                            String[] resultado = reader.readLine().split(" vs ");
+                            jornadaResultados.add(resultado);  // Guardar los resultados
+                        }
+                        resultados.add(jornadaResultados);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     
     private void guardarTemporada(String temporada) {
-        // Obtener la temporada seleccionada del comboBoxTemporadas
         String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
-
-        // Extraer solo el año de la temporada seleccionada (por ejemplo "Temporada 2024" -> "2024")
         String año = temporadaSeleccionada.replaceAll("[^0-9]", "");
-
         String archivo = "temporada_" + año + ".txt"; // Nombre del archivo basado en el año
 
         // Crea un archivo si no existe
         File f = new File(archivo);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
-            // Escribe el encabezado de la temporada
             writer.write("Temporada: " + temporadaSeleccionada);
             writer.newLine();
-            writer.write("Estado: Finalizada");
+            writer.write("Estado: " + (todosLlenos() ? "Finalizada" : "En Progreso"));
             writer.newLine();
             writer.newLine();
 
-            // Escribir los nombres de los equipos participantes
+            // Escribir los equipos
             writer.write("Equipos Participantes:");
             writer.newLine();
             for (Equipo equipo : equipos) {
@@ -283,30 +364,54 @@ public class VentanaPestanas extends JFrame {
             for (int i = 0; i < tabbedPane.getTabCount(); i++) {
                 writer.write("Jornada " + (i + 1) + ":");
                 writer.newLine();
-
-                // Obtener los resultados de la jornada
                 List<Partido> partidos = calendarioGenerado.get(i);
                 ArrayList<String[]> jornadaResultados = resultados.get(i);
 
                 for (int j = 0; j < partidos.size(); j++) {
                     Partido partido = partidos.get(j);
-                    String[] resultado = jornadaResultados.get(j);
+                    String[] resultado = jornadaResultados.size() > j ? jornadaResultados.get(j) : new String[]{"", ""};
 
-                    // Formato: Equipo1 (resultado1) vs Equipo2 (resultado2)
                     String lineaResultado = partido.getlocal().getNombre() + " " + resultado[0] + " vs " +
-                                            partido.getvisitante().getNombre() + " " + resultado[1] + "";
+                                            partido.getvisitante().getNombre() + " " + resultado[1];
                     writer.write(lineaResultado);
                     writer.newLine();
                 }
                 writer.newLine();
             }
 
-            // Mensaje de confirmación
             JOptionPane.showMessageDialog(this, "Temporada " + temporadaSeleccionada + " guardada correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al guardar la temporada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private boolean todosLlenos() {
+        // Recorre todas las pestañas (jornadas)
+        for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+            JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(i);
+            JPanel panel = (JPanel) scrollPanel.getViewport().getView();
+
+            // Recorre todos los componentes dentro del panel de la jornada actual (paneles de partidos)
+            for (Component comp : panel.getComponents()) {
+                if (comp instanceof JPanel) {
+                    JPanel partidoPanel = (JPanel) comp;
+
+                    // Recorre todos los componentes dentro del panel del partido (campos de texto)
+                    for (Component subComp : partidoPanel.getComponents()) {
+                        if (subComp instanceof JTextField) {
+                            JTextField campoTexto = (JTextField) subComp;
+
+                            // Verifica si el campo de texto está vacío
+                            if (campoTexto.getText().trim().isEmpty()) {
+                                return false; // Si algún campo está vacío, retorna false
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true; // Si no hay campos vacíos, retorna true
     }
 
     
@@ -371,8 +476,8 @@ public class VentanaPestanas extends JFrame {
             JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos de todas las jornadas antes de finalizar la temporada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
-
-
+    
+    
     
     private void actualizarResultados() {
         // Obtener los resultados de todos los campos de texto
@@ -406,10 +511,17 @@ public class VentanaPestanas extends JFrame {
                     if (equipo1txt != null && equipo2txt != null) {
                         String[] resultado = {equipo1txt.getText(), equipo2txt.getText()};
                         jornadaResultados.add(resultado); // Agregar resultado al ArrayList de la jornada
-                    }
+                        
+                     
+
+					}
+                
                 }
             }
         }
+     
     }
+    
+    
 
 }

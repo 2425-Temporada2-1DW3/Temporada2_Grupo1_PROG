@@ -1,0 +1,62 @@
+Temporada: 2034
+Estado: En Progreso
+
+Equipos Participantes:
+- MOA
+- GLOW
+- SOKOA
+- SAIKO
+- KICK
+- JIMMY
+
+Resultados por Jornada:
+Jornada 1:
+MOA 2 vs JIMMY 2
+GLOW 2 vs KICK 1
+SOKOA 1 vs SAIKO 2
+
+Jornada 2:
+MOA 2 vs KICK 2
+JIMMY 1 vs SAIKO 2
+GLOW 21 vs SOKOA 1
+
+Jornada 3:
+MOA  vs SAIKO 
+KICK  vs SOKOA 
+JIMMY  vs GLOW 
+
+Jornada 4:
+MOA  vs SOKOA 
+SAIKO  vs GLOW 
+KICK  vs JIMMY 
+
+Jornada 5:
+MOA  vs GLOW 
+SOKOA  vs JIMMY 
+SAIKO  vs KICK 
+
+Jornada 6:
+JIMMY  vs MOA 
+KICK  vs GLOW 
+SAIKO  vs SOKOA 
+
+Jornada 7:
+KICK  vs MOA 
+SAIKO  vs JIMMY 
+SOKOA  vs GLOW 
+
+Jornada 8:
+SAIKO  vs MOA 
+SOKOA  vs KICK 
+GLOW  vs JIMMY 
+
+Jornada 9:
+SOKOA  vs MOA 
+GLOW  vs SAIKO 
+JIMMY  vs KICK 
+
+Jornada 10:
+GLOW  vs MOA 
+JIMMY  vs SOKOA 
+KICK  vs SAIKO 
+

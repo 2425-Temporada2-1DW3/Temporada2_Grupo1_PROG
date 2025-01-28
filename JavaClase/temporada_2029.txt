@@ -1,0 +1,62 @@
+Temporada: 2029
+Estado: Finalizada
+
+Equipos Participantes:
+- Eibar
+- Bilbao
+- Valencia
+- Besiktas
+- Moko
+- caca
+
+Resultados por Jornada:
+Jornada 1:
+Eibar 2 vs caca 2
+Bilbao 2 vs Moko 2
+Valencia 2 vs Besiktas 2
+
+Jornada 2:
+Eibar 1 vs Moko 1
+caca 2 vs Besiktas 2
+Bilbao 2 vs Valencia 2
+
+Jornada 3:
+Eibar 2 vs Besiktas 2
+Moko 2 vs Valencia 22
+caca 2 vs Bilbao 2
+
+Jornada 4:
+Eibar 1 vs Valencia 1
+Besiktas 1 vs Bilbao 1
+Moko 1 vs caca 1
+
+Jornada 5:
+Eibar 2 vs Bilbao 22
+Valencia 22 vs caca 2
+Besiktas 2 vs Moko 2
+
+Jornada 6:
+caca 1 vs Eibar 1
+Moko 1 vs Bilbao 1
+Besiktas 1 vs Valencia 1
+
+Jornada 7:
+Moko 1 vs Eibar 2
+Besiktas 2 vs caca 1
+Valencia 2 vs Bilbao 1
+
+Jornada 8:
+Besiktas 2 vs Eibar 2
+Valencia 2 vs Moko 2
+Bilbao 2 vs caca 2
+
+Jornada 9:
+Valencia 1 vs Eibar 1
+Bilbao 1 vs Besiktas 1
+caca 1 vs Moko 1
+
+Jornada 10:
+Bilbao 2 vs Eibar 3
+caca 3 vs Valencia 2
+Moko 2 vs Besiktas 2
+

@@ -3,12 +3,18 @@ package javainterfaz;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -68,6 +74,41 @@ public class TemporadasFrame extends JFrame implements ActionListener {
 
         // Inicializar datos de ejemplo-
         inicializarDatos();
+        
+     // Agregar el manejador de eventos para el cierre de la ventana
+
+        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Mostrar confirmación de si realmente desea salir
+                int opcion = JOptionPane.showConfirmDialog(
+                        TemporadasFrame.this,
+                        "¿Estás seguro de que quieres salir?",
+                        "Confirmar salida",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Preguntar si desea guardar los datos antes de salir
+                    int guardarOpcion = JOptionPane.showConfirmDialog(
+                            TemporadasFrame.this,
+                            "¿Quieres guardar los datos antes de salir?",
+                            "Guardar datos",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (guardarOpcion == JOptionPane.YES_OPTION) {
+                        guardarTemporadas(); // Aquí llamas a la función para guardar las temporadas
+                    }
+
+                    System.exit(0); // Cerrar la aplicación
+                } else {
+                    // Si no quiere salir, no hacer nada y mantener la ventana abierta
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
 
         // Panel superior con ComboBox de temporadas
         JPanel panelNorte = new JPanel();
@@ -346,6 +387,14 @@ public class TemporadasFrame extends JFrame implements ActionListener {
                 // Actualizar el combo box para mostrar la nueva temporada
                 comboBoxTemporadas.addItem(String.valueOf(anio));
                 comboBoxTemporadas.setSelectedIndex(comboBoxTemporadas.getItemCount() - 1);
+                comboBoxTemporadas.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
+                        cargarTemporada(temporadaSeleccionada);
+                    }
+                });
+                
                 actualizarEquipos();
 
                 //SI FUNCIONA TODO BIEN SALE ESTE MENSAJE
@@ -360,6 +409,28 @@ public class TemporadasFrame extends JFrame implements ActionListener {
             }
         }
     }
+    
+    private void guardarTemporadas() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("temporadas.txt"))) {
+            for (Temporada temporada : temporadas) {
+                // Guardar el año de la temporada
+                writer.write(temporada.getAnio() + "\n");
+                
+                // Guardar los equipos de esa temporada
+                for (Equipo equipo : temporada.getEquipos()) {
+                    writer.write(equipo.getNombre() + "\n");  // Escribe el nombre de los equipos
+                }
+                
+                // Marca el final de una temporada
+                writer.write("----\n");  
+            }
+            JOptionPane.showMessageDialog(this, "Datos guardados con éxito.", "Guardar", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     private void cargarTemporada(String temporada) {
     	
