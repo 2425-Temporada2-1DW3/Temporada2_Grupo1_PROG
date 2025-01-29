@@ -28,11 +28,8 @@ public class VentanaPestanas extends JFrame {
     private List<Equipo> equipos;
     private List<List<Partido>> calendarioGenerado;  // Nueva variable para almacenar el calendario fijo
     private List<Clasificacion> clasificaciones;
- 
     
 
-   
-   
 //ventana
     public VentanaPestanas(JComboBox<String> comboBoxTemporadas,  List<Equipo> equipos) {
     	
@@ -74,7 +71,6 @@ public class VentanaPestanas extends JFrame {
                 // Si el usuario presiona Cancelar, no se hace nada y la ventana sigue abierta.
             }
         });
-    
 
         // Inicializar el ArrayList de resultados 
         resultados = new ArrayList<>();
@@ -84,8 +80,6 @@ public class VentanaPestanas extends JFrame {
 
         // Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
-        
-    
 
         // Crear las 11 pestañass
         crearPestanas();
@@ -121,7 +115,6 @@ public class VentanaPestanas extends JFrame {
         add(panelBoton, BorderLayout.SOUTH);
     }
     
-    
     // Muestra la ventana TemporadasFrame
     private void mostrarVentanaTemporadasFrame() {
         // Aquí debes agregar el código para abrir la ventana TemporadasFrame
@@ -130,29 +123,6 @@ public class VentanaPestanas extends JFrame {
         temporadasFrame.setVisible(true);
     }    
 
-    //GENERA LAS 10 JORNADAS 
-    private void crearPestanas() {
-        // Al generar el calendario solo una vez
-        if (calendarioGenerado == null) {
-            calendarioGenerado = generarCalendarioRoundRobin(equipos);
-        }
-        
-        for (int i = 1; i <= 10; i++) {
-            // Crear un panel para cada pestaña
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-            // Inicializar la lista de resultados de la jornada actual
-            resultados.add(new ArrayList<>());
-
-            // Añadir el panel a la pestaña
-            JScrollPane scrollPanel = new JScrollPane(panel);
-            tabbedPane.addTab("Jornada " + i, scrollPanel);
-
-            //Actualizar la pestaña para inicializar los componentes
-            actualizarContenidoPestana(i - 1);
-        }
-    }
     
     //ROUND ROBIN
     private List<List<Partido>> generarCalendarioRoundRobin(List<Equipo> equipos) {
@@ -161,7 +131,6 @@ public class VentanaPestanas extends JFrame {
 
         // Si el número de equipos es impar, añadimos un equipo "Descansa"
         
-
         int numJornadas = numEquipos - 1; // Número de jornadas para la ida
         int numPartidosPorJornada = numEquipos / 2;
 
@@ -206,6 +175,29 @@ public class VentanaPestanas extends JFrame {
         return jornadas;
     }
 
+    //GENERA LAS 10 JORNADAS 
+    private void crearPestanas() {
+        // Al generar el calendario solo una vez
+        if (calendarioGenerado == null) {
+            calendarioGenerado = generarCalendarioRoundRobin(equipos);
+        }
+        
+        for (int i = 1; i <= 10; i++) {
+            // Crear un panel para cada pestaña
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+            // Inicializar la lista de resultados de la jornada actual
+            resultados.add(new ArrayList<>());
+
+            // Añadir el panel a la pestaña
+            JScrollPane scrollPanel = new JScrollPane(panel);
+            tabbedPane.addTab("Jornada " + i, scrollPanel);
+
+            //Actualizar la pestaña para inicializar los componentes
+            actualizarContenidoPestana(i - 1);
+        }
+    }
     
    //NAVEGACION ENTRE PESTAÑAS
     private void actualizarContenidoPestana(int index) {
@@ -292,7 +284,6 @@ public class VentanaPestanas extends JFrame {
         panel.revalidate();
         panel.repaint();
     }
-
 
     //FUNCION PARA CARGAR LA TEMPORADA GUARDADA 
     private void cargarTemporada(String temporada) {
@@ -383,7 +374,6 @@ public class VentanaPestanas extends JFrame {
                 }
                 writer.newLine();
             }
-
             JOptionPane.showMessageDialog(this, "Temporada " + temporadaSeleccionada + " guardada correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
@@ -413,7 +403,7 @@ public class VentanaPestanas extends JFrame {
                                 return false; // Si algún campo está vacío, retorna false
                             }
                         }
-                    }
+					}	
                 }
             }
         }
@@ -482,8 +472,7 @@ public class VentanaPestanas extends JFrame {
             JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos de todas las jornadas antes de finalizar la temporada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-    
+
     //FUNCION DEL BOTON ACTUALIZAR RESULTADOS
     private void actualizarResultados() {
         // Obtener los resultados de todos los campos de texto
@@ -512,22 +501,14 @@ public class VentanaPestanas extends JFrame {
                             }
                         }
                     }
-
+                    
                     // Guardar los resultados en el ArrayList correspondiente para la jornada actual
                     if (equipo1txt != null && equipo2txt != null) {
                         String[] resultado = {equipo1txt.getText(), equipo2txt.getText()};
                         jornadaResultados.add(resultado); // Agregar resultado al ArrayList de la jornada
-                        
-                     
-
 					}
-                
                 }
             }
         }
-     
     }
-    
-    
-
 }

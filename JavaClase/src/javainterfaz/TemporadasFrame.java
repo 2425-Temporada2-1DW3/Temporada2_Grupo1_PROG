@@ -77,7 +77,6 @@ public class TemporadasFrame extends JFrame implements ActionListener {
         
      // Agregar el manejador de eventos para el cierre de la ventana
 
-        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -202,7 +201,6 @@ public class TemporadasFrame extends JFrame implements ActionListener {
         }
         return null; // En caso de que no se encuentre el equipo
     }
-
     
     //inicializar datos
     private void inicializarDatos() {
@@ -272,7 +270,6 @@ public class TemporadasFrame extends JFrame implements ActionListener {
                     panelEquipo.add(lblJugador);
                 }
 
-                
                 // Añadir el panel del equipo al panel de jugadores
                 panelJugadores.add(panelEquipo);
             }
@@ -303,10 +300,7 @@ public class TemporadasFrame extends JFrame implements ActionListener {
         panelJugadores.revalidate();
         panelJugadores.repaint();
     }
-    
-    
-    
-    
+
     private void limitarSeleccionEquipos(JCheckBox checkBox) {
     	
         // Contar cuántos equipos están seleccionados

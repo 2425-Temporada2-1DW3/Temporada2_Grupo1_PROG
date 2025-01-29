@@ -1,5 +1,5 @@
 Temporada: 2024
-Estado: Finalizada
+Estado: En Progreso
 
 Equipos Participantes:
 - Barca
@@ -11,52 +11,52 @@ Equipos Participantes:
 
 Resultados por Jornada:
 Jornada 1:
-Barca 1 vs Las Abelles 2
-Cisneros 2 vs Labiana 2
-Eibar 22 vs Hernani Club 2
+Barca  vs Las Abelles 
+Cisneros  vs Labiana 
+Eibar  vs Hernani Club 
 
 Jornada 2:
-Barca 2 vs Labiana 22
-Las Abelles 2 vs Hernani Club 2
-Cisneros 3 vs Eibar 3
+Barca  vs Labiana 
+Las Abelles  vs Hernani Club 
+Cisneros  vs Eibar 
 
 Jornada 3:
-Barca 4 vs Hernani Club 43
-Labiana 3 vs Eibar 43
-Las Abelles 3 vs Cisneros 2
+Barca  vs Hernani Club 
+Labiana  vs Eibar 
+Las Abelles  vs Cisneros 
 
 Jornada 4:
-Barca 2 vs Eibar 2
-Hernani Club 2 vs Cisneros 2
-Labiana 2 vs Las Abelles 2
+Barca  vs Eibar 
+Hernani Club  vs Cisneros 
+Labiana  vs Las Abelles 
 
 Jornada 5:
-Barca 2 vs Cisneros 2
-Eibar 2 vs Las Abelles 22
-Hernani Club 2 vs Labiana 2
+Barca  vs Cisneros 
+Eibar  vs Las Abelles 
+Hernani Club  vs Labiana 
 
 Jornada 6:
-Las Abelles 2 vs Barca 2
-Labiana 2 vs Cisneros 2
-Hernani Club 2 vs Eibar 3
+Las Abelles  vs Barca 
+Labiana  vs Cisneros 
+Hernani Club  vs Eibar 
 
 Jornada 7:
-Labiana 1 vs Barca 1
-Hernani Club 1 vs Las Abelles 1
-Eibar 1 vs Cisneros 1
+Labiana  vs Barca 
+Hernani Club  vs Las Abelles 
+Eibar  vs Cisneros 
 
 Jornada 8:
-Hernani Club 2 vs Barca 2
-Eibar 2 vs Labiana 2
-Cisneros 2 vs Las Abelles 2
+Hernani Club  vs Barca 
+Eibar  vs Labiana 
+Cisneros  vs Las Abelles 
 
 Jornada 9:
-Eibar 2 vs Barca 22
-Cisneros 22 vs Hernani Club 22
-Las Abelles 22 vs Labiana 22
+Eibar  vs Barca 
+Cisneros  vs Hernani Club 
+Las Abelles  vs Labiana 
 
 Jornada 10:
-Cisneros 22 vs Barca 22
-Las Abelles 22 vs Eibar 22
-Labiana 22 vs Hernani Club 22
+Cisneros  vs Barca 
+Las Abelles  vs Eibar 
+Labiana  vs Hernani Club 
 
