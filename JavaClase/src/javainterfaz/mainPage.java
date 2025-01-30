@@ -22,7 +22,7 @@ public class mainPage extends JFrame implements ActionListener { // Definición 
     private JPanel contentPane; // Panel principal que contendrá toda la interfaz
     private JTextField puntos1, puntos2, puntos3, puntos4, puntos5, puntos6; // Campos de texto para ingresar puntos de los equipos
     private JLabel lblEquipo1, lblEquipo2, lblEquipo3, lblEquipo4, lblEquipo5, lblEquipo6; // Etiquetas para mostrar los nombres de los equipos
-    private JButton btnNext, btnBack, btnUpdate, btnReset; // Botones para la navegación y las acciones
+    private JButton btnNext, btnBack, btnUpdate, btnReset, btnExportarXML; // Botones para la navegación y las acciones
     private JLabel lblJornada; // Etiqueta que muestra la jornada actual
     private JButton iniciarsesion; // Botón para volver a la ventana de inicio
     private JPanel centro; // Panel que contendrá los partidos y resultados
@@ -234,6 +234,7 @@ public class mainPage extends JFrame implements ActionListener { // Definición 
         btnUpdate = new JButton("Actualizar Clasificación");
         btnUpdate.addActionListener(this); // Registrar acción
         clasificacion.add(btnUpdate); // Añadir botón al panel de clasificación
+        
 
         // Botón para reiniciar los resultados a cero
         btnReset = new JButton("Restablecer Resultados");
@@ -297,6 +298,8 @@ public class mainPage extends JFrame implements ActionListener { // Definición 
         actualizarClasificacion(); // Actualizar la clasificación
     }
 
+    
+    
     private void setDefaultResults() {
         // Inicializar resultados predeterminados para cada jornada
         resultados[0] = new int[]{2, 1, 1, 2, 0, 1}; // Resultados para jornada 1

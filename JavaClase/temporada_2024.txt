@@ -2,61 +2,61 @@ Temporada: 2024
 Estado: En Progreso
 
 Equipos Participantes:
-- Barca
 - Cisneros
 - Eibar
 - Hernani Club
 - Labiana
 - Las Abelles
+- Pozuelo
 
 Resultados por Jornada:
 Jornada 1:
-Barca  vs Las Abelles 
-Cisneros  vs Labiana 
-Eibar  vs Hernani Club 
-
-Jornada 2:
-Barca  vs Labiana 
-Las Abelles  vs Hernani Club 
-Cisneros  vs Eibar 
-
-Jornada 3:
-Barca  vs Hernani Club 
-Labiana  vs Eibar 
-Las Abelles  vs Cisneros 
-
-Jornada 4:
-Barca  vs Eibar 
-Hernani Club  vs Cisneros 
-Labiana  vs Las Abelles 
-
-Jornada 5:
-Barca  vs Cisneros 
+Cisneros  vs Pozuelo 
 Eibar  vs Las Abelles 
 Hernani Club  vs Labiana 
 
-Jornada 6:
-Las Abelles  vs Barca 
-Labiana  vs Cisneros 
-Hernani Club  vs Eibar 
-
-Jornada 7:
-Labiana  vs Barca 
-Hernani Club  vs Las Abelles 
-Eibar  vs Cisneros 
-
-Jornada 8:
-Hernani Club  vs Barca 
-Eibar  vs Labiana 
+Jornada 2:
 Cisneros  vs Las Abelles 
+Pozuelo  vs Labiana 
+Eibar  vs Hernani Club 
 
-Jornada 9:
-Eibar  vs Barca 
+Jornada 3:
+Cisneros  vs Labiana 
+Las Abelles  vs Hernani Club 
+Pozuelo  vs Eibar 
+
+Jornada 4:
 Cisneros  vs Hernani Club 
-Las Abelles  vs Labiana 
+Labiana  vs Eibar 
+Las Abelles  vs Pozuelo 
 
-Jornada 10:
-Cisneros  vs Barca 
+Jornada 5:
+Cisneros  vs Eibar 
+Hernani Club  vs Pozuelo 
+Labiana  vs Las Abelles 
+
+Jornada 6:
+Pozuelo  vs Cisneros 
 Las Abelles  vs Eibar 
 Labiana  vs Hernani Club 
+
+Jornada 7:
+Las Abelles  vs Cisneros 
+Labiana  vs Pozuelo 
+Hernani Club  vs Eibar 
+
+Jornada 8:
+Labiana  vs Cisneros 
+Hernani Club  vs Las Abelles 
+Eibar  vs Pozuelo 
+
+Jornada 9:
+Hernani Club  vs Cisneros 
+Eibar  vs Labiana 
+Pozuelo  vs Las Abelles 
+
+Jornada 10:
+Eibar  vs Cisneros 
+Pozuelo  vs Hernani Club 
+Las Abelles  vs Labiana 
 

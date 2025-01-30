@@ -17,6 +17,22 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 
 import javax.swing.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import com.itextpdf.text.Paragraph;
+
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -589,85 +605,110 @@ public class TemporadasFrame extends JFrame implements ActionListener {
     }
 
  // Método para exportar a XML
-    private void exportarXML(List<String> equiposSeleccionados, Object[][] datos) {
-//        try {
-//            // Crear documento XML
-//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-//            Document doc = docBuilder.newDocument();
-//
-//            // Crear el nodo raíz
-//            Element raiz = doc.createElement("Clasificacion");
-//            doc.appendChild(raiz);
-//
-//            // Agregar los equipos
-//            for (int i = 0; i < equiposSeleccionados.size(); i++) {
-//                Element equipo = doc.createElement("Equipo");
-//                raiz.appendChild(equipo);
-//
-//                Element nombre = doc.createElement("Nombre");
-//                nombre.appendChild(doc.createTextNode(equiposSeleccionados.get(i)));
-//                equipo.appendChild(nombre);
-//
-//                Element puntos = doc.createElement("Puntos");
-//                puntos.appendChild(doc.createTextNode(String.valueOf(datos[i][1])));
-//                equipo.appendChild(puntos);
-//
-//                Element victorias = doc.createElement("Victorias");
-//                victorias.appendChild(doc.createTextNode(String.valueOf(datos[i][2])));
-//                equipo.appendChild(victorias);
-//
-//                Element derrotas = doc.createElement("Derrotas");
-//                derrotas.appendChild(doc.createTextNode(String.valueOf(datos[i][3])));
-//                equipo.appendChild(derrotas);
-//            }
-//
-//            // Guardar el archivo XML
-//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//            Transformer transformer = transformerFactory.newTransformer();
-//            DOMSource source = new DOMSource(doc);
-//            StreamResult result = new StreamResult(new File("clasificacion.xml"));
-//            transformer.transform(source, result);
-//
-//            JOptionPane.showMessageDialog(null, "Datos exportados a XML con éxito.");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-   }
+ 
+
+    private void exportarXML(List<String> equipos, Object[][] datos ) {
+    	
+    	int añoTemporada = Integer.parseInt(comboBoxTemporadas.getSelectedItem().toString());
+  	
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.newDocument();
+
+            // Crear el elemento raíz
+            Element rootElement = doc.createElement("Clasificacion");
+            doc.appendChild(rootElement);
+
+            // Recorrer los equipos y agregar los datos
+            for (int i = 0; i < equipos.size(); i++) {
+                Element equipoElement = doc.createElement("Equipo");
+
+                Element nombre = doc.createElement("Nombre");
+                nombre.appendChild(doc.createTextNode(equipos.get(i)));
+                equipoElement.appendChild(nombre);
+
+                Element puntos = doc.createElement("Puntos");
+                puntos.appendChild(doc.createTextNode(datos[i][1].toString()));
+                equipoElement.appendChild(puntos);
+
+                Element victorias = doc.createElement("Victorias");
+                victorias.appendChild(doc.createTextNode(datos[i][2].toString()));
+                equipoElement.appendChild(victorias);
+
+                Element derrotas = doc.createElement("Derrotas");
+                derrotas.appendChild(doc.createTextNode(datos[i][3].toString()));
+                equipoElement.appendChild(derrotas);
+
+                rootElement.appendChild(equipoElement);
+            }
+
+            // Definir la carpeta donde se guardará el archivo
+            String carpeta = "C:/xampp/htdocs/xml";
+            File directorio = new File(carpeta);
+            
+            // Si la carpeta no existe, crearla
+            if (!directorio.exists()) {
+                directorio.mkdirs();
+            }
+
+            // Nombre del archivo XML (ejemplo: Clasificacion_2025.xml)
+            String nombreArchivo =  añoTemporada + ".xml";
+            File archivoXML = new File(directorio, nombreArchivo);
+
+            // Guardar el XML en la carpeta
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(archivoXML);
+            transformer.transform(source, result);
+
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(null, "Se exportó el XML correctamente", 
+                                          "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al exportar el XML.", 
+                                          "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
     
     private void exportarPDF(List<String> equiposSeleccionados, Object[][] datos) {  
-//    	try {
-//            // Crear documento PDF
-//            Document document = new Document();
-//            PdfWriter.getInstance(document, new FileOutputStream("clasificacion.pdf"));
-//            document.open();
-//
-//            // Título del documento
-//            document.add(new Paragraph("Clasificación de Equipos"));
-//
-//            // Crear tabla para el PDF
-//            PdfPTable table = new PdfPTable(4); // 4 columnas
-//            table.addCell("Equipo");
-//            table.addCell("Puntos");
-//            table.addCell("Victorias");
-//            table.addCell("Derrotas");
-//
-//            // Agregar datos a la tabla
-//            for (int i = 0; i < equiposSeleccionados.size(); i++) {
-//    			table.addCell(equiposSeleccionados.get(i));
-//                table.addCell(String.valueOf(datos[i][1]));
-//                table.addCell(String.valueOf(datos[i][2]));
-//                table.addCell(String.valueOf(datos[i][3]));
-//            }
-//
-//            // Agregar tabla al documento
-//            document.add(table);
-//            document.close();
-//
-//            JOptionPane.showMessageDialog(null, "Datos exportados a PDF con éxito.");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//    }
+    	try {
+            // Crear documento PDF
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("clasificacion.pdf"));
+            document.open();
+
+            // Título del documento
+            document.add(new Paragraph("Clasificación de Equipos"));
+
+            // Crear tabla para el PDF
+            PdfPTable table = new PdfPTable(4); // 4 columnas
+            table.addCell("Equipo");
+            table.addCell("Puntos");
+            table.addCell("Victorias");
+            table.addCell("Derrotas");
+
+            // Agregar datos a la tabla
+            for (int i = 0; i < equiposSeleccionados.size(); i++) {
+    			table.addCell(equiposSeleccionados.get(i));
+                table.addCell(String.valueOf(datos[i][1]));
+                table.addCell(String.valueOf(datos[i][2]));
+                table.addCell(String.valueOf(datos[i][3]));
+            }
+
+            // Agregar tabla al documento
+            document.add(table);
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "Datos exportados a PDF con éxito.");
+        } catch (Exception e) {
+            e.printStackTrace();
+    }
   }
 
     private void accederALaPaginaPrincipal() {
