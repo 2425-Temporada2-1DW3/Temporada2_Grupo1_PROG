@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -14,14 +13,16 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
@@ -29,10 +30,9 @@ public class Login extends Icono implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblLogo, lblTitulo, lblUsuario, lblContraseña;
 	private JTextField textUsuario;
 	private JPasswordField passwordField;
-	private JButton btnAcceder, btnRegistrarse;
+	private JButton btnAcceder, btnRegistrate;
 
 
     public static void main(String[] args) {
@@ -51,147 +51,187 @@ public class Login extends Icono implements ActionListener{
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Registrarse");
-		setBounds(100, 100, 1063, 670);
+		setBounds(100, 100, 510, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setResizable(false);	
 	
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		JLabel lblNewLabel = new JLabel("Iniciar Sesion");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
-		lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(Login.class.getResource("/img/imagenes/logo.png")));
-		
-		lblTitulo = new JLabel("Iniciar Sesion");
-		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 50));
-		
-		lblUsuario = new JLabel("Usuario");
-		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		textUsuario = new JTextField();
 		textUsuario.setColumns(10);
 		
-		lblContraseña = new JLabel("Constraseña");
-		lblContraseña.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
-		btnAcceder = new JButton("Acceder");
-		btnAcceder.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnAcceder.addActionListener(this);
-		
-		btnRegistrarse = new JButton("Registrarse");
-		btnRegistrarse.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnRegistrarse.addActionListener(this);
+		JLabel lblContraseña = new JLabel("Contraseña");
+		lblContraseña.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		passwordField = new JPasswordField();
-
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-							.addGroup(gl_panel.createSequentialGroup()
-								.addGap(155)
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-									.addComponent(textUsuario, 221, 221, Short.MAX_VALUE)
-									.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-									.addComponent(lblContraseña, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-									.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
-								.addGap(112))
-							.addGroup(gl_panel.createSequentialGroup()
-								.addGap(189)
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnRegistrarse, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-									.addComponent(btnAcceder, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))
-								.addGap(145)))
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE)
-							.addGap(49)))
-					.addComponent(lblLogo)
-					.addGap(39))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(56)
-							.addComponent(lblTitulo)
-							.addGap(53)
-							.addComponent(lblUsuario)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(30)
-							.addComponent(lblContraseña)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(46)
-							.addComponent(btnAcceder, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnRegistrarse, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblLogo)))
-					.addContainerGap(227, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
-	
-
-	// Acción del botón
-		btnRegistrarse.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // Abrir el segundo JFrame
-        	RegistrarUsuarios RegistrarUsuarios = new RegistrarUsuarios();
-        	RegistrarUsuarios.setVisible(true);
-
-            dispose(); // Cierra la ventana actual
-        }
-    });	
 		
-		btnAcceder.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String usuario = textUsuario.getText();
-		        String contraseña = String.valueOf(passwordField.getPassword());
-		        if (usuario.isEmpty() || contraseña.isEmpty()) {
-	                JOptionPane.showMessageDialog(Login.this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-		        } else {
-			        validarUsuario(usuario, contraseña);
+		btnAcceder = new JButton("Acceder\r\n");
+		btnAcceder.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		btnRegistrate = new JButton("Registrate\r\n");
+		btnRegistrate.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(Login.class.getResource("/img/imagenes/logoPequeño.png")));
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(62)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textUsuario, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblContraseña, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnAcceder, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnRegistrate, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
+							.addGap(99)
+							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(153)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(29, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(48)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(36)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(textUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblContraseña, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(26)
+							.addComponent(btnAcceder)
+							.addGap(18)
+							.addComponent(btnRegistrate))
+						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)))
+		);
+		contentPane.setLayout(gl_contentPane);
+		
+		// Acción del botón
+				btnRegistrate.addActionListener(new ActionListener() {
+		        @Override
+		        public void actionPerformed(ActionEvent e) {
+		            // Abrir el segundo JFrame
+		        	Registro Registro = new Registro();
+		        	Registro.setVisible(true);
+
+		            dispose(); // Cierra la ventana actual
 		        }
-		    }
-		});
-	}
+		    });	
+				
+				btnAcceder.addActionListener(new ActionListener() {
+				    @Override
+				    public void actionPerformed(ActionEvent e) {
+				        String usuario = textUsuario.getText();
+				        String contraseña = String.valueOf(passwordField.getPassword());
+				        if (usuario.isEmpty() || contraseña.isEmpty()) {
+			                JOptionPane.showMessageDialog(Login.this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				        } else {
+					        validarUsuario(usuario, contraseña);
+					        writeLog("Inicio exitoso: " + usuario);
+				        }
+				    }
+				});
+			}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
         
 	}
 	
-	 private void validarUsuario(String username, String password) {
-		    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("usuarios.ser"))) {
-		        Object obj = ois.readObject();
-		        if (obj instanceof HashMap) {
-		            @SuppressWarnings("unchecked")
-					HashMap<String, String> usuarios = (HashMap<String, String>) obj;
+	private void validarUsuario(String username, String password) {
+	    // Definir credenciales del superusuario
+	    String superadmin = "admin";
+	    String superadmincontra = "admin123";
 
-		            // Validar usuario y contraseña
-		            if (usuarios.containsKey(username) && usuarios.get(username).equals(password)) {
-		            	pruebaAcceso pruebaAcceso = new pruebaAcceso();
-		                pruebaAcceso.setVisible(true);
-		                this.dispose();		            } else {
-		                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
-		            }
-		        }
-		    } catch (IOException e) {
-		        JOptionPane.showMessageDialog(this, "No se pudo leer el archivo usuarios.ser.\n" +
-		                "Por favor, verifique que el archivo existe.", "Error", JOptionPane.ERROR_MESSAGE);
-		    } catch (ClassNotFoundException e) {
-		        JOptionPane.showMessageDialog(this, "El archivo usuarios.ser tiene un formato inválido.", "Error", JOptionPane.ERROR_MESSAGE);
-		    }
-		}
+	    // Verificar si el usuario es el superadministrador
+	    if (username.equals(superadmin) && password.equals(superadmincontra)) {
+	        JOptionPane.showMessageDialog(this, "Bienvenido, Superadministrador.");
+	        abrirVentanaPorPermiso(3); // Permiso 3 para el superadmin
+	        return;
+	    }
+
+	    // Si no es el superusuario, proceder con la validación desde el archivo
+	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("usuarios.ser"))) {
+	        Object obj = ois.readObject();
+	        if (obj instanceof HashMap) {
+	            @SuppressWarnings("unchecked")
+	            HashMap<String, Object[]> usuarios = (HashMap<String, Object[]>) obj;
+
+	            // Validar si el usuario existe en el HashMap
+	            if (usuarios.containsKey(username)) {
+	                Object[] datos = usuarios.get(username);
+
+	                // Verificar que el array contiene datos válidos
+	                if (datos != null && datos.length >= 2 && datos[0] instanceof String && datos[0].equals(password)) {
+	                    int permiso = (datos[1] instanceof Integer) ? (int) datos[1] : -1;
+
+	                    // Verificar el nivel de permiso y abrir la ventana correspondiente
+	                    abrirVentanaPorPermiso(permiso);
+	                } else {
+	                    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+	                }
+	            } else {
+	                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+	            }
+	        }
+	    } catch (IOException e) {
+	        JOptionPane.showMessageDialog(this, "No se pudo leer el archivo usuarios.ser.\n" +
+	                "Por favor, verifique que el archivo existe.", "Error", JOptionPane.ERROR_MESSAGE);
+	    } catch (ClassNotFoundException e) {
+	        JOptionPane.showMessageDialog(this, "El archivo usuarios.ser tiene un formato inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
+
+	// Método para abrir la ventana según el nivel de permisos
+	private void abrirVentanaPorPermiso(int permiso) {
+	    TemporadasFrame vh = new TemporadasFrame();
+
+	    // Dependiendo del nivel de permiso, ocultar o mostrar botones
+	    if (permiso == 3) { // Superadministrador
+	        // Mostrar todos los botones
+	    } else if (permiso == 2) { // Administrador
+	        // Mostrar todos los botones
+	    } else if (permiso == 1) { // Árbitro
+	        // Ocultar algunos botones
+	        vh.btnConfirmar.setVisible(false);
+	    } else if (permiso == 0) { // Usuario básico
+	        // Ocultar todos los botones
+	        vh.btnCrearTemporada.setVisible(false);
+	        vh.btnConfirmar.setVisible(false);
+	    } else { // Nivel de permiso no válido
+	        JOptionPane.showMessageDialog(this, "Nivel de permiso no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+
+	    vh.setVisible(true);
+	    this.dispose();
+	}
+	
+	private void writeLog(String message) {
+	    try (PrintWriter writer = new PrintWriter(new FileWriter("log.txt", true))) {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        String timestamp = dateFormat.format(new Date());
+	        writer.println(timestamp + " - " + message);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 }

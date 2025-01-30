@@ -36,11 +36,11 @@ public class TemporadasFrame extends JFrame implements ActionListener {
     private JPanel panelJugadores;
     private List<Temporada> temporadas;
     private List<JCheckBox> checkboxesEquipos;
-    private JButton btnConfirmar;
+    JButton btnConfirmar;
     private JButton btnAcceder;
     private JSeparator separator;
     private JSeparator separator_1;
-    private JButton btnCrearTemporada;
+    JButton btnCrearTemporada;
     private JTabbedPane tabbedPane;
     private List<String> equiposSeleccionadosList = new ArrayList<>();
     private List<Equipo> equipos2023;

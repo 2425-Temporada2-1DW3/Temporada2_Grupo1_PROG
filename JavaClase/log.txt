@@ -1,0 +1,17 @@
+2025-01-30 12:08:42 - Usuario lopez registrado como invitado
+2025-01-30 12:08:52 - Inicio exitoso: lopez
+2025-01-30 12:09:25 - Se ha modificado el usuario: lopez, Contraseña: Lopez44, Rol: Administrador por Nombre de usuario lopez, Nueva contraseña: Lopez44, Nuevo tipo de usuario: Administrador
+2025-01-30 12:09:30 - Usuario lopez ha sido eliminado
+2025-01-30 12:09:43 - Usuario lope de tipo Administrador ha sido creado
+2025-01-30 12:11:22 - Se ha modificado el usuario: 2 por Nombre de usuario lope, Nueva contraseña: Lopez44, Nuevo tipo de usuario: Administrador
+2025-01-30 12:15:15 - Usuario lope ha sido eliminado
+2025-01-30 12:15:20 - Usuario lope ha sido eliminado
+2025-01-30 12:15:22 - Usuario lope ha sido eliminado
+2025-01-30 12:15:23 - Usuario lope ha sido eliminado
+2025-01-30 12:15:25 - Usuario pepe ha sido eliminado
+2025-01-30 12:15:28 - Usuario lope ha sido eliminado
+2025-01-30 12:15:39 - Usuario pepe ha sido eliminado
+2025-01-30 12:15:40 - Usuario lope ha sido eliminado
+2025-01-30 12:15:49 - Usuario prepe ha sido eliminado
+2025-01-30 12:15:50 - Usuario jose ha sido eliminado
+2025-01-30 12:15:51 - Usuario lopez ha sido eliminado

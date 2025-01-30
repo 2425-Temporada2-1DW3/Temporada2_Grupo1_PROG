@@ -158,7 +158,7 @@ public class interfaz extends JFrame implements ActionListener {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        // Abrir la ventana de registrar usuario
-		        RegistrarUsuarios registrarUsuarios = new RegistrarUsuarios();
+		        Registro registrarUsuarios = new Registro();
 		        registrarUsuarios.setVisible(true);
 
 		        // Cerrar la ventana actual de login
@@ -247,7 +247,7 @@ public class interfaz extends JFrame implements ActionListener {
 	        // Datos introducidos por el usuario
 	        String usuario = formattedTextField.getText().replaceAll("\\s+", "");
 	        String contrasena = new String(passwordField.getPassword()).replaceAll("\\s+", "");
-
+	        
 	        // Verifica si los campos no están vacíos
 	        if (usuario.equals("") || contrasena.equals("")) {
 	            errorLabel.setText("Campos en blanco o espacios introducidos");
