@@ -1,58 +1,49 @@
 package javainterfaz;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Clasificacion {
+    private Equipo equipo;
+    private int puntos;
+    private int victorias;
+    private int derrotas;
 
-class Clasificacion {
-    private List<Equipo> equipos;
-
-    // Constructor
-    public Clasificacion() {
-        equipos = new ArrayList<>();
+    public Clasificacion(Equipo equipo) {
+        this.equipo = equipo;
+        this.puntos = 0;
+        this.victorias = 0;
+        this.derrotas = 0;
     }
 
-    // Método para agregar equipos
-    public void agregarEquipo(Equipo equipo) {
-        equipos.add(equipo);
+    public Equipo getEquipo() {
+        return equipo;
     }
 
-    // Método para actualizar los puntos después de un partido
-    public void actualizarClasificacion(String nombreEquipoLocal, int golesLocal, String nombreEquipoVisitante, int golesVisitante) {
-        Equipo equipoLocal = obtenerEquipo(nombreEquipoLocal);
-        Equipo equipoVisitante = obtenerEquipo(nombreEquipoVisitante);
-
-        // Actualizar puntos según el resultado del partido
-        if (golesLocal > golesVisitante) {
-            equipoLocal.sumarPuntos(3); // El equipo local gana
-        } else if (golesLocal < golesVisitante) {
-            equipoVisitante.sumarPuntos(3); // El equipo visitante gana
-        } else {
-            equipoLocal.sumarPuntos(1); // Empate
-            equipoVisitante.sumarPuntos(1); // Empate
-        }
+    public int getPuntos() {
+        return puntos;
     }
 
-    // Método para obtener un equipo por su nombre
-    private Equipo obtenerEquipo(String nombreEquipo) {
-        for (Equipo equipo : equipos) {
-            if (equipo.getNombre().equals(nombreEquipo)) {
-                return equipo;
-            }
-        }
-        return null; // Si no se encuentra el equipo
+    public int getVictorias() {
+        return victorias;
     }
 
-    // Método para obtener la clasificación ordenada por puntos (descendente)
-    public List<Equipo> obtenerClasificacion() {
-        equipos.sort((e1, e2) -> Integer.compare(e2.getPuntos(), e1.getPuntos()));
-        return equipos;
+    public int getDerrotas() {
+        return derrotas;
     }
 
-    // Método para mostrar la clasificación (esto puede ser útil para depuración)
-    public void mostrarClasificacion() {
-        List<Equipo> clasificados = obtenerClasificacion();
-        for (Equipo equipo : clasificados) {
-            System.out.println(equipo.getNombre() + " - " + equipo.getPuntos() + " puntos");
-        }
+    public void agregarVictoria() {
+        victorias++;
+        puntos += 3; // El equipo obtiene 3 puntos por victoria
+    }
+
+    public void agregarDerrota() {
+        derrotas++;
+    }
+
+    public void agregarEmpate() {
+        puntos++; // Ambos equipos obtienen 1 punto en caso de empate
+    }
+
+    @Override
+    public String toString() {
+        return equipo.getNombre() + " - Puntos: " + puntos + " - Victorias: " + victorias + " - Derrotas: " + derrotas;
     }
 }

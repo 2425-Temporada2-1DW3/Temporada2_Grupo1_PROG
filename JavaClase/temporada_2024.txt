@@ -11,34 +11,34 @@ Equipos Participantes:
 
 Resultados por Jornada:
 Jornada 1:
-Barca 1 vs Las Abelles 2
-Cisneros 2 vs Labiana 2
-Eibar 22 vs Hernani Club 2
+Barca 1 vs Las Abelles 1
+Cisneros 1 vs Labiana 1
+Eibar 1 vs Hernani Club 1
 
 Jornada 2:
-Barca 2 vs Labiana 22
-Las Abelles 2 vs Hernani Club 2
-Cisneros 3 vs Eibar 3
+Barca 1 vs Labiana 1
+Las Abelles 1 vs Hernani Club 1
+Cisneros 1 vs Eibar 1
 
 Jornada 3:
-Barca 4 vs Hernani Club 43
-Labiana 3 vs Eibar 43
-Las Abelles 3 vs Cisneros 2
+Barca 1 vs Hernani Club 1
+Labiana 1 vs Eibar 1
+Las Abelles 1 vs Cisneros 1
 
 Jornada 4:
-Barca 2 vs Eibar 2
-Hernani Club 2 vs Cisneros 2
-Labiana 2 vs Las Abelles 2
+Barca 1 vs Eibar 1
+Hernani Club 1 vs Cisneros 1
+Labiana 1 vs Las Abelles 1
 
 Jornada 5:
-Barca 2 vs Cisneros 2
-Eibar 2 vs Las Abelles 22
-Hernani Club 2 vs Labiana 2
+Barca 1 vs Cisneros 1
+Eibar 1 vs Las Abelles 1
+Hernani Club 1 vs Labiana 1
 
 Jornada 6:
-Las Abelles 2 vs Barca 2
-Labiana 2 vs Cisneros 2
-Hernani Club 2 vs Eibar 3
+Las Abelles 1 vs Barca 1
+Labiana 1 vs Cisneros 1
+Hernani Club 1 vs Eibar 1
 
 Jornada 7:
 Labiana 1 vs Barca 1
@@ -46,17 +46,17 @@ Hernani Club 1 vs Las Abelles 1
 Eibar 1 vs Cisneros 1
 
 Jornada 8:
-Hernani Club 2 vs Barca 2
-Eibar 2 vs Labiana 2
-Cisneros 2 vs Las Abelles 2
+Hernani Club 1 vs Barca 1
+Eibar 1 vs Labiana 1
+Cisneros 1 vs Las Abelles 1
 
 Jornada 9:
-Eibar 2 vs Barca 22
-Cisneros 22 vs Hernani Club 22
-Las Abelles 22 vs Labiana 22
+Eibar 1 vs Barca 1
+Cisneros 1 vs Hernani Club 1
+Las Abelles 1 vs Labiana 1
 
 Jornada 10:
-Cisneros 22 vs Barca 22
-Las Abelles 22 vs Eibar 22
-Labiana 22 vs Hernani Club 22
+Cisneros 1 vs Barca 1
+Las Abelles 1 vs Eibar 1
+Labiana 1 vs Hernani Club 1
 

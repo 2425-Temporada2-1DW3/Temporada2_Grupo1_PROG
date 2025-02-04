@@ -3,11 +3,17 @@ package javainterfaz;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,20 +29,52 @@ public class VentanaPestanas extends JFrame {
     private JComboBox<String> comboBoxTemporadas;
     private List<Equipo> equipos;
     private List<List<Partido>> calendarioGenerado;  // Nueva variable para almacenar el calendario fijo
+    private List<Clasificacion> clasificaciones;
+    private DefaultTableModel modeloTablaClasificacion;
 
-   
-   
+    
+
 //ventana
     public VentanaPestanas(JComboBox<String> comboBoxTemporadas,  List<Equipo> equipos) {
     	
     	this.comboBoxTemporadas = comboBoxTemporadas;
     	 this.equipos = (equipos != null) ? equipos : new ArrayList<>(); // Asegurar que no sea null
     	
+    	 
+    	 clasificaciones = new ArrayList<>();
+    	    for (Equipo equipo : equipos) {
+    	        clasificaciones.add(new Clasificacion(equipo)); // Agregar cada equipo a la clasificación
+    	    }
+    	
         // Configuración básica de la ventana
         setTitle("Jornadas");
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                        VentanaPestanas.this,
+                        "¿Quieres guardar los datos antes de cerrar?",
+                        "Confirmar Cierre",
+                        JOptionPane.YES_NO_CANCEL_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Llama al método para guardar los datos
+                    guardarTemporada("Temporada ejemplo");  // Aquí deberías pasar la temporada que corresponda
+                    System.exit(0); // Cierra la ventana después de guardar
+                } else if (opcion == JOptionPane.NO_OPTION) {
+                    // Si el usuario no quiere guardar los datos, redirigirlo a TemporadasFrame
+                    // Esto asume que TemporadasFrame es otra ventana de la aplicación
+                    // Aquí debes asegurarte de que TemporadasFrame se abre correctamente.
+                    mostrarVentanaTemporadasFrame();
+                    setVisible(false);  // Ocultar la ventana actual
+                }
+                // Si el usuario presiona Cancelar, no se hace nada y la ventana sigue abierta.
+            }
+        });
 
         // Inicializar el ArrayList de resultados 
         resultados = new ArrayList<>();
@@ -46,8 +84,6 @@ public class VentanaPestanas extends JFrame {
 
         // Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
-        
-        
 
         // Crear las 11 pestañass
         crearPestanas();
@@ -81,40 +117,27 @@ public class VentanaPestanas extends JFrame {
         
         // Añadir el panel del botón al borde inferior de la ventana
         add(panelBoton, BorderLayout.SOUTH);
+    
+
+    
     }
     
+    // Muestra la ventana TemporadasFrame
+    private void mostrarVentanaTemporadasFrame() {
+        // Aquí debes agregar el código para abrir la ventana TemporadasFrame
+        // Por ejemplo, si TemporadasFrame es otra clase con un JFrame:
+        TemporadasFrame temporadasFrame = new TemporadasFrame();
+        temporadasFrame.setVisible(true);
+    }    
+
     
-
-    private void crearPestanas() {
-        // Al generar el calendario solo una vez
-        if (calendarioGenerado == null) {
-            calendarioGenerado = generarCalendarioRoundRobin(equipos);
-        }
-        
-        for (int i = 1; i <= 10; i++) {
-            // Crear un panel para cada pestaña
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-            // Inicializar la lista de resultados de la jornada actual
-            resultados.add(new ArrayList<>());
-
-            // Añadir el panel a la pestaña
-            JScrollPane scrollPanel = new JScrollPane(panel);
-            tabbedPane.addTab("Jornada " + i, scrollPanel);
-
-            //Actualizar la pestaña para inicializar los componentes
-            actualizarContenidoPestana(i - 1);
-        }
-    }
-    
+    //ROUND ROBIN
     private List<List<Partido>> generarCalendarioRoundRobin(List<Equipo> equipos) {
         List<List<Partido>> jornadas = new ArrayList<>();
         int numEquipos = equipos.size();
 
         // Si el número de equipos es impar, añadimos un equipo "Descansa"
         
-
         int numJornadas = numEquipos - 1; // Número de jornadas para la ida
         int numPartidosPorJornada = numEquipos / 2;
 
@@ -159,8 +182,31 @@ public class VentanaPestanas extends JFrame {
         return jornadas;
     }
 
+    //GENERA LAS 10 JORNADAS 
+    private void crearPestanas() {
+        // Al generar el calendario solo una vez
+        if (calendarioGenerado == null) {
+            calendarioGenerado = generarCalendarioRoundRobin(equipos);
+        }
+        
+        for (int i = 1; i <= 10; i++) {
+            // Crear un panel para cada pestaña
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+            // Inicializar la lista de resultados de la jornada actual
+            resultados.add(new ArrayList<>());
+
+            // Añadir el panel a la pestaña
+            JScrollPane scrollPanel = new JScrollPane(panel);
+            tabbedPane.addTab("Jornada " + i, scrollPanel);
+
+            //Actualizar la pestaña para inicializar los componentes
+            actualizarContenidoPestana(i - 1);
+        }
+    }
     
-   
+   //NAVEGACION ENTRE PESTAÑAS
     private void actualizarContenidoPestana(int index) {
         // Obtener el panel correspondiente a la pestaña seleccionada
         JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(index);
@@ -246,29 +292,68 @@ public class VentanaPestanas extends JFrame {
         panel.repaint();
     }
 
+    //FUNCION PARA CARGAR LA TEMPORADA GUARDADA 
+    private void cargarTemporada(String temporada) {
+        String archivo = "temporada_" + temporada + ".txt"; // El nombre del archivo con el año de la temporada
+        File f = new File(archivo);
 
-    
-    
+        if (!f.exists()) {
+            JOptionPane.showMessageDialog(this, "La temporada no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Procesar la información del archivo línea por línea
+                if (line.startsWith("Temporada:")) {
+                    String temporadaGuardada = line.split(":")[1].trim();
+                    comboBoxTemporadas.addItem(temporadaGuardada);  // Agregar la temporada al JComboBox
+                }
+
+                if (line.startsWith("Equipos Participantes:")) {
+                    while ((line = reader.readLine()) != null && !line.trim().isEmpty()) {
+                        String nombreEquipo = line.substring(2).trim();  // Eliminar el guión y posibles espacios
+                        if (!nombreEquipo.isEmpty()) {
+                            equipos.add(new Equipo(nombreEquipo, null));  // Agregar el equipo a la lista
+                        }
+                    }
+                }
+
+
+                if (line.startsWith("Resultados por Jornada:")) {
+                    for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+                        List<Partido> partidos = calendarioGenerado.get(i);
+                        ArrayList<String[]> jornadaResultados = new ArrayList<>();
+                        for (Partido partido : partidos) {
+                            String[] resultado = reader.readLine().split(" vs ");
+                            jornadaResultados.add(resultado);  // Guardar los resultados
+                        }
+                        resultados.add(jornadaResultados);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //FUNCION PARA GUARDAR CADA TEMPORADA
     private void guardarTemporada(String temporada) {
-        // Obtener la temporada seleccionada del comboBoxTemporadas
         String temporadaSeleccionada = (String) comboBoxTemporadas.getSelectedItem();
-
-        // Extraer solo el año de la temporada seleccionada (por ejemplo "Temporada 2024" -> "2024")
         String año = temporadaSeleccionada.replaceAll("[^0-9]", "");
-
         String archivo = "temporada_" + año + ".txt"; // Nombre del archivo basado en el año
 
         // Crea un archivo si no existe
         File f = new File(archivo);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
-            // Escribe el encabezado de la temporada
             writer.write("Temporada: " + temporadaSeleccionada);
             writer.newLine();
-            writer.write("Estado: Finalizada");
+            writer.write("Estado: " + (todosLlenos() ? "Finalizada" : "En Progreso"));
             writer.newLine();
             writer.newLine();
 
-            // Escribir los nombres de los equipos participantes
+            // Escribir los equipos
             writer.write("Equipos Participantes:");
             writer.newLine();
             for (Equipo equipo : equipos) {
@@ -283,25 +368,20 @@ public class VentanaPestanas extends JFrame {
             for (int i = 0; i < tabbedPane.getTabCount(); i++) {
                 writer.write("Jornada " + (i + 1) + ":");
                 writer.newLine();
-
-                // Obtener los resultados de la jornada
                 List<Partido> partidos = calendarioGenerado.get(i);
                 ArrayList<String[]> jornadaResultados = resultados.get(i);
 
                 for (int j = 0; j < partidos.size(); j++) {
                     Partido partido = partidos.get(j);
-                    String[] resultado = jornadaResultados.get(j);
+                    String[] resultado = jornadaResultados.size() > j ? jornadaResultados.get(j) : new String[]{"", ""};
 
-                    // Formato: Equipo1 (resultado1) vs Equipo2 (resultado2)
                     String lineaResultado = partido.getlocal().getNombre() + " " + resultado[0] + " vs " +
-                                            partido.getvisitante().getNombre() + " " + resultado[1] + "";
+                                            partido.getvisitante().getNombre() + " " + resultado[1];
                     writer.write(lineaResultado);
                     writer.newLine();
                 }
                 writer.newLine();
             }
-
-            // Mensaje de confirmación
             JOptionPane.showMessageDialog(this, "Temporada " + temporadaSeleccionada + " guardada correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
@@ -309,7 +389,36 @@ public class VentanaPestanas extends JFrame {
         }
     }
 
-    
+    //COMPRUEBA SI TODOS LOS CAMPOS DE TEXTO DE LOS RESULTADOS ESTAN RELLENADOS
+    private boolean todosLlenos() {
+        // Recorre todas las pestañas (jornadas)
+        for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+            JScrollPane scrollPanel = (JScrollPane) tabbedPane.getComponentAt(i);
+            JPanel panel = (JPanel) scrollPanel.getViewport().getView();
+
+            // Recorre todos los componentes dentro del panel de la jornada actual (paneles de partidos)
+            for (Component comp : panel.getComponents()) {
+                if (comp instanceof JPanel) {
+                    JPanel partidoPanel = (JPanel) comp;
+
+                    // Recorre todos los componentes dentro del panel del partido (campos de texto)
+                    for (Component subComp : partidoPanel.getComponents()) {
+                        if (subComp instanceof JTextField) {
+                            JTextField campoTexto = (JTextField) subComp;
+
+                            // Verifica si el campo de texto está vacío
+                            if (campoTexto.getText().trim().isEmpty()) {
+                                return false; // Si algún campo está vacío, retorna false
+                            }
+                        }
+					}	
+                }
+            }
+        }
+        return true; // Si no hay campos vacíos, retorna true
+    }
+
+    //FUNCION DEL BOTON FINALIZAR TEMPORADA
     private void finalizarTemporada() {
         boolean todosLlenos = true; // Flag para verificar si todos los campos están llenos
 
@@ -372,8 +481,7 @@ public class VentanaPestanas extends JFrame {
         }
     }
 
-
-    
+    //FUNCION DEL BOTON ACTUALIZAR RESULTADOS
     private void actualizarResultados() {
         // Obtener los resultados de todos los campos de texto
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
@@ -409,7 +517,128 @@ public class VentanaPestanas extends JFrame {
                     }
                 }
             }
+
+            // Aquí, después de actualizar los resultados, actualizamos la clasificación
+            actualizarPuntosClasificacion(i); // Actualiza los puntos de la clasificación de esta jornada
+        }
+
+        // Recargar la tabla o cualquier componente relacionado con la clasificación para reflejar los cambios
+        
+        actualizarTablaClasificacion();
+    }
+
+    // Función para actualizar los puntos de la clasificación
+    private void actualizarPuntosClasificacion(int index) {
+        ArrayList<String[]> jornadaResultados = resultados.get(index); // Obtener los resultados de la jornada
+
+        for (Component comp : ((JPanel) ((JScrollPane) tabbedPane.getComponentAt(index)).getViewport().getView()).getComponents()) {
+            if (comp instanceof JPanel) {
+                JPanel partidoPanel = (JPanel) comp;
+                
+                JTextField equipo1txt = null, equipo2txt = null;
+                JLabel lblEquipo1 = null, lblEquipo2 = null;
+
+                // Obtener los nombres de los equipos y los resultados
+                for (Component subComp : partidoPanel.getComponents()) {
+                    if (subComp instanceof JLabel) {
+                        if (lblEquipo1 == null) {
+                            lblEquipo1 = (JLabel) subComp;
+                        } else {
+                            lblEquipo2 = (JLabel) subComp;
+                        }
+                    }
+                    if (subComp instanceof JTextField) {
+                        if (equipo1txt == null) {
+                            equipo1txt = (JTextField) subComp;
+                        } else {
+                            equipo2txt = (JTextField) subComp;
+                        }
+                    }
+                }
+
+                // Asegurar que tenemos datos antes de procesarlos
+                if (lblEquipo1 != null && lblEquipo2 != null && equipo1txt != null && equipo2txt != null) {
+                    String nombreEquipo1 = lblEquipo1.getText();
+                    String nombreEquipo2 = lblEquipo2.getText();
+                    String resultadoEquipo1 = equipo1txt.getText().trim();
+                    String resultadoEquipo2 = equipo2txt.getText().trim();
+
+                    if (!resultadoEquipo1.isEmpty() && !resultadoEquipo2.isEmpty()) {
+                        try {
+                            int golesEquipo1 = Integer.parseInt(resultadoEquipo1);
+                            int golesEquipo2 = Integer.parseInt(resultadoEquipo2);
+
+                            if (golesEquipo1 > golesEquipo2) {
+                                // Gana equipo 1
+                                actualizarPuntosEquipo(nombreEquipo1, 3);
+                                actualizarPuntosEquipo(nombreEquipo2, 0);
+                            } else if (golesEquipo1 < golesEquipo2) {
+                                // Gana equipo 2
+                                actualizarPuntosEquipo(nombreEquipo1, 0);
+                                actualizarPuntosEquipo(nombreEquipo2, 3);
+                            } else {
+                                // Empate
+                                actualizarPuntosEquipo(nombreEquipo1, 1);
+                                actualizarPuntosEquipo(nombreEquipo2, 1);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Los resultados deben ser números válidos.");
+                        }
+                    }
+                }
+            }
+        }
+
+        actualizarTablaClasificacion();
+    }
+
+
+
+    // Función para actualizar los puntos de cada equipo
+    
+    private void actualizarPuntosEquipo(String nombreEquipo, int puntos) {
+        for (int i = 0; i < equipos.size(); i++) {
+            if (equipos.get(i).getNombre().equals(nombreEquipo)) {
+                int puntosActuales = equipos.get(i).getPuntos();
+                equipos.get(i).setPuntos(puntosActuales + puntos);
+                System.out.println("Puntos de " + nombreEquipo + " actualizados a: " + equipos.get(i).getPuntos());
+                break;
+            }
         }
     }
+
+    private void actualizarTabla() {
+        if (modeloTablaClasificacion == null) {
+            System.out.println("Error: La tabla de clasificación no ha sido inicializada.");
+            return;
+        }
+
+        // Ordenar los equipos por puntos (de mayor a menor)
+        equipos.sort((e1, e2) -> Integer.compare(e2.getPuntos(), e1.getPuntos()));
+
+        // Limpiar la tabla antes de actualizarla
+        modeloTablaClasificacion.setRowCount(0);
+
+        // Agregar los equipos con los valores actualizados
+        for (Equipo equipo : equipos) {
+            modeloTablaClasificacion.addRow(new Object[]{
+                equipo.getNombre(),
+                equipo.getPuntos(),
+                equipo.getVictorias(),
+                equipo.getderrotas()
+            });
+        }
+
+        // Refrescar la tabla
+        modeloTablaClasificacion.fireTableDataChanged();
+    }
+
+
+    // Función para actualizar la tabla de clasificación (si es necesario)
+    private void actualizarTablaClasificacion() {
+        
+		
+    }
+
 
 }

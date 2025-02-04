@@ -3,6 +3,8 @@ package javainterfaz;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 class Equipo implements Serializable,  Comparable<Equipo>{
     /**
 		 * 
@@ -13,6 +15,7 @@ class Equipo implements Serializable,  Comparable<Equipo>{
 	private int puntos;
 	private int victorias;
 	private int derrotas;
+	
     
 
     public Equipo(String nombre, List<String> jugadores) {
@@ -21,12 +24,17 @@ class Equipo implements Serializable,  Comparable<Equipo>{
         this.puntos = 0;
         this.victorias = 0;
 		this.derrotas = 0;
-      
+		
     }
     
     public int getPuntos() {
 		return puntos;
 	}
+    
+ // Setter para puntos
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
     
     public int getVictorias() {
 		return victorias;
@@ -46,6 +54,22 @@ class Equipo implements Serializable,  Comparable<Equipo>{
     
     public void sumarPuntos(int puntos) {
         this.puntos += puntos;
+    }
+    
+    public void resetEstadisticas() {
+        this.puntos = 0;
+        this.victorias = 0;
+        this.derrotas = 0;
+    }
+    
+    public void actualizarEstadisticas(int golesPropios, int golesRivales) {
+        if (golesPropios > golesRivales) {
+            this.puntos += 3; // Gana
+            this.victorias++;
+        } else if (golesPropios < golesRivales) {
+            this.derrotas++; // Pierde
+        }
+        // Si empatan, no hay cambios en victorias o derrotas, pero no se especificó manejo de empates.
     }
     
 	public int compareTo(Equipo other) {
