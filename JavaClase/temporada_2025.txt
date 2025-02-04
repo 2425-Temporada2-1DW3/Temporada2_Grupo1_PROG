@@ -1,0 +1,52 @@
+Temporada: 2025
+Estado: Finalizada
+Jornada 1:
+00 vs 00
+00 vs 00
+00 vs 00
+
+Jornada 2:
+9 vs 41
+74 vs 25
+84 vs 53
+
+Jornada 3:
+16 vs 36
+88 vs 8
+97 vs 30
+
+Jornada 4:
+19 vs 37
+78 vs 31
+88 vs 85
+
+Jornada 5:
+82 vs 96
+50 vs 72
+49 vs 3
+
+Jornada 6:
+99 vs 78
+52 vs 25
+75 vs 79
+
+Jornada 7:
+22 vs 73
+71 vs 30
+36 vs 43
+
+Jornada 8:
+97 vs 62
+35 vs 28
+76 vs 84
+
+Jornada 9:
+90 vs 59
+39 vs 8
+28 vs 9
+
+Jornada 10:
+90 vs 73
+12 vs 40
+51 vs 98
+
