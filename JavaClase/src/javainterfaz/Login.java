@@ -157,7 +157,7 @@ public class Login extends Icono implements ActionListener{
         
 	}
 	
-	private void validarUsuario(String username, String password) {
+	public void validarUsuario(String username, String password) {
 	    // Definir credenciales del superusuario
 	    String superadmin = "admin";
 	    String superadmincontra = "admin123";
@@ -212,11 +212,8 @@ public class Login extends Icono implements ActionListener{
 	        // Mostrar todos los botones
 	    } else if (permiso == 1) { // Árbitro
 	        // Ocultar algunos botones
-	        vh.btnConfirmar.setVisible(false);
 	    } else if (permiso == 0) { // Usuario básico
 	        // Ocultar todos los botones
-	        vh.btnCrearTemporada.setVisible(false);
-	        vh.btnConfirmar.setVisible(false);
 	    } else { // Nivel de permiso no válido
 	        JOptionPane.showMessageDialog(this, "Nivel de permiso no válido.", "Error", JOptionPane.ERROR_MESSAGE);
 	    }
@@ -225,7 +222,7 @@ public class Login extends Icono implements ActionListener{
 	    this.dispose();
 	}
 	
-	private void writeLog(String message) {
+	public static void writeLog(String message) {
 	    try (PrintWriter writer = new PrintWriter(new FileWriter("log.txt", true))) {
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        String timestamp = dateFormat.format(new Date());

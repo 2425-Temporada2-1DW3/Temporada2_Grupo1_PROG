@@ -506,7 +506,7 @@ public class mainPage extends JFrame implements ActionListener { // Definición 
             guardarResultadosPorJornada(Integer.parseInt(lblJornada.getText())); // Guardar resultados actuales
             actualizarClasificacion(); // Actualizar la clasificación en la tabla
         } else if (e.getSource() == iniciarsesion) { // Si se presiona el botón de inicio de sesión
-            interfaz vh = new interfaz(); // Crear una nueva instancia de la ventana de inicio
+            Login vh = new Login(); // Crear una nueva instancia de la ventana de inicio
             vh.setVisible(true); // Mostrar ventana de inicio
             this.setVisible(false); // Ocultar ventana actual
             this.dispose(); // Descartar ventana actual

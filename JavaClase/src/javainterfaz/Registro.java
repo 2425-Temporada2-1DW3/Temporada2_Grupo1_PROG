@@ -165,12 +165,12 @@ public class Registro extends Icono implements ActionListener{
 				});
 		}
 
-	private void validarUsuarios(String nombreUsuario, String contraseñaUsuario) {
+	public void validarUsuarios(String nombreUsuario, String contraseñaUsuario) {
 	    int permisoPredeterminado = 0; // Puedes cambiar este valor según tus necesidades
 	    LeerGuardarUsuarios.guardarUsuarios(nombreUsuario, contraseñaUsuario, permisoPredeterminado);
 	}
 	
-	private void writeLog(String message) {
+	public void writeLog(String message) {
 	    try (PrintWriter writer = new PrintWriter(new FileWriter("log.txt", true))) {
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        String timestamp = dateFormat.format(new Date());

@@ -15,3 +15,9 @@
 2025-01-30 12:15:49 - Usuario prepe ha sido eliminado
 2025-01-30 12:15:50 - Usuario jose ha sido eliminado
 2025-01-30 12:15:51 - Usuario lopez ha sido eliminado
+2025-02-06 10:56:28 - Inicio exitoso: admin
+2025-02-06 10:56:32 - Inicio exitoso: admin
+2025-02-06 11:47:01 - Test log message
+2025-02-06 11:47:09 - Test log message
+2025-02-06 11:49:43 - Usuario registrado como invitado
+2025-02-06 11:50:22 - Usuario registrado como invitado

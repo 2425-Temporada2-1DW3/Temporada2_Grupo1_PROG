@@ -1,33 +1,16 @@
 package javainterfaz;
 
-
-
 public class Clasificacion {
     private Equipo equipo;
     private int puntos;
-    private int partidosJugados;
-    private int golesFavor;
-    private int golesContra;
+    private int victorias;
+    private int derrotas;
 
     public Clasificacion(Equipo equipo) {
         this.equipo = equipo;
         this.puntos = 0;
-        this.partidosJugados = 0;
-        this.golesFavor = 0;
-        this.golesContra = 0;
-    }
-
-    public void actualizar(int golesFavor, int golesContra) {
-        this.partidosJugados++;
-        this.golesFavor += golesFavor;
-        this.golesContra += golesContra;
-
-        if (golesFavor > golesContra) {
-            this.puntos += 3; // Victoria
-        } else if (golesFavor == golesContra) {
-            this.puntos += 1; // Empate
-        }
-        // Derrota no suma puntos
+        this.victorias = 0;
+        this.derrotas = 0;
     }
 
     public Equipo getEquipo() {
@@ -38,16 +21,29 @@ public class Clasificacion {
         return puntos;
     }
 
-    public int getPartidosJugados() {
-        return partidosJugados;
+    public int getVictorias() {
+        return victorias;
     }
 
-    public int getGolesFavor() {
-        return golesFavor;
+    public int getDerrotas() {
+        return derrotas;
     }
 
-    public int getGolesContra() {
-        return golesContra;
+    public void agregarVictoria() {
+        victorias++;
+        puntos += 3; // El equipo obtiene 3 puntos por victoria
+    }
+
+    public void agregarDerrota() {
+        derrotas++;
+    }
+
+    public void agregarEmpate() {
+        puntos++; // Ambos equipos obtienen 1 punto en caso de empate
+    }
+
+    @Override
+    public String toString() {
+        return equipo.getNombre() + " - Puntos: " + puntos + " - Victorias: " + victorias + " - Derrotas: " + derrotas;
     }
 }
-

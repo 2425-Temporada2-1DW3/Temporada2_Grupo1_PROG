@@ -39,12 +39,13 @@ public class GestionUsuarios extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textUsuario;
-	private JPasswordField passwordField;
-	private JTable table;
-	private JButton btnCrear, btnModificar, btnEliminar, btnGuardar;
-    private DefaultTableModel model;
-    private JButton btnSalir;
+	public JTextField textUsuario;
+	public JPasswordField passwordField;
+	public JTable table;
+	public JButton btnCrear, btnModificar, btnEliminar, btnGuardar;
+	public DefaultTableModel model;
+	public JButton btnSalir;
+	public Object comboBox;
 
 	/**
 	 * Launch the application.
