@@ -21,3 +21,4 @@
 2025-02-06 11:47:09 - Test log message
 2025-02-06 11:49:43 - Usuario registrado como invitado
 2025-02-06 11:50:22 - Usuario registrado como invitado
+2025-02-06 12:09:43 - Inicio exitoso: admin

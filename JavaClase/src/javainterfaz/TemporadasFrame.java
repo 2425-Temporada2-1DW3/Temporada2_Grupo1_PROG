@@ -183,9 +183,22 @@ public class TemporadasFrame extends JFrame implements ActionListener {
         btnCrearTemporada = new JButton("Crear Temporada");
         btnCrearTemporada.addActionListener(e -> crearNuevaTemporada());
         panelNorte.add(btnCrearTemporada);
-
         getContentPane().add(panelNorte, BorderLayout.NORTH);
 
+        btnGestionUsuarios = new JButton("Gestion Usuarios");
+        panelNorte.add(btnGestionUsuarios);
+        getContentPane().add(panelNorte, BorderLayout.NORTH);
+        btnGestionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Abrir el segundo JFrame
+                GestionUsuarios GestionUsuarios = new GestionUsuarios();
+                GestionUsuarios.setVisible(true);
+
+                dispose(); // Cierra la ventana actual
+            }
+        });
+        
         // Botón para confirmar selección de equipos
         btnConfirmar = new JButton("Confirmar Equipos");
         btnConfirmar.addActionListener(e -> confirmarSeleccionEquipos());
@@ -208,20 +221,8 @@ public class TemporadasFrame extends JFrame implements ActionListener {
         	        // Crear la ventana con los equipos seleccionados
         	        VentanaPestanas ventanaPestanas = new VentanaPestanas(comboBoxTemporadas, equiposSeleccionados1);
         	        
-        	        btnGestionUsuarios = new JButton("Gestion Usuarios");
-        	        panelNorte.add(btnGestionUsuarios);
         	        ventanaPestanas.setVisible(true);
-        	        btnGestionUsuarios.addActionListener(new ActionListener() {
-        	            @Override
-        	            public void actionPerformed(ActionEvent e) {
-        	                // Abrir el segundo JFrame
-        	                Registro registro = new Registro();
-        	                registro.setVisible(true);
-
-        	                dispose(); // Cierra la ventana actual
-        	            }
-        	        });
-        	        
+        	               	        
         	        System.out.println("Equipos seleccionados: " + equiposSeleccionados1);
         	        System.out.println("Creando ventana con los equipos seleccionados...");
         	    });
