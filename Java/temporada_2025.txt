@@ -1,0 +1,62 @@
+Temporada: 2025
+Estado: En Progreso
+
+Equipos Participantes:
+- Barca
+- Cisneros
+- Eibar
+- Hernani
+- Labiana
+- Pozuelo
+
+Resultados por Jornada:
+Jornada 1:
+Barca 2 vs Pozuelo 1
+Cisneros  vs Labiana 
+Eibar  vs Hernani 
+
+Jornada 2:
+Barca  vs Labiana 
+Pozuelo  vs Hernani 
+Cisneros  vs Eibar 
+
+Jornada 3:
+Barca  vs Hernani 
+Labiana  vs Eibar 
+Pozuelo  vs Cisneros 
+
+Jornada 4:
+Barca  vs Eibar 
+Hernani  vs Cisneros 
+Labiana  vs Pozuelo 
+
+Jornada 5:
+Barca  vs Cisneros 
+Eibar  vs Pozuelo 
+Hernani  vs Labiana 
+
+Jornada 6:
+Pozuelo  vs Barca 
+Labiana  vs Cisneros 
+Hernani  vs Eibar 
+
+Jornada 7:
+Labiana  vs Barca 
+Hernani  vs Pozuelo 
+Eibar  vs Cisneros 
+
+Jornada 8:
+Hernani  vs Barca 
+Eibar  vs Labiana 
+Cisneros  vs Pozuelo 
+
+Jornada 9:
+Eibar  vs Barca 
+Cisneros  vs Hernani 
+Pozuelo  vs Labiana 
+
+Jornada 10:
+Cisneros  vs Barca 
+Pozuelo  vs Eibar 
+Labiana  vs Hernani 
+
